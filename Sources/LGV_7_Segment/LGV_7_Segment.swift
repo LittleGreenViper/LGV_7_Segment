@@ -30,7 +30,7 @@ import CoreGraphics
  
  It also does not actually *display* anything. It just provides primitive CoreGraphics paths for the segment.
  */
-struct LGV_7_Segment {
+public struct LGV_7_Segment {
     /* ################################################################## */
     /**
      This is the size of the entire drawing area. The numbers are somewhat arbitrary, as the shapes will be cast into whatever context the user desires.
@@ -290,11 +290,17 @@ struct LGV_7_Segment {
 
     /* ################################################################## */
     /**
+     We make the initializer public.
+     */
+    public init() { }
+    
+    /* ################################################################## */
+    /**
      This is the combined paths for all the "On" segments.
      
      > NOTE: If none are on (value -2), this will be an empty path.
      */
-    var onSegments: CGPath {
+    public var onSegments: CGPath {
         return _onSegments.reduce(into: CGMutablePath()) {
             if let path = $1.path(withCache: _segmentCache) {
                 $0.addPath(path)
@@ -308,19 +314,33 @@ struct LGV_7_Segment {
      
      > NOTE: If none are off (value 8), this will be an empty path.
      */
-    var offSegments: CGPath {
+    public var offSegments: CGPath {
         return SegmentPath.allCases.filter({!_onSegments.contains($0)}).reduce(into: CGMutablePath()) {
             if let path = $1.path(withCache: _segmentCache) {
                 $0.addPath(path)
             }
         }
     }
-    
+
+    /* ################################################################## */
+    /**
+     This is the combined paths for all the segments (both "on" and "off").
+     
+     > NOTE: If none are off (value 8), this will be an empty path.
+     */
+    public var allSegments: CGPath {
+        return SegmentPath.allCases.reduce(into: CGMutablePath()) {
+            if let path = $1.path(withCache: _segmentCache) {
+                $0.addPath(path)
+            }
+        }
+    }
+
     /* ################################################################## */
     /**
      This is the outline of the entire display.
      */
-    var outline: CGPath { CGPath(rect: CGRect(origin: .zero, size: Self._c_g_displaySize), transform: nil) }
+    public var outline: CGPath { CGPath(rect: CGRect(origin: .zero, size: Self._c_g_displaySize), transform: nil) }
     
     /* ################################################################## */
     /**
@@ -332,5 +352,5 @@ struct LGV_7_Segment {
      
      > NOTE: This will crash, if a value is set outside the required range.
      */
-    var value: Int = -2 { didSet { precondition((-2..<16).contains(value), "-2 -> 15 only!") } }
+    public var value: Int = -2 { didSet { precondition((-2..<16).contains(value), "-2 -> 15 only!") } }
 }

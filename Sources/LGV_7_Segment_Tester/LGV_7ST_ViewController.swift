@@ -18,6 +18,70 @@
  */
 
 import UIKit
+import LGV_7_Segment
+
+class LGV_7ST_DisplaySegment: UIView {
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable var onColor: UIColor = .systemRed
+
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable var offColor : UIColor = .systemGray
+
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable var backColor: UIColor = .label
+
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable var value: Int = -2 { didSet { setNeedsLayout() } }
+
+    /* ################################################################## */
+    /**
+     */
+    var segmentDisplay = LGV_7_Segment()
+    
+    /* ################################################################## */
+    /**
+     */
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard (-2..<16).contains(value) else { return }
+        
+        layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        
+        segmentDisplay.value = value
+        
+        let backLayer = CAShapeLayer()
+        let offLayer = CAShapeLayer()
+        let onLayer = CAShapeLayer()
+        let allLayer = CAShapeLayer()
+        
+        backLayer.frame = bounds
+        offLayer.frame = bounds
+        onLayer.frame = bounds
+        allLayer.frame = bounds
+
+        backLayer.path = segmentDisplay.outline
+        offLayer.path = segmentDisplay.offSegments
+        onLayer.path = segmentDisplay.onSegments
+        allLayer.path = segmentDisplay.allSegments
+        
+        backLayer.fillColor = backColor.cgColor
+        offLayer.fillColor = offColor.cgColor
+        onLayer.fillColor = onColor.cgColor
+        
+        layer.addSublayer(backLayer)
+        layer.addSublayer(offLayer)
+        layer.addSublayer(onLayer)
+    }
+}
 
 /* ###################################################################################################################################### */
 // MARK: -  -
@@ -28,8 +92,26 @@ class LGV_7ST_ViewController: UIViewController {
     /* ################################################################## */
     /**
      */
+    @IBOutlet weak var displaySegment: LGV_7ST_DisplaySegment?
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet weak var valueSlider: UISlider?
+    
+    /* ################################################################## */
+    /**
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBAction func valueChanged(_ inControl: UISlider) {
+        let newValue = max(-2, min(15, Int(round(inControl.value))))
+        inControl.value = Float(newValue)
+        displaySegment?.value = newValue
     }
 }

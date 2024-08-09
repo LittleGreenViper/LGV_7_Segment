@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
@@ -14,15 +14,45 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LGV_7ST_ViewController" customModule="LGV_7_Segment_Tester" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-2" minValue="-2" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-uu-IJC">
+                                <rect key="frame" x="14" y="122" width="347" height="31"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="LeN-Ul-uTZ"/>
+                                </connections>
+                            </slider>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W4T-dd-WjV" customClass="LGV_7ST_DisplaySegment" customModule="LGV_7_Segment_Tester" customModuleProvider="target">
+                                <rect key="frame" x="63" y="160" width="249" height="492"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="W4T-dd-WjV" secondAttribute="height" multiplier="83:164" id="NU5-ti-Ypm"/>
+                                    <constraint firstAttribute="width" priority="750" constant="250" id="Wb6-hf-5wg"/>
+                                    <constraint firstAttribute="height" priority="750" constant="492" id="z2n-cD-3mI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yTL-uu-IJC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="1Ut-4D-iAN"/>
+                            <constraint firstItem="W4T-dd-WjV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3QT-UN-eBr"/>
+                            <constraint firstItem="yTL-uu-IJC" firstAttribute="bottom" secondItem="W4T-dd-WjV" secondAttribute="top" constant="-8" id="Jnx-IT-Uos"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yTL-uu-IJC" secondAttribute="trailing" constant="16" id="cee-Ru-xks"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W4T-dd-WjV" secondAttribute="bottom" id="hnS-NV-AnF"/>
+                            <constraint firstItem="W4T-dd-WjV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="k2L-cG-rdP"/>
+                            <constraint firstItem="yTL-uu-IJC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yFb-ep-5B9"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="displaySegment" destination="W4T-dd-WjV" id="hRs-hK-P7C"/>
+                        <outlet property="valueSlider" destination="yTL-uu-IJC" id="rnj-By-i9L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="-34"/>
+            <point key="canvasLocation" x="132" y="-34.729064039408868"/>
         </scene>
     </scenes>
     <resources>
