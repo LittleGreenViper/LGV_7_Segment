@@ -135,20 +135,14 @@ public struct LGV_7_Segment {
          This returns the path, taking caches into account, as well as scaling to our display size.
          
          - parameter withCache: The cache dictionary. If it is not in here, we create one from scratch
-         - parameter andSize: This is the entire display size. The path is transformed to fit in that size.
+         - parameter withSize: This is the entire display size. The path is transformed to fit in that size.
          - returns: A new path, scaled to fit in the size.
          */
-        func path(withCache inCache: [SegmentPath: CGPath], andSize inSize: CGSize) -> CGPath? {
-            if let mutie = inCache[self] {
-                return mutie
-            } else if let mutie = path {
-                let bbSize = mutie.boundingBox.size
-                let scale = min(inSize.height / bbSize.height, inSize.width / bbSize.width)
-                var transform = CGAffineTransform(scaleX: scale, y: scale)
-                return mutie.copy(using: &transform)
-            }
-            
-            return nil
+        func path(withSize inSize: CGSize) -> CGPath? {
+            let bbSize = LGV_7_Segment.c_g_displaySize
+            let scale = min(inSize.height / bbSize.height, inSize.width / bbSize.width)
+            var transform = CGAffineTransform(scaleX: scale, y: scale)
+            return path?.copy(using: &transform)
         }
 
         /* ############################################################## */
@@ -220,12 +214,6 @@ public struct LGV_7_Segment {
             return nil
         }
     }
-    
-    /* ################################################################## */
-    /**
-     This caches the paths. We build this at init time.
-     */
-    private let _segmentCache: [SegmentPath: CGPath] = SegmentPath.allCases.reduce(into: [SegmentPath: CGPath]()) { $0[$1] = $1.path }
     
     /* ################################################################## */
     /**
@@ -323,8 +311,7 @@ public struct LGV_7_Segment {
      */
     public var onSegments: CGPath {
         _onSegments.reduce(into: CGMutablePath()) {
-            if let path = $1.path(withCache: _segmentCache, andSize: size) {
-                
+            if let path = $1.path(withSize: size) {
                 $0.addPath(path)
             }
         }
@@ -338,7 +325,7 @@ public struct LGV_7_Segment {
      */
     public var offSegments: CGPath {
         SegmentPath.allCases.filter({!_onSegments.contains($0)}).reduce(into: CGMutablePath()) {
-            if let path = $1.path(withCache: _segmentCache, andSize: size) {
+            if let path = $1.path(withSize: size) {
                 $0.addPath(path)
             }
         }
@@ -352,7 +339,7 @@ public struct LGV_7_Segment {
      */
     public var allSegments: CGPath {
         SegmentPath.allCases.reduce(into: CGMutablePath()) {
-            if let path = $1.path(withCache: _segmentCache, andSize: size) {
+            if let path = $1.path(withSize: size) {
                 $0.addPath(path)
             }
         }

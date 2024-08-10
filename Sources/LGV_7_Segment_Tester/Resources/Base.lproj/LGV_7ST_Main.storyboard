@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-2" minValue="-2" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-uu-IJC">
+                            <slider opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-2" minValue="-2" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-uu-IJC">
                                 <rect key="frame" x="14" y="122" width="347" height="31"/>
                                 <connections>
                                     <action selector="valueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="LeN-Ul-uTZ"/>
@@ -42,7 +42,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yTL-uu-IJC" secondAttribute="trailing" constant="16" id="cee-Ru-xks"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W4T-dd-WjV" secondAttribute="bottom" id="hnS-NV-AnF"/>
                             <constraint firstItem="W4T-dd-WjV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="k2L-cG-rdP"/>
-                            <constraint firstItem="yTL-uu-IJC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yFb-ep-5B9"/>
+                            <constraint firstItem="yTL-uu-IJC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="yFb-ep-5B9"/>
                         </constraints>
                     </view>
                     <connections>

@@ -24,17 +24,17 @@ class LGV_7ST_DisplaySegment: UIView {
     /* ################################################################## */
     /**
      */
-    @IBInspectable var onColor: UIColor = .systemRed
+    @IBInspectable var onColor: UIColor = .systemOrange
 
     /* ################################################################## */
     /**
      */
-    @IBInspectable var offColor : UIColor = .systemGray
+    @IBInspectable var offColor : UIColor = .systemGray.withAlphaComponent(0.75)
 
     /* ################################################################## */
     /**
      */
-    @IBInspectable var backColor: UIColor = .label
+    @IBInspectable var backColor: UIColor = .blue
 
     /* ################################################################## */
     /**
@@ -55,7 +55,8 @@ class LGV_7ST_DisplaySegment: UIView {
         guard (-2..<16).contains(value) else { return }
         
         layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-        segmentDisplay.size = bounds.size
+
+        segmentDisplay.size = frame.size
         segmentDisplay.value = value
         
         let backLayer = CAShapeLayer()
