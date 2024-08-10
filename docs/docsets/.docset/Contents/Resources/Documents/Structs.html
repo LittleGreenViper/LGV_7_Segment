@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Structures  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Section/Structures" class="dashAnchor"></a>
+
+    <a title="Structures  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          LGV_7_Segment Doumentation
+        </a>
+         (100% documented)
+      </p>
+    
+      <div class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </div>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/LittleGreenViper/LGV_7_Segment">
+            <img class="header-icon" src="img/gh.png" alt="GitHub"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">Index</a>
+      <img class="carat" src="img/carat.png" alt=""/>
+      Structures  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/LGV_7_Segment.html">LGV_7_Segment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>Structures</h1>
+            <p>The following structures are available globally.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Seven-Segment%20Display%20CGPath%20Generator"></a>
+                <a name="//apple_ref/swift/Section/Seven-Segment Display CGPath Generator" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Seven-Segment%20Display%20CGPath%20Generator"></a>
+                  <h3 class="section-name"><span>Seven-Segment Display CGPath Generator</span>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_SegmentAAV"></a>
+                    <a name="//apple_ref/swift/Struct/LGV_7_Segment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_SegmentAAV">LGV_7_Segment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This struct is a graphical representation of a classic &ldquo;7-segment&rdquo; LED/LCD display for a single digit.</p>
+
+<p>It does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).</p>
+
+<p>It also does not actually <em>display</em> anything. It just provides primitive <code>CGPath</code> paths for the segments. These need to be used by the calling context to render the display.</p>
+
+<p>It supplies 4 different paths:</p>
+
+<ul>
+<li>The path for all of the &ldquo;on&rdquo; segments. You get this from the <code>onSegments</code> computed property.</li>
+<li>The path for all of the &ldquo;off&rdquo; segments. You get this from the <code>offSegments</code> computed property.</li>
+<li>A path that encompasses all of the segments, whether on or off. This can be used as a mask. You get this from the <code>segmentMask</code> computed property.</li>
+<li>A simple rectangular path, for the outline of the display. You get this from the <code>outline</code> computed property.</li>
+</ul>
+
+<p>The paths are calculated in realtime, and reflect the value and size of the display.</p>
+
+<p>By default, the control calculates its layout, based on 250 display units wide, by 492 display units high.
+However, the size can be set to anything, and the paths will fill it (stretching, if necessary).</p>
+
+<p>There are two mutable properties for this struct:</p>
+
+<ul>
+<li><code>size</code>: This is the actual size that the display is calculated to fill. It will cause stretching, if it is different from the 125:246 aspect ratio of the default size.</li>
+<li><p><code>value</code>: This is an integer value, from -2, to 15.</p>
+
+<p>The value can be:</p>
+
+<ul>
+<li>-2 is all off (blank). This is the default.</li>
+<li>-1 is the negative sign (center bar only).</li>
+<li>0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).</li>
+</ul></li>
+</ul>
+
+<p>It is possible to get the default aspect ratio, using the <code>defaultAspect</code> computed property, and the current aspect, using the <code>currentAspect</code> computed property.</p>
+
+                        <a href="Structs/LGV_7_Segment.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">LGV_7_Segment</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2024 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2024-08-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+    </section>
+  </body>
+</html>

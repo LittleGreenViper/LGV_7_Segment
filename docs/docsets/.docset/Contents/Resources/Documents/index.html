@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Index  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+
+    <a title="Index  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          LGV_7_Segment Doumentation
+        </a>
+         (100% documented)
+      </p>
+    
+      <div class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </div>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/LittleGreenViper/LGV_7_Segment">
+            <img class="header-icon" src="img/gh.png" alt="GitHub"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">Index</a>
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/LGV_7_Segment.html">LGV_7_Segment</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            
+            <p><img src="icon.png" alt="The Project Icon"></p>
+<h1 id='code-lgv_7_segment-code' class='heading'><code><a href="Structs/LGV_7_Segment.html">LGV_7_Segment</a></code></h1>
+<h2 id='overview' class='heading'>Overview</h2>
+
+<p>This module simply provides a primitive Core Graphics <code>CGPath</code> for a basic 7-segment display.</p>
+
+<p>The <code>LGV_7_Sement</code> struct is a graphical representation of a classic &ldquo;7-segment&rdquo; LED/LCD display for a single digit.</p>
+
+<p>It does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).</p>
+
+<p>It also does not actually <em>display</em> anything. It just provides primitive <code>CGPath</code> paths for the segments. These need to be used by the calling context to render the display.</p>
+
+<p>It supplies 4 different paths:</p>
+
+<ul>
+<li>The path for all of the &ldquo;on&rdquo; segments. You get this from the <code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV10onSegmentsSo9CGPathRefavp">LGV_7_Segment.onSegments</a></code> computed property.</li>
+<li>The path for all of the &ldquo;off&rdquo; segments. You get this from the <code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV11offSegmentsSo9CGPathRefavp">LGV_7_Segment.offSegments</a></code> computed property.</li>
+<li>A path that encompasses all of the segments, whether on or off. This can be used as a mask. You get this from the <code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV11segmentMaskSo9CGPathRefavp">LGV_7_Segment.segmentMask</a></code> computed property.</li>
+<li>A simple rectangular path, for the outline of the display. You get this from the <code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV7outlineSo9CGPathRefavp">LGV_7_Segment.outline</a></code> computed property.</li>
+</ul>
+
+<p><img src="img/Legend.png" alt="Figure 1"></p>
+
+<p>Figure 1: The Various Paths, As Shown in the Tester App</p>
+
+<p>The paths are calculated in realtime, and reflect the value and size of the display.</p>
+
+<p>By default, the control calculates its layout, based on 250 display units wide, by 492 display units high.
+However, the size can be set to anything, and the paths will fill it (stretching, if necessary).</p>
+
+<p>There are two mutable properties for this struct:</p>
+
+<ul>
+<li><code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV4sizeSo6CGSizeVvp">LGV_7_Segment.size</a></code>: This is the actual size that the display is calculated to fill. It will cause stretching, if it is different from the 125:246 aspect ratio of the default size.</li>
+<li><code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV5valueSivp">LGV_7_Segment.value</a></code>: This is an integer value, from -2, to 15.</li>
+</ul>
+
+<p>The value can be:</p>
+
+<ul>
+<li>-2 is all off (blank). This is the default.</li>
+<li>-1 is the negative sign (center bar only).</li>
+<li>0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).</li>
+</ul>
+
+<p>It is possible to get the default aspect ratio, using the <code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV13defaultAspect14CoreFoundation7CGFloatVvp">LGV_7_Segment.defaultAspect</a></code> computed property, and the current aspect, using the <code><a href="Structs/LGV_7_Segment.html#/s:13LGV_7_SegmentAAV13currentAspect14CoreFoundation7CGFloatVvp">LGV_7_Segment.currentAspect</a></code> computed property.</p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2024 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2024-08-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+    </section>
+  </body>
+</html>

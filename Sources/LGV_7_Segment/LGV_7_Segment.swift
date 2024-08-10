@@ -28,15 +28,15 @@ import CoreGraphics
  
  It does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
  
- It also does not actually *display* anything. It just provides primitive ``CGPath`` paths for the segments. These need to be used by the calling context to render the display.
+ It also does not actually *display* anything. It just provides primitive `CGPath` paths for the segments. These need to be used by the calling context to render the display.
  
  It supplies 4 different paths:
  
- - The path for all of the "on" segments.
- - The path for all of the "off" segment.
- - A path that encompasses all of the segments, whether on or off. This can be used as a mask.
- - A simple rectangular path, for the outline of the display.
- 
+ - The path for all of the "on" segments. You get this from the ``onSegments`` computed property.
+ - The path for all of the "off" segments. You get this from the ``offSegments`` computed property.
+ - A path that encompasses all of the segments, whether on or off. This can be used as a mask. You get this from the ``segmentMask`` computed property.
+ - A simple rectangular path, for the outline of the display. You get this from the ``outline`` computed property.
+
  The paths are calculated in realtime, and reflect the value and size of the display.
 
  By default, the control calculates its layout, based on 250 display units wide, by 492 display units high.
@@ -53,7 +53,7 @@ import CoreGraphics
      - -1 is the negative sign (center bar only).
      - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
  
- It is possible to get the default aspect ratio.
+ It is possible to get the default aspect ratio, using the ``defaultAspect`` computed property, and the current aspect, using the ``currentAspect`` computed property.
  */
 public struct LGV_7_Segment {
     /* ################################################################################################################################## */
@@ -310,20 +310,26 @@ public struct LGV_7_Segment {
     
     /* ################################################################## */
     /**
+     This is the default initializer.
+     
+     - parameter size: The display size. If omitted, the default calculation size (``c_g_displaySize``) will be used.
+     - parameter value: An initial value. If not provided, -2 (all off) is used.
+     */
+    public init(size inSize: CGSize = CGSize(width: Self.c_g_displaySize.width, height: Self.c_g_displaySize.height), value inValue: Int = -2) {
+        size = inSize
+        value = inValue
+    }
+    
+    // MARK: Public Static Constants
+
+    /* ################################################################## */
+    /**
      This is the size of the entire drawing area. The numbers are somewhat arbitrary, as the shapes will be cast into whatever context the user desires.
      */
     public static let c_g_displaySize = CGSize(width: 250, height: 492)
     
-    /* ################################################################## */
-    /**
-     We make the initializer public.
-     
-     - parameter size: The display size. If omitted, the default calculation size will be used.
-     */
-    public init(size inSize: CGSize = CGSize(width: Self.c_g_displaySize.width, height: Self.c_g_displaySize.height)) {
-        size = inSize
-    }
-    
+    // MARK: Public Mutable Properties
+
     /* ################################################################## */
     /**
      This is the display size. This is a mutable property.
@@ -346,7 +352,7 @@ public struct LGV_7_Segment {
 }
 
 /* ###################################################################################################################################### */
-// MARK: Public Computed Properties
+// MARK: Public Read-Only Computed Properties
 /* ###################################################################################################################################### */
 extension LGV_7_Segment {
     /* ################################################################## */

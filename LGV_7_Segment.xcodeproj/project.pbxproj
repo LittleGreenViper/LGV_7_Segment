@@ -16,7 +16,7 @@
 		D4B0C2B92C655B5900CB5F76 /* LGV_7ST_Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4B0C2B82C655B5900CB5F76 /* LGV_7ST_Assets.xcassets */; };
 		D4B0C2BC2C655B5900CB5F76 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = D4B0C2BB2C655B5900CB5F76 /* Base */; };
 		D4B0C2CA2C655BB000CB5F76 /* LGV_7_Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C2C92C655BB000CB5F76 /* LGV_7_Segment.swift */; };
-		D4B0C2D62C6560FC00CB5F76 /* LGV_7_Segment.docc in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C2D52C6560FC00CB5F76 /* LGV_7_Segment.docc */; };
+		D4FAFFB02C68286300A5C536 /* LGV_7_Segment.docc in Sources */ = {isa = PBXBuildFile; fileRef = D4FAFFAF2C68286300A5C536 /* LGV_7_Segment.docc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +54,7 @@
 		D4B0C2C72C655BB000CB5F76 /* libLGV_7_Segment.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLGV_7_Segment.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4B0C2C92C655BB000CB5F76 /* LGV_7_Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LGV_7_Segment.swift; sourceTree = "<group>"; };
 		D4B0C2D22C655F6C00CB5F76 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
-		D4B0C2D52C6560FC00CB5F76 /* LGV_7_Segment.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LGV_7_Segment.docc; sourceTree = "<group>"; };
+		D4FAFFAF2C68286300A5C536 /* LGV_7_Segment.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LGV_7_Segment.docc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				D4B0C2CE2C655C1A00CB5F76 /* Sources */,
+				D4B0C2AE2C655B5900CB5F76 /* LGV_7_Segment_Tester */,
 				D4B0C2D32C655F6C00CB5F76 /* Project-Meta */,
 				D4B0C2AD2C655B5900CB5F76 /* Products */,
 			);
@@ -117,9 +118,8 @@
 		D4B0C2CE2C655C1A00CB5F76 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D4FAFFAF2C68286300A5C536 /* LGV_7_Segment.docc */,
 				D4B0C2C82C655BB000CB5F76 /* LGV_7_Segment */,
-				D4B0C2AE2C655B5900CB5F76 /* LGV_7_Segment_Tester */,
-				D4B0C2D52C6560FC00CB5F76 /* LGV_7_Segment.docc */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4B0C2D62C6560FC00CB5F76 /* LGV_7_Segment.docc in Sources */,
+				D4FAFFB02C68286300A5C536 /* LGV_7_Segment.docc in Sources */,
 				D4B0C2CA2C655BB000CB5F76 /* LGV_7_Segment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,7 +428,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P53V4JS928;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Sources/LGV_7_Segment_Tester/Meta/Info.plist;
+				INFOPLIST_FILE = LGV_7_Segment_Tester/Meta/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LGV_7ST_LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LGV_7ST_Main;
@@ -456,7 +456,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P53V4JS928;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Sources/LGV_7_Segment_Tester/Meta/Info.plist;
+				INFOPLIST_FILE = LGV_7_Segment_Tester/Meta/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LGV_7ST_LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LGV_7ST_Main;
