@@ -31,12 +31,6 @@ import CoreGraphics
  It also does not actually *display* anything. It just provides primitive CoreGraphics paths for the segment.
  */
 public struct LGV_7_Segment {
-    /* ################################################################## */
-    /**
-     This is the size of the entire drawing area. The numbers are somewhat arbitrary, as the shapes will be cast into whatever context the user desires.
-     */
-    private static let _c_g_displaySize = CGSize(width: 250, height: 492)
-    
     /* ################################################################################################################################## */
     // MARK: Segment Description Enum
     /* ################################################################################################################################## */
@@ -80,11 +74,11 @@ public struct LGV_7_Segment {
          */
         private static let _c_g_viewOffsets: [SegmentPath: CGPoint] = [
             .top: CGPoint(x: 8, y: 0),
-            .topRight: CGPoint(x: 192, y: 8),
-            .bottomRight: CGPoint(x: 192, y: 250),
-            .bottom: CGPoint(x: 8, y: 434),
-            .bottomLeft: CGPoint(x: 0, y: 250),
-            .topLeft: CGPoint(x: 0, y: 8),
+            .topRight: CGPoint(x: 250, y: 8),
+            .bottomRight: CGPoint(x: 250, y: 250),
+            .bottom: CGPoint(x: 242, y: 492),
+            .bottomLeft: CGPoint(x: 0, y: 484),
+            .topLeft: CGPoint(x: 0, y: 242),
             .center: CGPoint(x: 8, y: 212)
         ]
         
@@ -132,13 +126,30 @@ public struct LGV_7_Segment {
         
         /* ############################################################## */
         /**
+         This calculates a new path, based on the standard size.
          */
-        var path: CGPath? { Self._newSegmentShape(for: self) }
+        var path: CGPath? { _newSegmentShape(for: self) }
         
         /* ############################################################## */
         /**
+         This returns the path, taking caches into account, as well as scaling to our display size.
+         
+         - parameter withCache: The cache dictionary. If it is not in here, we create one from scratch
+         - parameter andSize: This is the entire display size. The path is transformed to fit in that size.
+         - returns: A new path, scaled to fit in the size.
          */
-        func path(withCache inCache: [SegmentPath: CGPath]) -> CGPath? { inCache[self] ?? path }
+        func path(withCache inCache: [SegmentPath: CGPath], andSize inSize: CGSize) -> CGPath? {
+            if let mutie = inCache[self] {
+                return mutie
+            } else if let mutie = path {
+                let bbSize = mutie.boundingBox.size
+                let scale = min(inSize.height / bbSize.height, inSize.width / bbSize.width)
+                var transform = CGAffineTransform(scaleX: scale, y: scale)
+                return mutie.copy(using: &transform)
+            }
+            
+            return nil
+        }
 
         /* ############################################################## */
         /**
@@ -148,8 +159,8 @@ public struct LGV_7_Segment {
          
          - returns: a new path, in the shape of the requested segment
          */
-        private static func _newSegmentShape(for inSegment: Self) -> CGPath? {
-            var points: [CGPoint] = (.center == inSegment) ? _c_g_CenterShapePoints : _c_g_StandardShapePoints
+        private func _newSegmentShape(for inSegment: Self) -> CGPath? {
+            var points: [CGPoint] = (.center == inSegment) ? Self._c_g_CenterShapePoints : Self._c_g_StandardShapePoints
             
             guard !points.isEmpty,
                   let startingPoint = points.popLast()
@@ -172,13 +183,9 @@ public struct LGV_7_Segment {
             var rotDiv: CGFloat = 0.0
             
             switch inSegment {
-            case .topLeft:
+            case .topLeft, .bottomLeft:
                 rotDiv = CGFloat(Double.pi / -2.0)
-            case .bottomLeft:
-                rotDiv = CGFloat(Double.pi / -2.0)
-            case .topRight:
-                rotDiv = CGFloat(Double.pi / 2.0)
-            case .bottomRight:
+            case .topRight, .bottomRight:
                 rotDiv = CGFloat(Double.pi / 2.0)
             case .bottom:
                 rotDiv = -CGFloat(Double.pi)
@@ -188,21 +195,19 @@ public struct LGV_7_Segment {
 
             var transform = CGAffineTransform(rotationAngle: rotDiv)
             
-            let bounds = CGRect(origin: .zero, size: LGV_7_Segment._c_g_displaySize)
-            
-            if let offset = _c_g_viewOffsets[inSegment] {
+            if let offset = Self._c_g_viewOffsets[inSegment] {
                 var toOrigin: CGAffineTransform
                 switch inSegment {
                 case .bottom:
-                    toOrigin = CGAffineTransform(translationX: -bounds.origin.x + offset.x, y: -bounds.origin.y + offset.y)
+                    toOrigin = CGAffineTransform(translationX: offset.x, y: offset.y)
                 case .topLeft:
-                    toOrigin = CGAffineTransform(translationX: offset.x, y: -bounds.origin.y + offset.y)
+                    toOrigin = CGAffineTransform(translationX: offset.x, y: offset.y)
                 case .bottomLeft:
-                    toOrigin = CGAffineTransform(translationX: offset.x, y: -bounds.origin.y + offset.y)
+                    toOrigin = CGAffineTransform(translationX: offset.x, y: offset.y)
                 case .topRight:
-                    toOrigin = CGAffineTransform(translationX: -bounds.origin.x + offset.x, y: -bounds.origin.y + offset.y)
+                    toOrigin = CGAffineTransform(translationX: offset.x, y: offset.y)
                 case .bottomRight:
-                    toOrigin = CGAffineTransform(translationX: -bounds.origin.x + offset.x, y: -bounds.origin.y + offset.y)
+                    toOrigin = CGAffineTransform(translationX: offset.x, y: offset.y)
                 default:
                     toOrigin = CGAffineTransform(translationX: offset.x, y: offset.y)
                 }
@@ -234,7 +239,7 @@ public struct LGV_7_Segment {
             paths = [.center]
             
         case 0:
-            paths = [.topLeft, .topRight, .bottomRight, .bottom, .bottomLeft, .topLeft]
+            paths = [.top, .topLeft, .topRight, .bottomRight, .bottom, .bottomLeft, .topLeft]
             
         case 1:
             paths = [.topRight, .bottomRight]
@@ -258,13 +263,13 @@ public struct LGV_7_Segment {
             paths = [.top, .topRight, .bottomRight]
 
         case 8:
-            paths = [.topLeft, .topRight, .bottomRight, .bottom, .bottomLeft, .topLeft, .center]
+            paths = [.top, .topLeft, .topRight, .bottomRight, .bottom, .bottomLeft, .topLeft, .center]
 
         case 9:
-            paths = [.topLeft, .topRight, .bottomRight, .bottom, .topLeft, .center]
+            paths = [.top, .topLeft, .topRight, .bottomRight, .bottom, .topLeft, .center]
 
         case 10:
-            paths = [.topLeft, .topRight, .bottomRight, .bottomLeft, .topLeft, .center]
+            paths = [.top, .topLeft, .topRight, .bottomRight, .bottomLeft, .topLeft, .center]
 
         case 11:
             paths = [.topLeft, .bottomLeft, .bottom, .bottomRight, .center]
@@ -290,10 +295,26 @@ public struct LGV_7_Segment {
 
     /* ################################################################## */
     /**
-     We make the initializer public.
+     This is the size of the entire drawing area. The numbers are somewhat arbitrary, as the shapes will be cast into whatever context the user desires.
      */
-    public init() { }
+    public static let c_g_displaySize = CGSize(width: 250, height: 492)
     
+    /* ################################################################## */
+    /**
+     This is the display size.
+     */
+    public var size: CGSize
+
+    /* ################################################################## */
+    /**
+     We make the initializer public.
+     
+     - parameter size: The required display size. If omitted, the default calculation siaze will be used.
+     */
+    public init(size inSize: CGSize = CGSize(width: Self.c_g_displaySize.width, height: Self.c_g_displaySize.height)) {
+        size = inSize
+    }
+
     /* ################################################################## */
     /**
      This is the combined paths for all the "On" segments.
@@ -301,8 +322,9 @@ public struct LGV_7_Segment {
      > NOTE: If none are on (value -2), this will be an empty path.
      */
     public var onSegments: CGPath {
-        return _onSegments.reduce(into: CGMutablePath()) {
-            if let path = $1.path(withCache: _segmentCache) {
+        _onSegments.reduce(into: CGMutablePath()) {
+            if let path = $1.path(withCache: _segmentCache, andSize: size) {
+                
                 $0.addPath(path)
             }
         }
@@ -315,8 +337,8 @@ public struct LGV_7_Segment {
      > NOTE: If none are off (value 8), this will be an empty path.
      */
     public var offSegments: CGPath {
-        return SegmentPath.allCases.filter({!_onSegments.contains($0)}).reduce(into: CGMutablePath()) {
-            if let path = $1.path(withCache: _segmentCache) {
+        SegmentPath.allCases.filter({!_onSegments.contains($0)}).reduce(into: CGMutablePath()) {
+            if let path = $1.path(withCache: _segmentCache, andSize: size) {
                 $0.addPath(path)
             }
         }
@@ -329,8 +351,8 @@ public struct LGV_7_Segment {
      > NOTE: If none are off (value 8), this will be an empty path.
      */
     public var allSegments: CGPath {
-        return SegmentPath.allCases.reduce(into: CGMutablePath()) {
-            if let path = $1.path(withCache: _segmentCache) {
+        SegmentPath.allCases.reduce(into: CGMutablePath()) {
+            if let path = $1.path(withCache: _segmentCache, andSize: size) {
                 $0.addPath(path)
             }
         }
@@ -340,7 +362,7 @@ public struct LGV_7_Segment {
     /**
      This is the outline of the entire display.
      */
-    public var outline: CGPath { CGPath(rect: CGRect(origin: .zero, size: Self._c_g_displaySize), transform: nil) }
+    public var outline: CGPath { CGPath(rect: CGRect(origin: .zero, size: size), transform: nil) }
     
     /* ################################################################## */
     /**

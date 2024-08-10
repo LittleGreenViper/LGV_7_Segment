@@ -55,7 +55,7 @@ class LGV_7ST_DisplaySegment: UIView {
         guard (-2..<16).contains(value) else { return }
         
         layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-        
+        segmentDisplay.size = bounds.size
         segmentDisplay.value = value
         
         let backLayer = CAShapeLayer()
