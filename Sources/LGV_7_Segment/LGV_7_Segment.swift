@@ -139,9 +139,9 @@ public struct LGV_7_Segment {
          - returns: A new path, scaled to fit in the size.
          */
         func path(withSize inSize: CGSize) -> CGPath? {
-            let bbSize = LGV_7_Segment.c_g_displaySize
-            let scale = min(inSize.height / bbSize.height, inSize.width / bbSize.width)
-            var transform = CGAffineTransform(scaleX: scale, y: scale)
+            let heightScale = inSize.height / LGV_7_Segment.c_g_displaySize.height
+            let widthScale = inSize.width / LGV_7_Segment.c_g_displaySize.width
+            var transform = CGAffineTransform(scaleX: widthScale, y: heightScale)
             return path?.copy(using: &transform)
         }
 
@@ -149,7 +149,7 @@ public struct LGV_7_Segment {
         /**
          Creates a path containing a segment shape.
          
-         - parameter inSegment: This indicates which segment we want (Will affect rotation and selection of shape).
+         - parameter inSegment: This indicates which segment we want (Will affect rotation and position of shape).
          
          - returns: a new path, in the shape of the requested segment
          */
@@ -286,12 +286,6 @@ public struct LGV_7_Segment {
      This is the size of the entire drawing area. The numbers are somewhat arbitrary, as the shapes will be cast into whatever context the user desires.
      */
     public static let c_g_displaySize = CGSize(width: 250, height: 492)
-    
-    /* ################################################################## */
-    /**
-     This is the display size.
-     */
-    public var size: CGSize
 
     /* ################################################################## */
     /**
@@ -353,11 +347,19 @@ public struct LGV_7_Segment {
     
     /* ################################################################## */
     /**
-     The value that determines the display. This is the only mutable property.
+     This is the display size. This is a mutable property.
      
-     -2 is all off (blank). This is the default.
-     -1 is negative sign (center bar only).
-     0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
+     The display will be stretched to fill the size.
+     */
+    public var size: CGSize
+
+    /* ################################################################## */
+    /**
+     The value that determines the display. This is a mutable property.
+     
+     - -2 is all off (blank). This is the default.
+     - -1 is negative sign (center bar only).
+     - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
      
      > NOTE: This will crash, if a value is set outside the required range.
      */

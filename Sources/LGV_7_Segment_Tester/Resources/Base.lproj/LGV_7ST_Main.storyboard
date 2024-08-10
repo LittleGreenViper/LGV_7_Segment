@@ -17,36 +17,68 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-2" minValue="-2" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-uu-IJC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="ERROR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lI6-RW-4Kl">
+                                <rect key="frame" x="154.33333333333334" y="90" width="66.666666666666657" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-2" minValue="-2" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-uu-IJC">
                                 <rect key="frame" x="14" y="122" width="347" height="31"/>
                                 <connections>
                                     <action selector="valueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="LeN-Ul-uTZ"/>
                                 </connections>
                             </slider>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W4T-dd-WjV" customClass="LGV_7ST_DisplaySegment" customModule="LGV_7_Segment_Tester" customModuleProvider="target">
-                                <rect key="frame" x="63" y="160" width="249" height="492"/>
+                                <rect key="frame" x="62.666666666666657" y="160" width="249.99999999999997" height="492"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="W4T-dd-WjV" secondAttribute="height" multiplier="83:164" id="NU5-ti-Ypm"/>
-                                    <constraint firstAttribute="width" priority="750" constant="250" id="Wb6-hf-5wg"/>
-                                    <constraint firstAttribute="height" priority="750" constant="492" id="z2n-cD-3mI"/>
+                                    <constraint firstAttribute="width" secondItem="W4T-dd-WjV" secondAttribute="height" multiplier="250:492" id="NU5-ti-Ypm"/>
+                                    <constraint firstAttribute="width" priority="999" constant="250" id="Wb6-hf-5wg"/>
+                                    <constraint firstAttribute="height" priority="999" constant="492" id="z2n-cD-3mI"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogr-Ze-oJc">
+                                <rect key="frame" x="186.66666666666666" y="660" width="2" height="42"/>
+                                <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="2" id="E9F-6K-LCR"/>
+                                </constraints>
+                            </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="1" maxValue="99" translatesAutoresizingMaskIntoConstraints="NO" id="woh-md-Okt">
+                                <rect key="frame" x="14" y="660" width="347" height="31"/>
+                                <connections>
+                                    <action selector="aspectSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="3bs-RD-1Ca"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="yTL-uu-IJC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="1Ut-4D-iAN"/>
                             <constraint firstItem="W4T-dd-WjV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3QT-UN-eBr"/>
+                            <constraint firstItem="yTL-uu-IJC" firstAttribute="top" secondItem="lI6-RW-4Kl" secondAttribute="bottom" constant="8" id="EFJ-x8-9o1"/>
                             <constraint firstItem="yTL-uu-IJC" firstAttribute="bottom" secondItem="W4T-dd-WjV" secondAttribute="top" constant="-8" id="Jnx-IT-Uos"/>
+                            <constraint firstItem="ogr-Ze-oJc" firstAttribute="top" secondItem="woh-md-Okt" secondAttribute="top" id="QnR-7Z-siy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="woh-md-Okt" secondAttribute="bottom" constant="8" id="SJQ-Km-E2Z"/>
+                            <constraint firstItem="W4T-dd-WjV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="Ti8-SU-Xwg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yTL-uu-IJC" secondAttribute="trailing" constant="16" id="cee-Ru-xks"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W4T-dd-WjV" secondAttribute="bottom" id="hnS-NV-AnF"/>
+                            <constraint firstItem="woh-md-Okt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="fJu-gu-UfR"/>
+                            <constraint firstItem="woh-md-Okt" firstAttribute="top" secondItem="W4T-dd-WjV" secondAttribute="bottom" constant="8" id="hnS-NV-AnF"/>
                             <constraint firstItem="W4T-dd-WjV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="k2L-cG-rdP"/>
-                            <constraint firstItem="yTL-uu-IJC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="yFb-ep-5B9"/>
+                            <constraint firstItem="lI6-RW-4Kl" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="ovj-Su-0ox"/>
+                            <constraint firstItem="lI6-RW-4Kl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qgi-gu-1tu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="W4T-dd-WjV" secondAttribute="trailing" constant="4" id="w8l-qS-ZxK"/>
+                            <constraint firstItem="ogr-Ze-oJc" firstAttribute="bottom" secondItem="woh-md-Okt" secondAttribute="bottom" constant="12" id="xKd-IC-Mo8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="woh-md-Okt" secondAttribute="trailing" constant="16" id="z9K-Yd-Zab"/>
+                            <constraint firstItem="ogr-Ze-oJc" firstAttribute="centerX" secondItem="woh-md-Okt" secondAttribute="centerX" id="zbe-qV-ZIW"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aspectConstraint" destination="NU5-ti-Ypm" id="es6-mk-CuT"/>
+                        <outlet property="aspectSlider" destination="woh-md-Okt" id="HQR-W7-F2h"/>
                         <outlet property="displaySegment" destination="W4T-dd-WjV" id="hRs-hK-P7C"/>
+                        <outlet property="valueDisplayLabel" destination="lI6-RW-4Kl" id="Vih-0g-i4D"/>
                         <outlet property="valueSlider" destination="yTL-uu-IJC" id="rnj-By-i9L"/>
                     </connections>
                 </viewController>
@@ -58,6 +90,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

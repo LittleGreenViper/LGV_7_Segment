@@ -20,34 +20,98 @@
 import UIKit
 import LGV_7_Segment
 
+/* ###################################################################################################################################### */
+// MARK: -  -
+/* ###################################################################################################################################### */
+/**
+ This was cribbed [from this SO answer](https://stackoverflow.com/a/33003217/879365)
+ */
+extension NSLayoutConstraint {
+    /* ################################################################## */
+    /**
+     Change multiplier constraint.
+     
+     It does this, by deactivating the current constraint, creating a new constraint, based on the current one, then activating and returning that.
+
+     - parameter multiplier: This is the new multiplier value for the new constraint.
+     - returns: A new constraint, with the multiplier value changed.
+    */
+    func setMultiplier(multiplier inMult: CGFloat) -> NSLayoutConstraint {
+        guard let firstItem = firstItem else { return self }
+        
+        NSLayoutConstraint.deactivate([self])
+
+        let newConstraint = NSLayoutConstraint(
+            item: firstItem,
+            attribute: firstAttribute,
+            relatedBy: relation,
+            toItem: secondItem,
+            attribute: secondAttribute,
+            multiplier: inMult,
+            constant: constant)
+
+        newConstraint.priority = priority
+        newConstraint.shouldBeArchived = self.shouldBeArchived
+        newConstraint.identifier = self.identifier
+
+        NSLayoutConstraint.activate([newConstraint])
+        
+        return newConstraint
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: -  -
+/* ###################################################################################################################################### */
+/**
+ This is a basic view, displaying the seven-segment generator.
+ */
 class LGV_7ST_DisplaySegment: UIView {
     /* ################################################################## */
     /**
+     The color to use for "on" segments.
      */
     @IBInspectable var onColor: UIColor = .systemOrange
 
     /* ################################################################## */
     /**
+     The color to use for "off" segments.
      */
     @IBInspectable var offColor : UIColor = .systemGray.withAlphaComponent(0.75)
 
     /* ################################################################## */
     /**
+     The color to use for the "container."
      */
     @IBInspectable var backColor: UIColor = .blue
 
     /* ################################################################## */
     /**
+     The color to use for the "mask" outline.
+     */
+    @IBInspectable var allColor: UIColor = .label
+
+    /* ################################################################## */
+    /**
+     The line width to use for the "mask" outline.
+     */
+    @IBInspectable var allLineWidthInDisplayUnits: CGFloat = 3
+
+    /* ################################################################## */
+    /**
+     The initial value.
      */
     @IBInspectable var value: Int = -2 { didSet { setNeedsLayout() } }
 
     /* ################################################################## */
     /**
+     The instance of our struct, used to calculate the paths.
      */
     var segmentDisplay = LGV_7_Segment()
     
     /* ################################################################## */
     /**
+     Called when the view layout is changed/set.
      */
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -81,6 +145,12 @@ class LGV_7ST_DisplaySegment: UIView {
         layer.addSublayer(backLayer)
         layer.addSublayer(offLayer)
         layer.addSublayer(onLayer)
+        
+        allLayer.strokeColor = allColor.cgColor
+        allLayer.lineWidth = allLineWidthInDisplayUnits
+        allLayer.fillColor = UIColor.clear.cgColor
+
+        layer.addSublayer(allLayer)
     }
 }
 
@@ -103,16 +173,47 @@ class LGV_7ST_ViewController: UIViewController {
     /* ################################################################## */
     /**
      */
+    @IBOutlet weak var valueDisplayLabel: UILabel?
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet weak var aspectSlider: UISlider?
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet weak var aspectConstraint: NSLayoutConstraint?
+    
+    /* ################################################################## */
+    /**
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
+        valueDisplayLabel?.text = String(displaySegment?.value ?? -1)
     }
     
     /* ################################################################## */
     /**
      */
-    @IBAction func valueChanged(_ inControl: UISlider) {
-        let newValue = max(-2, min(15, Int(round(inControl.value))))
-        inControl.value = Float(newValue)
+    @IBAction func valueChanged(_ inSlider: UISlider) {
+        let newValue = max(-2, min(15, Int(round(inSlider.value))))
+        valueDisplayLabel?.text = String(newValue)
+        inSlider.value = Float(newValue)
         displaySegment?.value = newValue
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBAction func aspectSliderChanged(_ inSlider: UISlider) {
+        let idealAspect = LGV_7_Segment.c_g_displaySize.width / LGV_7_Segment.c_g_displaySize.height
+        let midpoint = (inSlider.maximumValue - inSlider.minimumValue) / 2
+        let spread = CGFloat(midpoint) + 2 // The +2 prevents the annoying "snap" in portrait mode.
+        let valueToUse = 3 < abs(midpoint - inSlider.value) ? max(inSlider.minimumValue + 1, inSlider.value) : midpoint + 1   // This gives it a "snap detent" in the middle.
+        inSlider.value = valueToUse
+        let aspectMultiplier = CGFloat(valueToUse - inSlider.minimumValue) / spread
+        
+        aspectConstraint = aspectConstraint?.setMultiplier(multiplier: idealAspect * aspectMultiplier)
     }
 }
