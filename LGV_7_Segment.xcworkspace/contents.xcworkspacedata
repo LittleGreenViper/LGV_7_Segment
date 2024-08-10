@@ -31,6 +31,13 @@
       <FileRef
          location = "group:README.md">
       </FileRef>
+      <Group
+         location = "group:img"
+         name = "img">
+         <FileRef
+            location = "group:Legend.png">
+         </FileRef>
+      </Group>
    </Group>
    <FileRef
       location = "group:LGV_7_Segment.xcodeproj">

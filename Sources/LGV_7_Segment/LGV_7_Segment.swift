@@ -26,9 +26,34 @@ import CoreGraphics
 /**
  This struct is a graphical representation of a classic "7-segment" LED/LCD display for a single digit.
  
- It does not provide slanted segments, like displays that also have text charatcers. It just displays 0-F (0-15), and a single center segment (-).
+ It does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
  
- It also does not actually *display* anything. It just provides primitive CoreGraphics paths for the segment.
+ It also does not actually *display* anything. It just provides primitive ``CGPath`` paths for the segments. These need to be used by the calling context to render the display.
+ 
+ It supplies 4 different paths:
+ 
+ - The path for all of the "on" segments.
+ - The path for all of the "off" segment.
+ - A path that encompasses all of the segments, whether on or off. This can be used as a mask.
+ - A simple rectangular path, for the outline of the display.
+ 
+ The paths are calculated in realtime, and reflect the value and size of the display.
+
+ By default, the control calculates its layout, based on 250 display units wide, by 492 display units high.
+ However, the size can be set to anything, and the paths will fill it (stretching, if necessary).
+ 
+ There are two mutable properties for this struct:
+ 
+ - ``size``: This is the actual size that the display is calculated to fill. It will cause stretching, if it is different from the 125:246 aspect ratio of the default size.
+ - ``value``: This is an integer value, from -2, to 15.
+ 
+     The value can be:
+     
+     - -2 is all off (blank). This is the default.
+     - -1 is the negative sign (center bar only).
+     - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
+ 
+ It is possible to get the default aspect ratio.
  */
 public struct LGV_7_Segment {
     /* ################################################################################################################################## */
@@ -144,7 +169,7 @@ public struct LGV_7_Segment {
             var transform = CGAffineTransform(scaleX: widthScale, y: heightScale)
             return path?.copy(using: &transform)
         }
-
+        
         /* ############################################################## */
         /**
          Creates a path containing a segment shape.
@@ -159,10 +184,10 @@ public struct LGV_7_Segment {
             guard !points.isEmpty,
                   let startingPoint = points.popLast()
             else { return nil }
-
+            
             // First, we draw the shape. We do this by cycling through the points (backwards, for efficiency), ending where we started.
             let path = CGMutablePath()
-
+            
             path.move(to: startingPoint)
             
             while !points.isEmpty {
@@ -186,7 +211,7 @@ public struct LGV_7_Segment {
             default:
                 break
             }
-
+            
             var transform = CGAffineTransform(rotationAngle: rotDiv)
             
             if let offset = Self._c_g_viewOffsets[inSegment] {
@@ -234,7 +259,7 @@ public struct LGV_7_Segment {
             
         case 2:
             paths = [.top, .topRight, .bottomLeft, .center, .bottom]
-
+            
         case 3:
             paths = [.top, .topRight, .bottomRight, .center, .bottom]
             
@@ -246,57 +271,84 @@ public struct LGV_7_Segment {
             
         case 6:
             paths = [.top, .topLeft, .bottomLeft, .bottomRight, .center, .bottom]
-
+            
         case 7:
             paths = [.top, .topRight, .bottomRight]
-
+            
         case 8:
             paths = [.top, .topLeft, .topRight, .bottomRight, .bottom, .bottomLeft, .topLeft, .center]
-
+            
         case 9:
             paths = [.top, .topLeft, .topRight, .bottomRight, .bottom, .topLeft, .center]
-
+            
         case 10:
             paths = [.top, .topLeft, .topRight, .bottomRight, .bottomLeft, .topLeft, .center]
-
+            
         case 11:
             paths = [.topLeft, .bottomLeft, .bottom, .bottomRight, .center]
-
+            
         case 12:
             paths = [.topLeft, .bottomLeft, .bottom, .top]
-
+            
         case 13:
             paths = [.topRight, .bottomRight, .bottom, .bottomLeft, .center]
-
+            
         case 14:
             paths = [.topLeft, .bottomLeft, .bottom, .top, .center]
-
+            
         case 15:
             paths = [.topLeft, .bottomLeft, .top, .center]
-
+            
         default:
             break
         }
         
         return paths
     }
-
+    
+    // MARK: Public Interface
+    
     /* ################################################################## */
     /**
      This is the size of the entire drawing area. The numbers are somewhat arbitrary, as the shapes will be cast into whatever context the user desires.
      */
     public static let c_g_displaySize = CGSize(width: 250, height: 492)
-
+    
     /* ################################################################## */
     /**
      We make the initializer public.
      
-     - parameter size: The required display size. If omitted, the default calculation siaze will be used.
+     - parameter size: The display size. If omitted, the default calculation size will be used.
      */
     public init(size inSize: CGSize = CGSize(width: Self.c_g_displaySize.width, height: Self.c_g_displaySize.height)) {
         size = inSize
     }
+    
+    /* ################################################################## */
+    /**
+     This is the display size. This is a mutable property.
+     
+     The display will be stretched to fill the size.
+     */
+    public var size: CGSize
 
+    /* ################################################################## */
+    /**
+     The value that determines the display. This is a mutable property.
+     
+     - -2 is all off (blank). This is the default.
+     - -1 is negative sign (center bar only).
+     - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
+     
+     > NOTE: This will crash, if a value is set outside the required range.
+     */
+    public var value: Int = -2 { didSet { precondition((-2..<16).contains(value), "-2 -> 15 only!") } }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Public Computed Properties
+/* ###################################################################################################################################### */
+extension LGV_7_Segment {
     /* ################################################################## */
     /**
      This is the combined paths for all the "On" segments.
@@ -328,10 +380,8 @@ public struct LGV_7_Segment {
     /* ################################################################## */
     /**
      This is the combined paths for all the segments (both "on" and "off").
-     
-     > NOTE: If none are off (value 8), this will be an empty path.
      */
-    public var allSegments: CGPath {
+    public var segmentMask: CGPath {
         SegmentPath.allCases.reduce(into: CGMutablePath()) {
             if let path = $1.path(withSize: size) {
                 $0.addPath(path)
@@ -347,21 +397,13 @@ public struct LGV_7_Segment {
     
     /* ################################################################## */
     /**
-     This is the display size. This is a mutable property.
-     
-     The display will be stretched to fill the size.
+     This returns the default aspect, as single floating-point value.
      */
-    public var size: CGSize
-
+    public var defaultAspect: CGFloat { Self.c_g_displaySize.width / Self.c_g_displaySize.height }
+    
     /* ################################################################## */
     /**
-     The value that determines the display. This is a mutable property.
-     
-     - -2 is all off (blank). This is the default.
-     - -1 is negative sign (center bar only).
-     - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
-     
-     > NOTE: This will crash, if a value is set outside the required range.
+     This returns the current aspect, as single floating-point value.
      */
-    public var value: Int = -2 { didSet { precondition((-2..<16).contains(value), "-2 -> 15 only!") } }
+    public var currentAspect: CGFloat { size.width / size.height }
 }

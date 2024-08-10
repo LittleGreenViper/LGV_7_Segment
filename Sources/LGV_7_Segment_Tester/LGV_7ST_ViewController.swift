@@ -136,7 +136,7 @@ class LGV_7ST_DisplaySegment: UIView {
         backLayer.path = segmentDisplay.outline
         offLayer.path = segmentDisplay.offSegments
         onLayer.path = segmentDisplay.onSegments
-        allLayer.path = segmentDisplay.allSegments
+        allLayer.path = segmentDisplay.segmentMask
         
         backLayer.fillColor = backColor.cgColor
         offLayer.fillColor = offColor.cgColor
