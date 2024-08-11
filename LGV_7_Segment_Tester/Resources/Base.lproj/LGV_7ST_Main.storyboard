@@ -38,7 +38,7 @@
                                     <constraint firstAttribute="height" priority="999" constant="492" id="z2n-cD-3mI"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogr-Ze-oJc">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogr-Ze-oJc" userLabel="Center Tick View">
                                 <rect key="frame" x="186.66666666666666" y="660" width="2" height="42"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor"/>
                                 <constraints>
@@ -51,23 +51,40 @@
                                     <action selector="aspectSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="3bs-RD-1Ca"/>
                                 </connections>
                             </slider>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="4" translatesAutoresizingMaskIntoConstraints="NO" id="mym-xn-CVk">
+                                <rect key="frame" x="28" y="706" width="319" height="32"/>
+                                <segments>
+                                    <segment title="Outline"/>
+                                    <segment title="Mask"/>
+                                    <segment title="On"/>
+                                    <segment title="Off"/>
+                                    <segment title="All"/>
+                                </segments>
+                                <connections>
+                                    <action selector="displaySegmentedSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="lzf-9P-eUK"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mym-xn-CVk" secondAttribute="trailing" constant="16" id="0fe-bv-m21"/>
                             <constraint firstItem="yTL-uu-IJC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="1Ut-4D-iAN"/>
                             <constraint firstItem="W4T-dd-WjV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3QT-UN-eBr"/>
                             <constraint firstItem="yTL-uu-IJC" firstAttribute="top" secondItem="lI6-RW-4Kl" secondAttribute="bottom" constant="8" id="EFJ-x8-9o1"/>
                             <constraint firstItem="yTL-uu-IJC" firstAttribute="bottom" secondItem="W4T-dd-WjV" secondAttribute="top" constant="-8" id="Jnx-IT-Uos"/>
+                            <constraint firstItem="mym-xn-CVk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Lv6-ZJ-3AY"/>
                             <constraint firstItem="ogr-Ze-oJc" firstAttribute="top" secondItem="woh-md-Okt" secondAttribute="top" id="QnR-7Z-siy"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="woh-md-Okt" secondAttribute="bottom" constant="8" id="SJQ-Km-E2Z"/>
+                            <constraint firstItem="mym-xn-CVk" firstAttribute="top" secondItem="ogr-Ze-oJc" secondAttribute="bottom" constant="4" id="Sfx-mx-Aqo"/>
                             <constraint firstItem="W4T-dd-WjV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="Ti8-SU-Xwg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yTL-uu-IJC" secondAttribute="trailing" constant="16" id="cee-Ru-xks"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mym-xn-CVk" secondAttribute="bottom" id="e7U-15-1r6"/>
                             <constraint firstItem="woh-md-Okt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="fJu-gu-UfR"/>
                             <constraint firstItem="woh-md-Okt" firstAttribute="top" secondItem="W4T-dd-WjV" secondAttribute="bottom" constant="8" id="hnS-NV-AnF"/>
                             <constraint firstItem="W4T-dd-WjV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="k2L-cG-rdP"/>
                             <constraint firstItem="lI6-RW-4Kl" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="ovj-Su-0ox"/>
                             <constraint firstItem="lI6-RW-4Kl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qgi-gu-1tu"/>
+                            <constraint firstItem="mym-xn-CVk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qwZ-FQ-NEG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="W4T-dd-WjV" secondAttribute="trailing" constant="4" id="w8l-qS-ZxK"/>
                             <constraint firstItem="ogr-Ze-oJc" firstAttribute="bottom" secondItem="woh-md-Okt" secondAttribute="bottom" constant="12" id="xKd-IC-Mo8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="woh-md-Okt" secondAttribute="trailing" constant="16" id="z9K-Yd-Zab"/>
@@ -78,6 +95,7 @@
                         <outlet property="aspectConstraint" destination="NU5-ti-Ypm" id="es6-mk-CuT"/>
                         <outlet property="aspectSlider" destination="woh-md-Okt" id="HQR-W7-F2h"/>
                         <outlet property="displaySegment" destination="W4T-dd-WjV" id="hRs-hK-P7C"/>
+                        <outlet property="displaySegmentedSwitch" destination="mym-xn-CVk" id="p78-Mc-f5k"/>
                         <outlet property="valueDisplayLabel" destination="lI6-RW-4Kl" id="Vih-0g-i4D"/>
                         <outlet property="valueSlider" destination="yTL-uu-IJC" id="rnj-By-i9L"/>
                     </connections>
@@ -92,7 +110,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

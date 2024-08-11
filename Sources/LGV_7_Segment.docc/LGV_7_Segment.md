@@ -1,14 +1,12 @@
 # ``LGV_7_Segment``
 
-A struct that provides primitive `CGPath`  for use in displaying "retro" 7-segment LED displays.
+A struct that provides primitive `CGPath`s for use in displaying "retro" 7-segment LED displays.
 
 ## Overview
 
-This module simply provides a primitive Core Graphics `CGPath` for a basic 7-segment display.
+The ``LGV_7_Segment`` struct is a graphical representation of a classic "7-segment" LED/LCD display for a single digit, and provides primitive Core Graphics `CGPath` s.
 
-The ``LGV_7_Segment`` struct is a graphical representation of a classic "7-segment" LED/LCD display for a single digit.
-
-It does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
+This struct does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
 
 It also does not actually *display* anything. It just provides primitive `CGPath` paths for the segments. These need to be used by the calling context to render the display.
 
@@ -38,3 +36,5 @@ There are two mutable properties for this struct:
  - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
 
 It is possible to get the default aspect ratio, using the ``LGV_7_Segment/defaultAspect`` computed property, and the current aspect, using the ``LGV_7_Segment/currentAspect`` computed property.
+
+Because the struct returns `CGPath`s, they can be scaled and transformed at very little cost, and used in Basic Swift, UIKit, SwiftUI, AppKit, WatchKit, or TV UIKit.

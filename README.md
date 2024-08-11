@@ -4,11 +4,13 @@
 
 ## Overview
 
-This module simply provides a primitive Core Graphics `CGPath` for a basic 7-segment display.
+This module provides a struct that simply provides a primitive Core Graphics `CGPath` for a basic 7-segment display.
 
 The `LGV_7_Sement` struct is a graphical representation of a classic "7-segment" LED/LCD display for a single digit.
 
-It does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
+## Details
+
+This struct does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
 
 It also does not actually *display* anything. It just provides primitive `CGPath` paths for the segments. These need to be used by the calling context to render the display.
 
@@ -40,3 +42,27 @@ There are two mutable properties for this struct:
  - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
 
 It is possible to get the default aspect ratio, using the `LGV_7_Segment.defaultAspect` computed property, and the current aspect, using the `LGV_7_Segment.currentAspect` computed property.
+
+Because the struct returns `CGPath`s, they can be scaled and transformed at very little cost, and used in Basic Swift, UIKit, SwiftUI, AppKit, WatchKit, or TV UIKit.
+
+## License
+
+MIT License
+ 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

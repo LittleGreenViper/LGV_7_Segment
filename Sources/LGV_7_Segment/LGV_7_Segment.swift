@@ -62,51 +62,7 @@ public struct LGV_7_Segment {
     /**
      This enum represents each segment.
      */
-    enum SegmentPath: Hashable, CaseIterable {
-        /* ############################################################## */
-        /**
-         This is an array of points that maps out the standard element shape.
-         
-         These are the outer elements.
-         */
-        private static let _c_g_StandardShapePoints: [CGPoint] = [
-            CGPoint(x: 0, y: 4),
-            CGPoint(x: 4, y: 0),
-            CGPoint(x: 230, y: 0),
-            CGPoint(x: 234, y: 4),
-            CGPoint(x: 180, y: 58),
-            CGPoint(x: 54, y: 58),
-            CGPoint(x: 0, y: 4)
-        ]
-        
-        /* ############################################################## */
-        /**
-         This maps out the center element, which is a slightly different shape.
-         */
-        private static let _c_g_CenterShapePoints: [CGPoint] = [
-            CGPoint(x: 0, y: 34),
-            CGPoint(x: 34, y: 0),
-            CGPoint(x: 200, y: 0),
-            CGPoint(x: 234, y: 34),
-            CGPoint(x: 200, y: 68),
-            CGPoint(x: 34, y: 68),
-            CGPoint(x: 0, y: 34)
-        ]
-        
-        /* ############################################################## */
-        /**
-         This array of points dictates the layout of the display.
-         */
-        private static let _c_g_viewOffsets: [SegmentPath: CGPoint] = [
-            .top: CGPoint(x: 8, y: 0),
-            .topRight: CGPoint(x: 250, y: 8),
-            .bottomRight: CGPoint(x: 250, y: 250),
-            .bottom: CGPoint(x: 242, y: 492),
-            .bottomLeft: CGPoint(x: 0, y: 484),
-            .topLeft: CGPoint(x: 0, y: 242),
-            .center: CGPoint(x: 8, y: 212)
-        ]
-        
+    private enum _SegmentPath: CaseIterable {
         /* ############################################################## */
         /**
          The bar across the top
@@ -151,24 +107,47 @@ public struct LGV_7_Segment {
         
         /* ############################################################## */
         /**
-         This calculates a new path, based on the standard size.
+         This is an array of points that maps out the standard element shape.
+         
+         These are the outer elements.
          */
-        var path: CGPath? { _newSegmentShape(for: self) }
+        private static let _c_g_StandardShapePoints: [CGPoint] = [
+            CGPoint(x: 0, y: 4),
+            CGPoint(x: 4, y: 0),
+            CGPoint(x: 230, y: 0),
+            CGPoint(x: 234, y: 4),
+            CGPoint(x: 180, y: 58),
+            CGPoint(x: 54, y: 58),
+            CGPoint(x: 0, y: 4)
+        ]
         
         /* ############################################################## */
         /**
-         This returns the path, taking caches into account, as well as scaling to our display size.
-         
-         - parameter withCache: The cache dictionary. If it is not in here, we create one from scratch
-         - parameter withSize: This is the entire display size. The path is transformed to fit in that size.
-         - returns: A new path, scaled to fit in the size.
+         This maps out the center element, which is a slightly different shape.
          */
-        func path(withSize inSize: CGSize) -> CGPath? {
-            let heightScale = inSize.height / LGV_7_Segment.c_g_displaySize.height
-            let widthScale = inSize.width / LGV_7_Segment.c_g_displaySize.width
-            var transform = CGAffineTransform(scaleX: widthScale, y: heightScale)
-            return path?.copy(using: &transform)
-        }
+        private static let _c_g_CenterShapePoints: [CGPoint] = [
+            CGPoint(x: 0, y: 34),
+            CGPoint(x: 34, y: 0),
+            CGPoint(x: 200, y: 0),
+            CGPoint(x: 234, y: 34),
+            CGPoint(x: 200, y: 68),
+            CGPoint(x: 34, y: 68),
+            CGPoint(x: 0, y: 34)
+        ]
+        
+        /* ############################################################## */
+        /**
+         This array of points dictates the layout of the display.
+         */
+        private static let _c_g_viewOffsets: [_SegmentPath: CGPoint] = [
+            .top: CGPoint(x: 8, y: 0),
+            .topRight: CGPoint(x: 250, y: 8),
+            .bottomRight: CGPoint(x: 250, y: 250),
+            .bottom: CGPoint(x: 242, y: 492),
+            .bottomLeft: CGPoint(x: 0, y: 484),
+            .topLeft: CGPoint(x: 0, y: 242),
+            .center: CGPoint(x: 8, y: 212)
+        ]
         
         /* ############################################################## */
         /**
@@ -238,17 +217,40 @@ public struct LGV_7_Segment {
             
             return nil
         }
+        
+        // MARK: Internal Interface
+        
+        /* ############################################################## */
+        /**
+         This calculates a new path, based on the standard size.
+         */
+        var path: CGPath? { _newSegmentShape(for: self) }
+        
+        /* ############################################################## */
+        /**
+         This returns the path, taking caches into account, as well as scaling to our display size.
+         
+         - parameter withCache: The cache dictionary. If it is not in here, we create one from scratch
+         - parameter withSize: This is the entire display size. The path is transformed to fit in that size.
+         - returns: A new path, scaled to fit in the size.
+         */
+        func path(withSize inSize: CGSize) -> CGPath? {
+            let heightScale = inSize.height / LGV_7_Segment.c_g_displaySize.height
+            let widthScale = inSize.width / LGV_7_Segment.c_g_displaySize.width
+            var transform = CGAffineTransform(scaleX: widthScale, y: heightScale)
+            return path?.copy(using: &transform)
+        }
     }
     
     /* ################################################################## */
     /**
      This returns the segment enums that will be "on," for the current value.
      */
-    private var _onSegments: [SegmentPath] {
-        var paths = [SegmentPath]()
+    private var _onSegments: [_SegmentPath] {
+        var paths = [_SegmentPath]()
         
         switch value {
-        case -1:
+        case Values.minus.rawValue:
             paths = [.center]
             
         case 0:
@@ -315,9 +317,29 @@ public struct LGV_7_Segment {
      - parameter size: The display size. If omitted, the default calculation size (``c_g_displaySize``) will be used.
      - parameter value: An initial value. If not provided, -2 (all off) is used.
      */
-    public init(size inSize: CGSize = CGSize(width: Self.c_g_displaySize.width, height: Self.c_g_displaySize.height), value inValue: Int = -2) {
+    public init(size inSize: CGSize = CGSize(width: Self.c_g_displaySize.width, height: Self.c_g_displaySize.height), value inValue: Int = Values.off.rawValue) {
         size = inSize
         value = inValue
+    }
+    
+    /* ################################################################################################################################## */
+    // MARK: Special Values Enum
+    /* ################################################################################################################################## */
+    /**
+     This enum allows us to use these as placeholders for -2 and -1.
+     */
+    public enum Values: Int {
+        /* ############################################################## */
+        /**
+         All off.
+         */
+        case off = -2
+        
+        /* ############################################################## */
+        /**
+         Just the center bar.
+         */
+        case minus
     }
     
     // MARK: Public Static Constants
@@ -348,7 +370,7 @@ public struct LGV_7_Segment {
      
      > NOTE: This will crash, if a value is set outside the required range.
      */
-    public var value: Int = -2 { didSet { precondition((-2..<16).contains(value), "-2 -> 15 only!") } }
+    public var value: Int = Values.off.rawValue { didSet { precondition((-2..<16).contains(value), "-2 -> 15 only!") } }
 }
 
 /* ###################################################################################################################################### */
@@ -376,7 +398,7 @@ extension LGV_7_Segment {
      > NOTE: If none are off (value 8), this will be an empty path.
      */
     public var offSegments: CGPath {
-        SegmentPath.allCases.filter({!_onSegments.contains($0)}).reduce(into: CGMutablePath()) {
+        _SegmentPath.allCases.filter({!_onSegments.contains($0)}).reduce(into: CGMutablePath()) {
             if let path = $1.path(withSize: size) {
                 $0.addPath(path)
             }
@@ -388,7 +410,7 @@ extension LGV_7_Segment {
      This is the combined paths for all the segments (both "on" and "off").
      */
     public var segmentMask: CGPath {
-        SegmentPath.allCases.reduce(into: CGMutablePath()) {
+        _SegmentPath.allCases.reduce(into: CGMutablePath()) {
             if let path = $1.path(withSize: size) {
                 $0.addPath(path)
             }

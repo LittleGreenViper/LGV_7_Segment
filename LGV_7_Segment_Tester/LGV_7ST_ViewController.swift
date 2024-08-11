@@ -21,7 +21,7 @@ import UIKit
 import LGV_7_Segment
 
 /* ###################################################################################################################################### */
-// MARK: -  -
+// MARK: - A Special Constraint Extension for Changing the Multiplier -
 /* ###################################################################################################################################### */
 /**
  This was cribbed [from this SO answer](https://stackoverflow.com/a/33003217/879365)
@@ -61,7 +61,7 @@ extension NSLayoutConstraint {
 }
 
 /* ###################################################################################################################################### */
-// MARK: -  -
+// MARK: - A Class for Displaying the Digit -
 /* ###################################################################################################################################### */
 /**
  This is a basic view, displaying the seven-segment generator.
@@ -89,7 +89,7 @@ class LGV_7ST_DisplaySegment: UIView {
     /**
      The color to use for the "mask" outline.
      */
-    @IBInspectable var allColor: UIColor = .label
+    @IBInspectable var maskColor: UIColor = .label
 
     /* ################################################################## */
     /**
@@ -111,6 +111,12 @@ class LGV_7ST_DisplaySegment: UIView {
     
     /* ################################################################## */
     /**
+     The controller that "owns" this instance.
+     */
+    weak var myController: LGV_7ST_ViewController?
+    
+    /* ################################################################## */
+    /**
      Called when the view layout is changed/set.
      */
     override func layoutSubviews() {
@@ -126,75 +132,153 @@ class LGV_7ST_DisplaySegment: UIView {
         let backLayer = CAShapeLayer()
         let offLayer = CAShapeLayer()
         let onLayer = CAShapeLayer()
-        let allLayer = CAShapeLayer()
+        let maskLayer = CAShapeLayer()
         
         backLayer.frame = bounds
         offLayer.frame = bounds
         onLayer.frame = bounds
-        allLayer.frame = bounds
+        maskLayer.frame = bounds
 
         backLayer.path = segmentDisplay.outline
         offLayer.path = segmentDisplay.offSegments
         onLayer.path = segmentDisplay.onSegments
-        allLayer.path = segmentDisplay.segmentMask
+        maskLayer.path = segmentDisplay.segmentMask
         
         backLayer.fillColor = backColor.cgColor
         offLayer.fillColor = offColor.cgColor
         onLayer.fillColor = onColor.cgColor
-        
-        layer.addSublayer(backLayer)
-        layer.addSublayer(offLayer)
-        layer.addSublayer(onLayer)
-        
-        allLayer.strokeColor = allColor.cgColor
-        allLayer.lineWidth = allLineWidthInDisplayUnits
-        allLayer.fillColor = UIColor.clear.cgColor
+        maskLayer.strokeColor = UIColor.systemGray2.cgColor
 
-        layer.addSublayer(allLayer)
+        guard let selectedSegment = myController?.displaySegmentedSwitch?.selectedSegmentIndex,
+              let selection = LGV_7ST_ViewController.DisplayTypes(rawValue: selectedSegment)
+        else { return }
+        
+        switch selection {
+        case .all:
+            layer.addSublayer(backLayer)
+            layer.addSublayer(offLayer)
+            layer.addSublayer(onLayer)
+            
+        case .onOnly:
+            maskLayer.lineWidth = 0.5
+            maskLayer.fillColor = UIColor.clear.cgColor
+            layer.addSublayer(maskLayer)
+            layer.addSublayer(onLayer)
+
+        case .offOnly:
+            maskLayer.lineWidth = 0.5
+            maskLayer.fillColor = UIColor.clear.cgColor
+            layer.addSublayer(maskLayer)
+            layer.addSublayer(offLayer)
+
+        case .outline:
+            layer.addSublayer(backLayer)
+
+        case .maskOnly:
+            maskLayer.lineWidth = 0
+            maskLayer.fillColor = maskColor.cgColor
+            layer.addSublayer(maskLayer)
+        }
     }
 }
 
 /* ###################################################################################################################################### */
-// MARK: -  -
+// MARK: - Displays One Segment, And Controls -
 /* ###################################################################################################################################### */
 /**
+ This manages a view that displays a single segment, and has controls, affecting its display.
  */
 class LGV_7ST_ViewController: UIViewController {
+    /* ################################################################################################################################## */
+    // MARK: Enumeration for the Display Type Segmented Switch
+    /* ################################################################################################################################## */
+    /**
+     These are assignments for the integer indexes of the segmented control.
+     */
+    enum DisplayTypes: Int {
+        /* ############################################################## */
+        /**
+         Only display the control outline.
+         */
+        case outline
+        
+        /* ############################################################## */
+        /**
+         Only display the mask
+         */
+        case maskOnly
+        
+        /* ############################################################## */
+        /**
+         Only display on segments
+         */
+        case onOnly
+        
+        /* ############################################################## */
+        /**
+         Only display off segments
+         */
+        case offOnly
+        
+        /* ############################################################## */
+        /**
+         Display everything except the mask.
+         */
+        case all
+    }
+    
     /* ################################################################## */
     /**
+     The segment display, itself.
      */
     @IBOutlet weak var displaySegment: LGV_7ST_DisplaySegment?
     
     /* ################################################################## */
     /**
+     A slider that affects the integer value of the display.
      */
     @IBOutlet weak var valueSlider: UISlider?
     
     /* ################################################################## */
     /**
+     A label that shows the current integer value.
      */
     @IBOutlet weak var valueDisplayLabel: UILabel?
     
     /* ################################################################## */
     /**
+     A slider that affects the aspect ratio (and size) of the display.
      */
     @IBOutlet weak var aspectSlider: UISlider?
     
     /* ################################################################## */
     /**
+     A constraint that is changes, to control the aspect.
      */
     @IBOutlet weak var aspectConstraint: NSLayoutConstraint?
     
     /* ################################################################## */
     /**
+     A segmented switch that affects what is displayed.
+     */
+    @IBOutlet weak var displaySegmentedSwitch: UISegmentedControl?
+    
+    /* ################################################################## */
+    /**
+     Called when the view hierarchy has been loaded.
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        valueDisplayLabel?.text = String(displaySegment?.value ?? -1)
+        let value = displaySegment?.value ?? LGV_7_Segment.Values.off.rawValue
+        displaySegment?.myController = self
+        valueDisplayLabel?.text = String(value)
     }
     
     /* ################################################################## */
     /**
+     Called when the value slider changes.
+     
+     - parameter inSlider: The slider that changed.
      */
     @IBAction func valueChanged(_ inSlider: UISlider) {
         let newValue = max(-2, min(15, Int(round(inSlider.value))))
@@ -205,6 +289,9 @@ class LGV_7ST_ViewController: UIViewController {
     
     /* ################################################################## */
     /**
+     Called when the aspect slider changes.
+     
+     - parameter inSlider: The slider that changed.
      */
     @IBAction func aspectSliderChanged(_ inSlider: UISlider) {
         let idealAspect = LGV_7_Segment.c_g_displaySize.width / LGV_7_Segment.c_g_displaySize.height
@@ -215,5 +302,40 @@ class LGV_7ST_ViewController: UIViewController {
         let aspectMultiplier = CGFloat(valueToUse - inSlider.minimumValue) / spread
         
         aspectConstraint = aspectConstraint?.setMultiplier(multiplier: idealAspect * aspectMultiplier)
+    }
+    
+    /* ################################################################## */
+    /**
+     Called when the segmented switch for the display changes.
+     
+     - parameter inSwitch: The switch that changed.
+     */
+    @IBAction func displaySegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
+        switch inSwitch.selectedSegmentIndex {
+        case DisplayTypes.outline.rawValue:
+            valueSlider?.isEnabled = false
+            valueDisplayLabel?.isHidden = true
+            
+        case DisplayTypes.maskOnly.rawValue:
+            valueSlider?.isEnabled = false
+            valueDisplayLabel?.isHidden = true
+            
+        case DisplayTypes.onOnly.rawValue:
+            valueSlider?.isEnabled = true
+            valueDisplayLabel?.isHidden = false
+            
+        case DisplayTypes.offOnly.rawValue:
+            valueSlider?.isEnabled = true
+            valueDisplayLabel?.isHidden = false
+            
+        case DisplayTypes.all.rawValue:
+            valueSlider?.isEnabled = true
+            valueDisplayLabel?.isHidden = false
+            
+        default:
+            break
+        }
+        
+        displaySegment?.setNeedsLayout()
     }
 }
