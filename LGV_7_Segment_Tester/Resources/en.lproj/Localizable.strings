@@ -22,3 +22,9 @@
 // *|  DO NOT MODIFY ON THIS SIDE OF THE EQUALS  |*           *|   MODIFY THE TEXT ON THIS SIDE TO THE LOCAL LANGUAGE  |*
 // * -------------------------------------------- *           * ------------------------------------------------------- *
 // ************************************************           ***********************************************************
+
+"SLUG-SWITCH-0"                                   =     "Outline";
+"SLUG-SWITCH-1"                                   =     "Mask";
+"SLUG-SWITCH-2"                                   =     "On";
+"SLUG-SWITCH-3"                                   =     "Off";
+"SLUG-SWITCH-4"                                   =     "All";

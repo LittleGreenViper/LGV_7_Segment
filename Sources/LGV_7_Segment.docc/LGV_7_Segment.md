@@ -4,6 +4,8 @@ A struct that provides primitive `CGPath`s for use in displaying "retro" 7-segme
 
 ## Overview
 
+![The Project Icon](icon.png)
+
 The ``LGV_7_Segment`` struct is a graphical representation of a classic "7-segment" LED/LCD display for a single digit, and provides primitive Core Graphics `CGPath` s.
 
 This struct does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).

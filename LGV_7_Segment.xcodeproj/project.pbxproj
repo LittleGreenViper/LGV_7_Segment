@@ -16,6 +16,7 @@
 		D4B0C2B92C655B5900CB5F76 /* LGV_7ST_Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4B0C2B82C655B5900CB5F76 /* LGV_7ST_Assets.xcassets */; };
 		D4B0C2BC2C655B5900CB5F76 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = D4B0C2BB2C655B5900CB5F76 /* Base */; };
 		D4B0C2CA2C655BB000CB5F76 /* LGV_7_Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C2C92C655BB000CB5F76 /* LGV_7_Segment.swift */; };
+		D4E14C022C68EA92008AE070 /* RVS_Generic_Swift_Toolbox in Frameworks */ = {isa = PBXBuildFile; productRef = D4E14C012C68EA92008AE070 /* RVS_Generic_Swift_Toolbox */; };
 		D4FAFFB02C68286300A5C536 /* LGV_7_Segment.docc in Sources */ = {isa = PBXBuildFile; fileRef = D4FAFFAF2C68286300A5C536 /* LGV_7_Segment.docc */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4E14C022C68EA92008AE070 /* RVS_Generic_Swift_Toolbox in Frameworks */,
 				D48C11032C6563F600532B3D /* libLGV_7_Segment.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,8 +120,8 @@
 		D4B0C2CE2C655C1A00CB5F76 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D4FAFFAF2C68286300A5C536 /* LGV_7_Segment.docc */,
 				D4B0C2C82C655BB000CB5F76 /* LGV_7_Segment */,
+				D4FAFFAF2C68286300A5C536 /* LGV_7_Segment.docc */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -168,6 +170,9 @@
 				D48C11052C6563F600532B3D /* PBXTargetDependency */,
 			);
 			name = LGV_7_Segment_Tester;
+			packageProductDependencies = (
+				D4E14C012C68EA92008AE070 /* RVS_Generic_Swift_Toolbox */,
+			);
 			productName = LGV_7_Segment;
 			productReference = D4B0C2AC2C655B5900CB5F76 /* LGV_7_Segment_Tester.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +221,9 @@
 				Base,
 			);
 			mainGroup = D4B0C2A32C655B5800CB5F76;
+			packageReferences = (
+				D4E14C002C68EA92008AE070 /* XCRemoteSwiftPackageReference "RVS_Generic_Swift_Toolbox" */,
+			);
 			productRefGroup = D4B0C2AD2C655B5900CB5F76 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -425,7 +433,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0000;
 				DEVELOPMENT_TEAM = P53V4JS928;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LGV_7_Segment_Tester/Meta/Info.plist;
@@ -438,7 +446,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.littlegreenviper.LGV-7-Segment";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -453,7 +461,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0000;
 				DEVELOPMENT_TEAM = P53V4JS928;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LGV_7_Segment_Tester/Meta/Info.plist;
@@ -466,7 +474,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.littlegreenviper.LGV-7-Segment";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -542,6 +550,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D4E14C002C68EA92008AE070 /* XCRemoteSwiftPackageReference "RVS_Generic_Swift_Toolbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RiftValleySoftware/RVS_Generic_Swift_Toolbox";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.13.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D4E14C012C68EA92008AE070 /* RVS_Generic_Swift_Toolbox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4E14C002C68EA92008AE070 /* XCRemoteSwiftPackageReference "RVS_Generic_Swift_Toolbox" */;
+			productName = RVS_Generic_Swift_Toolbox;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D4B0C2A42C655B5800CB5F76 /* Project object */;
 }

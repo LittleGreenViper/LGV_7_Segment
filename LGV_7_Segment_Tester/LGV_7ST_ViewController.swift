@@ -19,6 +19,7 @@
 
 import UIKit
 import LGV_7_Segment
+import RVS_Generic_Swift_Toolbox
 
 /* ###################################################################################################################################### */
 // MARK: - A Special Constraint Extension for Changing the Multiplier -
@@ -272,6 +273,12 @@ class LGV_7ST_ViewController: UIViewController {
         let value = displaySegment?.value ?? LGV_7_Segment.Values.off.rawValue
         displaySegment?.myController = self
         valueDisplayLabel?.text = String(value)
+        
+        let max = (displaySegmentedSwitch?.numberOfSegments ?? 0)
+        
+        for index in 0..<max {
+            displaySegmentedSwitch?.setTitle(String(format: "SLUG-SWITCH-%d", index).localizedVariant, forSegmentAt: index)
+        }
     }
     
     /* ################################################################## */
