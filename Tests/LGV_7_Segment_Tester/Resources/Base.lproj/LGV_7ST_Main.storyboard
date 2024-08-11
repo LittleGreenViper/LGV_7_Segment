@@ -31,7 +31,7 @@
                             </slider>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W4T-dd-WjV" customClass="LGV_7ST_DisplaySegment" customModule="LGV_7_Segment_Tester" customModuleProvider="target">
                                 <rect key="frame" x="62.666666666666657" y="160" width="249.99999999999997" height="492"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="W4T-dd-WjV" secondAttribute="height" multiplier="250:492" id="NU5-ti-Ypm"/>
                                     <constraint firstAttribute="width" priority="999" constant="250" id="Wb6-hf-5wg"/>

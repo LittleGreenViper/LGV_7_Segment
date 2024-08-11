@@ -28,3 +28,10 @@
 "SLUG-SWITCH-2"                                   =     "On";
 "SLUG-SWITCH-3"                                   =     "Off";
 "SLUG-SWITCH-4"                                   =     "All";
+
+"SLUG-COUNT-0"                                    =     "0 Digits";
+"SLUG-COUNT-1"                                    =     "1 Digit";
+"SLUG-COUNT-2"                                    =     "2 Digits";
+"SLUG-COUNT-3"                                    =     "3 Digits";
+"SLUG-COUNT-4"                                    =     "4 Digits";
+"SLUG-COUNT-5"                                    =     "5 Digits";
