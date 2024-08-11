@@ -263,7 +263,12 @@ class LGV_7ST_ViewController: UIViewController {
      A segmented switch that affects what is displayed.
      */
     @IBOutlet weak var displaySegmentedSwitch: UISegmentedControl?
-    
+}
+
+/* ###################################################################################################################################### */
+// MARK: Base Class Overrides
+/* ###################################################################################################################################### */
+extension LGV_7ST_ViewController {
     /* ################################################################## */
     /**
      Called when the view hierarchy has been loaded.

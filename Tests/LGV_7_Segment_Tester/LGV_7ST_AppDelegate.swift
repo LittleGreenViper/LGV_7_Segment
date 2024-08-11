@@ -52,4 +52,3 @@ class LGV_7ST_AppDelegate: UIResponder, UIApplicationDelegate {
         UISceneConfiguration(name: "Default Configuration", sessionRole: inConnectingSceneSession.role)
     }
 }
-

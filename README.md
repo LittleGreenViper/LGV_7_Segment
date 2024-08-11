@@ -4,13 +4,17 @@
 
 ## Overview
 
-This module provides a struct that simply provides a primitive Core Graphics `CGPath` for a basic 7-segment display.
+This module provides a struct that simply provides a primitive Core Graphics `CGPath` for a basic 7-segment display, and another struct that acts as an "aggregator," for the initial struct.
 
 The `LGV_7_Sement` struct is a graphical representation of a classic "7-segment" LED/LCD display for a single digit.
 
+The `LGV_7_Sement_Group` struct is an aggregator of `LGV_7_Sement` structs, and treats them as digits in a number, with various bases.
+
 ## Details
 
-This struct does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
+### The The `LGV_7_Sement` struct
+
+The `LGV_7_Sement` struct does not provide diagonal segments, like displays that also render text characters. It just displays 0-F (0-15), and a single center segment (-).
 
 It also does not actually *display* anything. It just provides primitive `CGPath` paths for the segments. These need to be used by the calling context to render the display.
 
@@ -43,7 +47,9 @@ There are two mutable properties for this struct:
 
 It is possible to get the default aspect ratio, using the `LGV_7_Segment.defaultAspect` computed property, and the current aspect, using the `LGV_7_Segment.currentAspect` computed property.
 
-Because the struct returns `CGPath`s, they can be scaled and transformed at very little cost, and used in Basic Swift, UIKit, SwiftUI, AppKit, WatchKit, or TV UIKit.
+### The The `LGV_7_Sement_Group` struct
+
+Because the structs return `CGPath`s, the images can be scaled or transformed at very little cost, and used in Basic Swift, UIKit, SwiftUI, AppKit, WatchKit, or TV UIKit.
 
 ## License
 

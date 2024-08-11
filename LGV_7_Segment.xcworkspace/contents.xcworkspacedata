@@ -8,6 +8,9 @@
          location = "group:CHANGELOG.md">
       </FileRef>
       <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
          location = "group:CODEOWNERS">
       </FileRef>
       <FileRef
@@ -27,9 +30,6 @@
       </FileRef>
       <FileRef
          location = "group:PrivacyInfo.xcprivacy">
-      </FileRef>
-      <FileRef
-         location = "group:README.md">
       </FileRef>
       <Group
          location = "group:img"
