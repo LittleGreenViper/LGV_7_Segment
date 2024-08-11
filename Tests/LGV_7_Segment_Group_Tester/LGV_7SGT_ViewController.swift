@@ -40,7 +40,7 @@ class LGV_7SGT_ViewController: UIViewController {
     // MARK: Enumeration for the Display Type Segmented Switch
     /* ################################################################################################################################## */
     /**
-     These are assignments for the integer indexes of the segmented control.
+     These are assignments for the integer indexes of the display segmented control.
      */
     enum DisplayTypes: Int {
         /* ############################################################## */
