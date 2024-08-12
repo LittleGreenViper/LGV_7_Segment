@@ -27,7 +27,29 @@ import RVS_Generic_Swift_Toolbox
 /**
  */
 class LGV_7SGT_DisplayView: UIView {
+    /* ################################################################## */
+    /**
+     The controller that "owns" this instance.
+     */
+    weak var myController: LGV_7SGT_ViewController?
     
+    /* ################################################################## */
+    /**
+     The digit group
+     */
+    var digitSet: LGV_7_Segment_Group?
+    
+    /* ################################################################## */
+    /**
+     Called when the layout changes.
+     */
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard let myController = myController else { return }
+        
+        digitSet = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: frame.size, numberBase: myController.numberBase, value: myController.value)
+    }
 }
 
 /* ###################################################################################################################################### */
@@ -74,6 +96,8 @@ class LGV_7SGT_ViewController: UIViewController {
         case all
     }
     
+    var digitGroup: LGV_7_Segment_Group?
+    
     /* ################################################################## */
     /**
      The label that displays the current value
@@ -103,6 +127,71 @@ class LGV_7SGT_ViewController: UIViewController {
      A segmented switch that affects what is displayed.
      */
     @IBOutlet weak var displaySegmentedSwitch: UISegmentedControl?
+
+    /* ################################################################## */
+    /**
+     A segmented switch that affects the number base of the digits.
+     */
+    @IBOutlet weak var numberBaseSegmentedSwitch: UISegmentedControl?
+}
+
+/* ###################################################################################################################################### */
+// MARK: Computed Properties
+/* ###################################################################################################################################### */
+extension LGV_7SGT_ViewController {
+    /* ################################################################## */
+    /**
+     The selected base for the digits. This reads and sets the base switch.
+     */
+    var numberBase: LGV_7_Segment_Group.NumberBase {
+        get {
+            guard let index = numberBaseSegmentedSwitch?.selectedSegmentIndex,
+                  let enumeration = LGV_7_Segment_Group.NumberBase(rawValue: index)
+            else { return .decimal }
+            
+            return enumeration
+        }
+        
+        set {
+            numberBaseSegmentedSwitch?.selectedSegmentIndex = newValue.rawValue
+            numberBaseSegmentedSwitch?.sendActions(for: .valueChanged)
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     Returns the number of digits being displayed (including the negative sign).
+     */
+    var numberOfDigits: Int {
+        get { digitCountSegmentedSwitch?.selectedSegmentIndex ?? 0 }
+        
+        set {
+            guard (0..<(digitCountSegmentedSwitch?.numberOfSegments ?? 0)).contains(newValue) else { return }
+            digitCountSegmentedSwitch?.selectedSegmentIndex = newValue
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     Returns the number of digits being displayed (without the negative sign).
+     */
+    var numberOfNumericalDigits: Int { numberOfDigits - 1 < numberOfDigits ? 1 : 0 }
+    
+    /* ################################################################## */
+    /**
+     This is the value of the digit group.
+     */
+    var value: Int {
+        get { Int(valueSlider?.value ?? 0) }
+        set {
+            guard let valueSlider = valueSlider else { return }
+            
+            let tempVal = max(valueSlider.minimumValue, min(valueSlider.maximumValue, Float(newValue)))
+            
+            valueSlider.setValue(tempVal, animated: true)
+            valueSlider.sendActions(for: .valueChanged)
+        }
+    }
 }
 
 /* ###################################################################################################################################### */
@@ -122,18 +211,43 @@ extension LGV_7SGT_ViewController {
             digitCountSegmentedSwitch.setTitle(String(format: "SLUG-COUNT-%d", index).localizedVariant, forSegmentAt: index)
         }
         
-        let max = (displaySegmentedSwitch?.numberOfSegments ?? 0)
-        
-        for index in 0..<max {
+        for index in 0..<(displaySegmentedSwitch?.numberOfSegments ?? 0) {
             displaySegmentedSwitch?.setTitle(String(format: "SLUG-SWITCH-%d", index).localizedVariant, forSegmentAt: index)
         }
         
+        for index in 0..<(numberBaseSegmentedSwitch?.numberOfSegments ?? 0) {
+            numberBaseSegmentedSwitch?.setTitle(String(format: "SLUG-BASE-%d", index).localizedVariant, forSegmentAt: index)
+        }
+
         guard let slider = valueSlider else { return }
         
         digitCountSegmentedSwitchChanged(digitCountSegmentedSwitch)
         valueSliderChanged(slider)
     }
+}
 
+/* ###################################################################################################################################### */
+// MARK: Instance Methods
+/* ###################################################################################################################################### */
+extension LGV_7SGT_ViewController {
+    /* ################################################################## */
+    /**
+     Creates a digit group, based on the current screen setting.
+     */
+    func setDigitGroup() {
+        digitGroup = nil
+        
+        let numDigits = digitCountSegmentedSwitch?.selectedSegmentIndex ?? 0
+        
+        if 0 < numDigits {
+        }
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Callbacks
+/* ###################################################################################################################################### */
+extension LGV_7SGT_ViewController {
     /* ################################################################## */
     /**
      Called when the value slider changes.
@@ -144,6 +258,7 @@ extension LGV_7SGT_ViewController {
         let intValue = Int(round(inSlider.value))
         inSlider.value = Float(intValue)
         valueDisplayLabel?.text = String(intValue)
+        setDigitGroup()
     }
 
     /* ################################################################## */
@@ -155,8 +270,6 @@ extension LGV_7SGT_ViewController {
     @IBAction func digitCountSegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
         valueSlider?.isEnabled = 0 < inSwitch.selectedSegmentIndex
         valueDisplayLabel?.isHidden = 0 == inSwitch.selectedSegmentIndex
-        
-        valueSlider?.value = Float(0)
 
         switch inSwitch.selectedSegmentIndex {
         case 1:
@@ -196,6 +309,7 @@ extension LGV_7SGT_ViewController {
             valueSlider?.maximumValue = Float(0)
         }
         
+        valueSlider?.value = Float(0)
         valueSlider?.sendActions(for: .valueChanged)
     }
 
@@ -232,5 +346,15 @@ extension LGV_7SGT_ViewController {
         }
         
         displayView?.setNeedsLayout()
+    }
+    
+    /* ################################################################## */
+    /**
+     The number base segmented switch was hit.
+     
+     - parameter inSwitch: The switch that changed.
+     */
+    @IBAction func numberBaseSegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
+        valueSlider?.sendActions(for: .valueChanged)
     }
 }

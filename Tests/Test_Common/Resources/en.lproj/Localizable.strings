@@ -23,11 +23,15 @@
 // * -------------------------------------------- *           * ------------------------------------------------------- *
 // ************************************************           ***********************************************************
 
+// MARK: Used in both apps
+
 "SLUG-SWITCH-0"                                   =     "Outline";
 "SLUG-SWITCH-1"                                   =     "Mask";
 "SLUG-SWITCH-2"                                   =     "On";
 "SLUG-SWITCH-3"                                   =     "Off";
 "SLUG-SWITCH-4"                                   =     "All";
+
+// MARK: Used only in the Group tester app
 
 "SLUG-COUNT-0"                                    =     "0 Digits";
 "SLUG-COUNT-1"                                    =     "1 Digit";
@@ -35,3 +39,8 @@
 "SLUG-COUNT-3"                                    =     "3 Digits";
 "SLUG-COUNT-4"                                    =     "4 Digits";
 "SLUG-COUNT-5"                                    =     "5 Digits";
+
+"SLUG-BASE-0"                                     =     "Binary";
+"SLUG-BASE-1"                                     =     "Octal";
+"SLUG-BASE-2"                                     =     "Decimal";
+"SLUG-BASE-3"                                     =     "Hexadecimal";

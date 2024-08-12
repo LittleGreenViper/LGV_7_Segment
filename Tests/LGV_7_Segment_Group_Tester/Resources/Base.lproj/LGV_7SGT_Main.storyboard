@@ -64,6 +64,18 @@
                                     <action selector="displaySegmentedSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="9qJ-1V-uvN"/>
                                 </connections>
                             </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="TDe-uj-hR6">
+                                <rect key="frame" x="16" y="340" width="361" height="32"/>
+                                <segments>
+                                    <segment title="SLUG-BASE-0"/>
+                                    <segment title="SLUG-BASE-1"/>
+                                    <segment title="SLUG-BASE-2"/>
+                                    <segment title="SLUG-BASE-3"/>
+                                </segments>
+                                <connections>
+                                    <action selector="numberBaseSegmentedSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Mka-O7-M2p"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -72,15 +84,19 @@
                             <constraint firstItem="XBx-Sz-IxC" firstAttribute="top" secondItem="vvQ-sh-x43" secondAttribute="bottom" constant="8" symbolic="YES" id="1np-CH-73u"/>
                             <constraint firstItem="EyI-f8-J7b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Cb-t0-lHY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hok-nV-Fc6" secondAttribute="trailing" constant="16" id="8LQ-tU-qqK"/>
+                            <constraint firstItem="TDe-uj-hR6" firstAttribute="top" secondItem="fjn-Ny-Wyb" secondAttribute="bottom" constant="8" symbolic="YES" id="EqT-u0-Cjb"/>
                             <constraint firstItem="fjn-Ny-Wyb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KYH-Il-Buz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XBx-Sz-IxC" secondAttribute="trailing" constant="16" id="Le4-nW-MfJ"/>
+                            <constraint firstItem="TDe-uj-hR6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="SYy-Uk-ZSI"/>
                             <constraint firstItem="fjn-Ny-Wyb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="T2R-wQ-A3l"/>
                             <constraint firstItem="XBx-Sz-IxC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="VNf-Ah-0dw"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fjn-Ny-Wyb" secondAttribute="bottom" id="ZtT-TR-gxP"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TDe-uj-hR6" secondAttribute="trailing" constant="16" id="aZr-Qu-mAa"/>
                             <constraint firstItem="EyI-f8-J7b" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="dSy-6p-ZIf"/>
                             <constraint firstItem="hok-nV-Fc6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ekw-Fe-rWc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TDe-uj-hR6" secondAttribute="bottom" id="fdo-aY-3pl"/>
                             <constraint firstItem="hok-nV-Fc6" firstAttribute="top" secondItem="XBx-Sz-IxC" secondAttribute="bottom" constant="8" symbolic="YES" id="g0O-91-B0Y"/>
                             <constraint firstItem="fjn-Ny-Wyb" firstAttribute="top" secondItem="hok-nV-Fc6" secondAttribute="bottom" constant="8" id="h9E-Lc-JeL"/>
+                            <constraint firstItem="TDe-uj-hR6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hGM-9e-rVp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vvQ-sh-x43" secondAttribute="trailing" constant="16" id="jQn-CV-tyo"/>
                             <constraint firstItem="XBx-Sz-IxC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="l5U-cc-Aaj"/>
                             <constraint firstItem="vvQ-sh-x43" firstAttribute="top" secondItem="EyI-f8-J7b" secondAttribute="bottom" constant="8" symbolic="YES" id="lEE-4v-2Qn"/>
@@ -91,6 +107,7 @@
                         <outlet property="digitCountSegmentedSwitch" destination="hok-nV-Fc6" id="Vt4-uM-HVf"/>
                         <outlet property="displaySegmentedSwitch" destination="fjn-Ny-Wyb" id="Qep-Z2-zel"/>
                         <outlet property="displayView" destination="XBx-Sz-IxC" id="hRx-F4-S0e"/>
+                        <outlet property="numberBaseSegmentedSwitch" destination="TDe-uj-hR6" id="iav-iK-W57"/>
                         <outlet property="valueDisplayLabel" destination="EyI-f8-J7b" id="WZb-1u-phN"/>
                         <outlet property="valueSlider" destination="vvQ-sh-x43" id="Z2d-jS-dAL"/>
                     </connections>
