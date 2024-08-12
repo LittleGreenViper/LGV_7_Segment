@@ -144,6 +144,8 @@ public struct LGV_7_Segment_Group {
     
     /* ################################################################## */
     /**
+     Default initializer
+     
      - parameter numberOfDigits: This is the number of *numerical* digits (ones showing numbers). If `canShowNegative` is true, then one extra digit will prefix the set. Required.
      - parameter size: The overall size of the control. The digits are sized to fit inside it. Required.
      - parameter numberBase: The numerical base of the display. Default is hexadecimal.
@@ -173,6 +175,40 @@ public struct LGV_7_Segment_Group {
         canShowNegative = inCanShowNegative
         spacingInDisplayUnits = inSpacingInDisplayUnits
         value = inValue
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Public Instance Methods
+/* ###################################################################################################################################### */
+extension LGV_7_Segment_Group {
+    /* ################################################################## */
+    /**
+     This returns the "ideal" width for this group, based on a fixed height.
+     
+     - parameter height: The height to be used as the fixed axis.
+     */
+    public func idealWidthFrom(height inHeight: CGFloat) -> CGFloat {
+        guard !digits.isEmpty else { return 0 }
+        
+        let defaultAspect = LGV_7_Segment.c_g_displaySize.width / LGV_7_Segment.c_g_displaySize.height
+        let digitWidth = CGFloat(digits.count) * (inHeight / defaultAspect)
+        
+        return digitWidth + (spacingInDisplayUnits * (CGFloat(digits.count) - 1))
+    }
+    
+    /* ################################################################## */
+    /**
+     This returns the "ideal" height for this group, based on a fixed width.
+     
+     - parameter width: The width to be used as the fixed axis.
+     */
+    public func idealHeightFrom(width inWidth: CGFloat) -> CGFloat {
+        guard !digits.isEmpty else { return 0 }
+        
+        let eachDigitWidth = (CGFloat(inWidth) / CGFloat(digits.count)) - (spacingInDisplayUnits * (CGFloat(digits.count) - 1))
+        
+        return eachDigitWidth / (LGV_7_Segment.c_g_displaySize.width / LGV_7_Segment.c_g_displaySize.height)
     }
 }
 

@@ -31,7 +31,7 @@ class LGV_7SGT_DisplayView: UIView {
     /**
      The controller that "owns" this instance.
      */
-    weak var myController: LGV_7SGT_ViewController?
+    @IBOutlet weak var myController: LGV_7SGT_ViewController?
     
     /* ################################################################## */
     /**
@@ -48,7 +48,23 @@ class LGV_7SGT_DisplayView: UIView {
         
         guard let myController = myController else { return }
         
-        digitSet = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: frame.size, numberBase: myController.numberBase, value: myController.value)
+        let viewWidth = bounds.size.width
+        
+        if 0 < myController.numberOfDigits,
+           0 < viewWidth {
+            let tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: CGSize(width: 128, height: 128))
+            let necessaryHeight = tempDigit.idealHeightFrom(width: viewWidth)
+            digitSet = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits,
+                                           size: CGSize(width: viewWidth, height: necessaryHeight),
+                                           numberBase: myController.numberBase,
+                                           value: myController.value,
+                                           canShowNegative: 1 < myController.numberOfDigits,
+                                           spacing: 4
+            )
+            myController.displayHeightAnchor?.constant = necessaryHeight
+        } else {
+            myController.displayHeightAnchor?.constant = 0
+        }
     }
 }
 
@@ -96,8 +112,6 @@ class LGV_7SGT_ViewController: UIViewController {
         case all
     }
     
-    var digitGroup: LGV_7_Segment_Group?
-    
     /* ################################################################## */
     /**
      The label that displays the current value
@@ -128,6 +142,12 @@ class LGV_7SGT_ViewController: UIViewController {
      */
     @IBOutlet weak var displaySegmentedSwitch: UISegmentedControl?
 
+    /* ################################################################## */
+    /**
+     The height anchor for the display, which is changed to match the current number of digits, and the width of the display.
+     */
+    @IBOutlet weak var displayHeightAnchor: NSLayoutConstraint?
+    
     /* ################################################################## */
     /**
      A segmented switch that affects the number base of the digits.
@@ -235,12 +255,7 @@ extension LGV_7SGT_ViewController {
      Creates a digit group, based on the current screen setting.
      */
     func setDigitGroup() {
-        digitGroup = nil
-        
-        let numDigits = digitCountSegmentedSwitch?.selectedSegmentIndex ?? 0
-        
-        if 0 < numDigits {
-        }
+        displayView?.setNeedsLayout()
     }
 }
 
