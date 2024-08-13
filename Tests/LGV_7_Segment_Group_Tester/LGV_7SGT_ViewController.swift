@@ -35,6 +35,30 @@ class LGV_7SGT_DisplayView: UIView {
     
     /* ################################################################## */
     /**
+     The color to use for "on" segments.
+     */
+    @IBInspectable var onColor: UIColor = .systemOrange
+
+    /* ################################################################## */
+    /**
+     The color to use for "off" segments.
+     */
+    @IBInspectable var offColor : UIColor = .systemGray.withAlphaComponent(0.75)
+
+    /* ################################################################## */
+    /**
+     The color to use for the "container."
+     */
+    @IBInspectable var backColor: UIColor = .blue
+
+    /* ################################################################## */
+    /**
+     The color to use for the "mask" outline.
+     */
+    @IBInspectable var maskColor: UIColor = .label
+
+    /* ################################################################## */
+    /**
      The digit group
      */
     var digitSet: LGV_7_Segment_Group?
@@ -46,22 +70,78 @@ class LGV_7SGT_DisplayView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        guard let myController = myController else { return }
-        
-        let viewWidth = bounds.size.width
+        layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        guard let myController = myController,
+              let viewWidth = myController.view?.bounds.size.width
+        else { return }
         
         if 0 < myController.numberOfDigits,
            0 < viewWidth {
-            let tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: CGSize(width: 128, height: 128))
+            var tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: CGSize(width: 128, height: 128))
             let necessaryHeight = tempDigit.idealHeightFrom(width: viewWidth)
-            digitSet = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits,
+            let value = myController.value
+            tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits,
                                            size: CGSize(width: viewWidth, height: necessaryHeight),
                                            numberBase: myController.numberBase,
-                                           value: myController.value,
+                                           value: value,
                                            canShowNegative: 1 < myController.numberOfDigits,
                                            spacing: 4
             )
+            
+            digitSet = tempDigit
+            
             myController.displayHeightAnchor?.constant = necessaryHeight
+            
+            let backLayer = CAShapeLayer()
+            let offLayer = CAShapeLayer()
+            let onLayer = CAShapeLayer()
+            let maskLayer = CAShapeLayer()
+            
+            backLayer.frame = bounds
+            offLayer.frame = bounds
+            onLayer.frame = bounds
+            maskLayer.frame = bounds
+
+            backLayer.path = tempDigit.outline
+            offLayer.path = tempDigit.offSegments
+            onLayer.path = tempDigit.onSegments
+            maskLayer.path = tempDigit.segmentMask
+            
+            backLayer.fillColor = backColor.cgColor
+            offLayer.fillColor = offColor.cgColor
+            onLayer.fillColor = onColor.cgColor
+            maskLayer.strokeColor = UIColor.systemGray2.cgColor
+
+            guard let selectedSegment = myController.displaySegmentedSwitch?.selectedSegmentIndex,
+                  let selection = LGV_7SGT_ViewController.DisplayTypes(rawValue: selectedSegment)
+            else { return }
+            
+            switch selection {
+            case .all:
+                layer.addSublayer(backLayer)
+                layer.addSublayer(offLayer)
+                layer.addSublayer(onLayer)
+                
+            case .onOnly:
+                maskLayer.lineWidth = 0.5
+                maskLayer.fillColor = UIColor.clear.cgColor
+                layer.addSublayer(maskLayer)
+                layer.addSublayer(onLayer)
+
+            case .offOnly:
+                maskLayer.lineWidth = 0.5
+                maskLayer.fillColor = UIColor.clear.cgColor
+                layer.addSublayer(maskLayer)
+                layer.addSublayer(offLayer)
+
+            case .outline:
+                layer.addSublayer(backLayer)
+
+            case .maskOnly:
+                maskLayer.lineWidth = 0
+                maskLayer.fillColor = maskColor.cgColor
+                layer.addSublayer(maskLayer)
+            }
         } else {
             myController.displayHeightAnchor?.constant = 0
         }

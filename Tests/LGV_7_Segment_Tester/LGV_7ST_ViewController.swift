@@ -94,12 +94,6 @@ class LGV_7ST_DisplaySegment: UIView {
 
     /* ################################################################## */
     /**
-     The line width to use for the "mask" outline.
-     */
-    @IBInspectable var allLineWidthInDisplayUnits: CGFloat = 3
-
-    /* ################################################################## */
-    /**
      The initial value.
      */
     @IBInspectable var value: Int = -2 { didSet { setNeedsLayout() } }

@@ -37,7 +37,7 @@
                                             </slider>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBx-Sz-IxC" customClass="LGV_7SGT_DisplayView" customModule="LGV_7_Segment_Group_Tester" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="66.333333333333314" width="361" height="128"/>
-                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="128" id="EJK-WN-aZz"/>
                                                 </constraints>
@@ -102,6 +102,7 @@
                                 <constraints>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="bottom" secondItem="FNB-Ow-Pvq" secondAttribute="bottom" id="2sf-rZ-V9v"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="top" secondItem="FNB-Ow-Pvq" secondAttribute="top" id="57B-BN-NB5"/>
+                                    <constraint firstItem="XBx-Sz-IxC" firstAttribute="height" relation="lessThanOrEqual" secondItem="QrM-gA-jPN" secondAttribute="height" multiplier="0.5" id="ERk-WU-EWh"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="trailing" secondItem="FNB-Ow-Pvq" secondAttribute="trailing" constant="-16" id="Sri-zr-6yS"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="width" secondItem="QrM-gA-jPN" secondAttribute="width" constant="-32" id="fyB-9d-KhL"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="leading" secondItem="FNB-Ow-Pvq" secondAttribute="leading" constant="16" id="sVo-ZG-FY6"/>
@@ -137,9 +138,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
