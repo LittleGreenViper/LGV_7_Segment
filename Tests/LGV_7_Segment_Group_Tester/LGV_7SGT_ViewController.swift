@@ -159,6 +159,18 @@ class LGV_7SGT_ViewController: UIViewController {
 // MARK: Computed Properties
 /* ###################################################################################################################################### */
 extension LGV_7SGT_ViewController {
+    var displayType: DisplayTypes {
+        get {
+            guard let ds = displaySegmentedSwitch,
+                  let type = DisplayTypes(rawValue: ds.selectedSegmentIndex)
+            else { return .outline }
+            
+            return type
+        }
+        
+        set { displaySegmentedSwitch?.selectedSegmentIndex = newValue.rawValue }
+    }
+    
     /* ################################################################## */
     /**
      The selected base for the digits. This reads and sets the base switch.
@@ -242,6 +254,7 @@ extension LGV_7SGT_ViewController {
         guard let slider = valueSlider else { return }
         
         digitCountSegmentedSwitchChanged(digitCountSegmentedSwitch)
+        setHiddenStates()
         valueSliderChanged(slider)
     }
 }
@@ -256,6 +269,15 @@ extension LGV_7SGT_ViewController {
      */
     func setDigitGroup() {
         displayView?.setNeedsLayout()
+    }
+
+    /* ################################################################## */
+    /**
+     Hides or shows the value label and value slider.
+     */
+    func setHiddenStates() {
+        valueSlider?.isHidden = 0 == numberOfDigits || .outline == displayType || .maskOnly == displayType
+        valueDisplayLabel?.isHidden = 0 == numberOfDigits || .outline == displayType || .maskOnly == displayType
     }
 }
 
@@ -288,46 +310,37 @@ extension LGV_7SGT_ViewController {
 
         switch inSwitch.selectedSegmentIndex {
         case 1:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
             valueSlider?.minimumValue = Float(0)
             valueSlider?.maximumValue = Float(15)
 
         case 2:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
             valueSlider?.minimumValue = Float(-15)
             valueSlider?.maximumValue = Float(15)
 
         case 3:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
             valueSlider?.minimumValue = Float(-31)
             valueSlider?.maximumValue = Float(31)
 
         case 4:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
             valueSlider?.minimumValue = Float(-255)
             valueSlider?.maximumValue = Float(255)
 
         case 5:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
             valueSlider?.minimumValue = Float(-4095)
             valueSlider?.maximumValue = Float(4095)
 
         default:
-            valueSlider?.isEnabled = false
-            valueDisplayLabel?.isHidden = true
             valueSlider?.minimumValue = Float(0)
             valueSlider?.maximumValue = Float(0)
         }
         
+        setHiddenStates()
+
         valueSlider?.value = Float(0)
         valueSlider?.sendActions(for: .valueChanged)
+        displayView?.setNeedsLayout()
     }
-
+    
     /* ################################################################## */
     /**
      Called when the segmented switch for the display changes.
@@ -335,31 +348,7 @@ extension LGV_7SGT_ViewController {
      - parameter inSwitch: The switch that changed.
      */
     @IBAction func displaySegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
-        switch inSwitch.selectedSegmentIndex {
-        case DisplayTypes.outline.rawValue:
-            valueSlider?.isEnabled = false
-            valueDisplayLabel?.isHidden = true
-            
-        case DisplayTypes.maskOnly.rawValue:
-            valueSlider?.isEnabled = false
-            valueDisplayLabel?.isHidden = true
-            
-        case DisplayTypes.onOnly.rawValue:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
-            
-        case DisplayTypes.offOnly.rawValue:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
-            
-        case DisplayTypes.all.rawValue:
-            valueSlider?.isEnabled = true
-            valueDisplayLabel?.isHidden = false
-            
-        default:
-            break
-        }
-        
+        setHiddenStates()
         displayView?.setNeedsLayout()
     }
     
