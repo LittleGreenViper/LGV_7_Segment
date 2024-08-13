@@ -238,7 +238,7 @@ public struct LGV_7_Segment_Group {
     ) {
         var tempDigits = [LGV_7_Segment]()
         
-        let digitWidth = (inSize.width - (CGFloat(inNumberOfDigits) * inSpacingInDisplayUnits)) / CGFloat(inNumberOfDigits)
+        let digitWidth = (inSize.width - ((CGFloat(inNumberOfDigits) - 1) * inSpacingInDisplayUnits)) / CGFloat(inNumberOfDigits)
         let digitSize = CGSize(width: digitWidth, height: inSize.height)
 
         for _ in 0..<inNumberOfDigits {
@@ -295,9 +295,11 @@ extension LGV_7_Segment_Group {
     public var outline: CGPath {
         guard !digits.isEmpty else { return CGMutablePath() }
         var x = CGFloat(0)
+        var index = digits.count
         return digits.reduce(into: CGMutablePath()) {
             let transform = CGAffineTransform(translationX: x, y: 0)
-            x += $1.size.width + spacingInDisplayUnits
+            index -= 1
+            x += $1.size.width + (0 == index ? 0 : spacingInDisplayUnits)
             $0.addPath($1.outline, transform: transform)
         }
     }
@@ -311,9 +313,11 @@ extension LGV_7_Segment_Group {
     public var onSegments: CGPath {
         guard !digits.isEmpty else { return CGMutablePath() }
         var x = CGFloat(0)
+        var index = digits.count
         return digits.reduce(into: CGMutablePath()) {
             let transform = CGAffineTransform(translationX: x, y: 0)
-            x += $1.size.width + spacingInDisplayUnits
+            index -= 1
+            x += $1.size.width + (0 == index ? 0 : spacingInDisplayUnits)
             $0.addPath($1.onSegments, transform: transform)
         }
     }
@@ -327,9 +331,11 @@ extension LGV_7_Segment_Group {
     public var offSegments: CGPath {
         guard !digits.isEmpty else { return CGMutablePath() }
         var x = CGFloat(0)
+        var index = digits.count
         return digits.reduce(into: CGMutablePath()) {
             let transform = CGAffineTransform(translationX: x, y: 0)
-            x += $1.size.width + spacingInDisplayUnits
+            index -= 1
+            x += $1.size.width + (0 == index ? 0 : spacingInDisplayUnits)
             $0.addPath($1.offSegments, transform: transform)
         }
     }
@@ -341,9 +347,11 @@ extension LGV_7_Segment_Group {
     public var segmentMask: CGPath {
         guard !digits.isEmpty else { return CGMutablePath() }
         var x = CGFloat(0)
+        var index = digits.count
         return digits.reduce(into: CGMutablePath()) {
             let transform = CGAffineTransform(translationX: x, y: 0)
-            x += $1.size.width + spacingInDisplayUnits
+            index -= 1
+            x += $1.size.width + (0 == index ? 0 : spacingInDisplayUnits)
             $0.addPath($1.segmentMask, transform: transform)
         }
     }
