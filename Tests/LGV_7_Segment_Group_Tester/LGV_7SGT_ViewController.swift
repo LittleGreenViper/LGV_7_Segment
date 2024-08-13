@@ -305,7 +305,7 @@ extension LGV_7SGT_ViewController {
     /**
      Returns the number of digits being displayed (without the negative sign).
      */
-    var numberOfNumericalDigits: Int { numberOfDigits - 1 < numberOfDigits ? 1 : 0 }
+    var numberOfNumericalDigits: Int { numberOfDigits - (1 < numberOfDigits ? 1 : 0) }
     
     /* ################################################################## */
     /**
@@ -405,35 +405,14 @@ extension LGV_7SGT_ViewController {
     @IBAction func digitCountSegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
         valueSlider?.isEnabled = 0 < inSwitch.selectedSegmentIndex
         valueDisplayLabel?.isHidden = 0 == inSwitch.selectedSegmentIndex
-
-        switch inSwitch.selectedSegmentIndex {
-        case 1:
-            valueSlider?.minimumValue = Float(0)
-            valueSlider?.maximumValue = Float(15)
-
-        case 2:
-            valueSlider?.minimumValue = Float(-15)
-            valueSlider?.maximumValue = Float(15)
-
-        case 3:
-            valueSlider?.minimumValue = Float(-31)
-            valueSlider?.maximumValue = Float(31)
-
-        case 4:
-            valueSlider?.minimumValue = Float(-255)
-            valueSlider?.maximumValue = Float(255)
-
-        case 5:
-            valueSlider?.minimumValue = Float(-4095)
-            valueSlider?.maximumValue = Float(4095)
-
-        default:
-            valueSlider?.minimumValue = Float(0)
-            valueSlider?.maximumValue = Float(0)
-        }
         
         setHiddenStates()
 
+        let digitCount = numberOfNumericalDigits
+        let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(digitCount))) - 1
+        let minVal = (1 < digitCount) ? -maxVal : 0
+        valueSlider?.minimumValue = Float(minVal)
+        valueSlider?.maximumValue = Float(maxVal)
         valueSlider?.value = Float(0)
         valueSlider?.sendActions(for: .valueChanged)
         displayView?.setNeedsLayout()
@@ -457,6 +436,13 @@ extension LGV_7SGT_ViewController {
      - parameter inSwitch: The switch that changed.
      */
     @IBAction func numberBaseSegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
+        let digitCount = numberOfNumericalDigits
+        let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(digitCount))) - 1
+        let minVal = (1 < digitCount) ? -maxVal : 0
+        valueSlider?.minimumValue = Float(minVal)
+        valueSlider?.maximumValue = Float(maxVal)
+        valueSlider?.value = Float(0)
         valueSlider?.sendActions(for: .valueChanged)
+        displayView?.setNeedsLayout()
     }
 }

@@ -21,74 +21,6 @@ import Foundation
 import CoreGraphics
 
 /* ###################################################################################################################################### */
-// MARK: - UInt64 Extension -
-/* ###################################################################################################################################### */
-/**
- This extension will add a new set of capabilities to the native UInt64 data type.
- */
-fileprivate extension UInt64 {
-    /* ################################################################## */
-    /**
-     This method allows us to mask a discrete bit range within the number, and return its value as a 64-bit unsigned Int.
-     
-     For example, if we have the hex number 0xF30 (3888 decimal, or 111100110000 binary), we can mask parts of it to get masked values, like so:
-     ```
-        // 111100110000 (Value, in binary)
-     
-        // 111111111111 (Mask, in binary)
-        let wholeValue = 3888.maskedValue(firstPlace: 0, runLength: 12)     // Returns 3888
-        // 111111110000
-        let lastByte = 3888.maskedValue(firstPlace: 4, runLength: 8)        // Returns 243
-        // 000000000011
-        let lowestTwoBits = 3888.maskedValue(firstPlace: 0, runLength: 2)   // Returns 0
-        // 000000111100
-        let middleTwelve = 3888.maskedValue(firstPlace: 2, runLength: 4)    // Returns 12
-        // 000111100000
-        let middleNine = 3888.maskedValue(firstPlace: 5, runLength: 4)      // Returns 9
-        // 011111111111
-        let theFirstElevenBits = 3888.maskedValue(firstPlace: 0, runLength: 11) // Returns 1840
-        // 111111111110
-        let theLastElevenBits = 3888.maskedValue(firstPlace: 1, runLength: 11)  // Returns 1944
-        // 000000110000
-        let lowestTwoBitsOfTheSecondHalfOfTheFirstByte = 3888.maskedValue(firstPlace: 4, runLength: 2)          // Returns 3
-        // 000001100000
-        let secondToLowestTwoBitsOfTheSecondHalfOfTheFirstByte = 3888.maskedValue(firstPlace: 5, runLength: 2)  // Returns 1
-        // 000011000000
-        let thirdFromLowestTwoBitsOfTheSecondHalfOfTheFirstByte = 3888.maskedValue(firstPlace: 6, runLength: 2) // Returns 0
-     ```
-     This is useful for interpeting bitfields, such as the OBD DTS response.
-     
-     This is BIT-based, not BYTE-based, and assumes the number is in a linear (bigendian) format, in which the least significant bit is the rightmost one (position one).
-     In reality, this doesn't matter, as the language takes care of transposing byte order.
-     
-     Bit 1 is the least signficant (rightmost) bit in the value. The maximum value for `firstPlace` is 64.
-     Run Length means the selected (by `firstPlace`) first bit, and leftward (towards more significant bits). It includes the first bit.
-     
-     The UInt64 variant of this is the "main" one.
-     
-     - prerequisites:
-        - The sum of `firstPlace` and `runLength` cannot exceed the maximum size of a UInt64.
-
-     - parameters:
-        - firstPlace: The 1-based (1 is the first bit) starting position for the mask.
-        - runLength: The inclusive (includes the starting place) number of bits to mask. If 0, then the return will always be 0.
-     
-     - returns: An Unsigned Int, with the masked value.
-     */
-    func _maskedValue(firstPlace inFirstPlace: UInt, runLength inRunLength: UInt) -> UInt64 {
-        let maxRunLength = UInt(64)
-        guard (inFirstPlace + inRunLength) <= maxRunLength,
-              0 < inRunLength else { return 0 }   // Shortcut, if they aren't looking for anything.
-        // The first thing we do, is shift the main value down to the start of our mask.
-        let shifted = UInt64(self >> inFirstPlace)
-        // We make a mask quite simply. We just shift down a "full house."
-        let mask = UInt64(0xFFFFFFFFFFFFFFFF) >> (maxRunLength - inRunLength)
-        // By masking out anything not in the run length, we return a value.
-        return shifted & UInt64(mask)
-    }
-}
-
-/* ###################################################################################################################################### */
 // MARK: - Seven-Segment Display Group CGPath Generator -
 /* ###################################################################################################################################### */
 /**
@@ -251,7 +183,11 @@ public struct LGV_7_Segment_Group {
         canShowNegative = inCanShowNegative
         showLeadingZeroes = inShowLeadingZeroes
         spacingInDisplayUnits = inSpacingInDisplayUnits
-        value = inValue
+        let maxDigitalPlaces = digits.count - (inCanShowNegative ? 1 : 0) // How many digit places we have to work with.
+        let maxValue = Int(pow(Double(numberBase.base), Double(maxDigitalPlaces))) - 1
+        let minValue = canShowNegative ? -maxValue : 0
+        value = min(maxValue, max(minValue, inValue))
+        _setToValue()
     }
 }
 
@@ -395,20 +331,20 @@ extension LGV_7_Segment_Group {
         
         var digitValues: [Int] = []
         
-        var firstPlace = UInt(0)
-        
         switch numberBase {
         case .binary:
-            while firstPlace < 64 {
-                let temp = Int(value._maskedValue(firstPlace: firstPlace, runLength: 1))
-                firstPlace += 1
-                digitValues.append(temp)
+            while 0 < value {
+                let overTwo = (value / 2) * 2
+                let underTwo = Int(value - overTwo)
+                digitValues.append(underTwo)
+                value /= 2
             }
         case .octal:
-            while firstPlace < 64 {
-                let temp = Int(value._maskedValue(firstPlace: firstPlace, runLength: 3))
-                firstPlace += 3
-                digitValues.append(temp)
+            while 0 < value {
+                let overEight = (value / 8) * 8
+                let underEight = Int(value - overEight)
+                digitValues.append(underEight)
+                value /= 8
             }
         case .decimal:
             while 0 < value {
@@ -418,21 +354,20 @@ extension LGV_7_Segment_Group {
                 value /= 10
             }
         case .hex:
-            while firstPlace < 64 {
-                let temp = Int(value._maskedValue(firstPlace: firstPlace, runLength: 4))
-                firstPlace += 4
-                digitValues.append(temp)
+            while 0 < value {
+                let overSixteen = (value / 16) * 16
+                let underSixteen = Int(value - overSixteen)
+                digitValues.append(underSixteen)
+                value /= 16
             }
         }
         
         guard digitValues.count <= digits.count else { return }
         
         var currentDigit = digits.count - 1
-        digitValues.reversed().forEach {
-            if !canShowNegative || 1 < currentDigit {
-                digits[currentDigit].value = $0
-                currentDigit -= 1
-            }
+        digitValues.forEach {
+            digits[currentDigit].value = $0
+            currentDigit -= 1
         }
         
         if showLeadingZeroes {

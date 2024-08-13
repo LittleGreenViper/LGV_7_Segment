@@ -50,7 +50,7 @@
                                                         </connections>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="XBx-Sz-IxC" firstAttribute="centerX" secondItem="Nhs-Hg-b4Z" secondAttribute="centerX" id="A1j-LC-jQP"/>
                                                     <constraint firstItem="XBx-Sz-IxC" firstAttribute="top" secondItem="Nhs-Hg-b4Z" secondAttribute="top" id="K2u-dM-eti"/>
@@ -153,9 +153,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
