@@ -35,15 +35,29 @@
                                                     <action selector="valueSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="pJ8-Wb-DGt"/>
                                                 </connections>
                                             </slider>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBx-Sz-IxC" customClass="LGV_7SGT_DisplayView" customModule="LGV_7_Segment_Group_Tester" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nhs-Hg-b4Z">
                                                 <rect key="frame" x="0.0" y="66.333333333333314" width="361" height="128"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBx-Sz-IxC" customClass="LGV_7SGT_DisplayView" customModule="LGV_7_Segment_Group_Tester" customModuleProvider="target">
+                                                        <rect key="frame" x="116.66666666666666" y="0.0" width="128" height="128"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" id="EJK-WN-aZz"/>
+                                                            <constraint firstAttribute="width" constant="128" id="j5E-VE-v1O"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <outlet property="myController" destination="BYZ-38-t0r" id="qKR-kl-lge"/>
+                                                        </connections>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="128" id="EJK-WN-aZz"/>
+                                                    <constraint firstItem="XBx-Sz-IxC" firstAttribute="centerX" secondItem="Nhs-Hg-b4Z" secondAttribute="centerX" id="A1j-LC-jQP"/>
+                                                    <constraint firstItem="XBx-Sz-IxC" firstAttribute="top" secondItem="Nhs-Hg-b4Z" secondAttribute="top" id="K2u-dM-eti"/>
+                                                    <constraint firstAttribute="bottom" secondItem="XBx-Sz-IxC" secondAttribute="bottom" id="Uys-Ta-zr3"/>
+                                                    <constraint firstItem="XBx-Sz-IxC" firstAttribute="width" relation="lessThanOrEqual" secondItem="Nhs-Hg-b4Z" secondAttribute="width" id="e4q-De-062"/>
+                                                    <constraint firstAttribute="height" constant="128" placeholder="YES" id="hLl-yz-AEb"/>
                                                 </constraints>
-                                                <connections>
-                                                    <outlet property="myController" destination="BYZ-38-t0r" id="qKR-kl-lge"/>
-                                                </connections>
                                             </view>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hok-nV-Fc6">
                                                 <rect key="frame" x="0.0" y="202.33333333333331" width="361" height="32"/>
@@ -87,11 +101,11 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TDe-uj-hR6" secondAttribute="trailing" id="9da-hv-qjp"/>
+                                            <constraint firstAttribute="trailing" secondItem="Nhs-Hg-b4Z" secondAttribute="trailing" id="A1H-24-7SE"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hok-nV-Fc6" secondAttribute="trailing" id="Hpc-AN-U8m"/>
+                                            <constraint firstItem="Nhs-Hg-b4Z" firstAttribute="leading" secondItem="ifK-hW-Sf0" secondAttribute="leading" id="IXz-Of-45s"/>
                                             <constraint firstAttribute="trailing" secondItem="vvQ-sh-x43" secondAttribute="trailing" id="Kop-nU-Hzu"/>
                                             <constraint firstItem="fjn-Ny-Wyb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ifK-hW-Sf0" secondAttribute="leading" id="Tyz-tn-kXR"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XBx-Sz-IxC" secondAttribute="trailing" id="dVa-5P-7Mk"/>
-                                            <constraint firstItem="XBx-Sz-IxC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ifK-hW-Sf0" secondAttribute="leading" id="jqo-vk-EN4"/>
                                             <constraint firstItem="TDe-uj-hR6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ifK-hW-Sf0" secondAttribute="leading" id="kH2-zE-cVQ"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fjn-Ny-Wyb" secondAttribute="trailing" id="pUM-La-32W"/>
                                             <constraint firstItem="vvQ-sh-x43" firstAttribute="leading" secondItem="ifK-hW-Sf0" secondAttribute="leading" id="wbY-Oj-dmp"/>
@@ -102,7 +116,6 @@
                                 <constraints>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="bottom" secondItem="FNB-Ow-Pvq" secondAttribute="bottom" id="2sf-rZ-V9v"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="top" secondItem="FNB-Ow-Pvq" secondAttribute="top" id="57B-BN-NB5"/>
-                                    <constraint firstItem="XBx-Sz-IxC" firstAttribute="height" relation="lessThanOrEqual" secondItem="QrM-gA-jPN" secondAttribute="height" multiplier="0.5" id="ERk-WU-EWh"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="trailing" secondItem="FNB-Ow-Pvq" secondAttribute="trailing" constant="-16" id="Sri-zr-6yS"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="width" secondItem="QrM-gA-jPN" secondAttribute="width" constant="-32" id="fyB-9d-KhL"/>
                                     <constraint firstItem="ifK-hW-Sf0" firstAttribute="leading" secondItem="FNB-Ow-Pvq" secondAttribute="leading" constant="16" id="sVo-ZG-FY6"/>
@@ -125,6 +138,8 @@
                         <outlet property="displayHeightAnchor" destination="EJK-WN-aZz" id="XgY-dY-qJd"/>
                         <outlet property="displaySegmentedSwitch" destination="fjn-Ny-Wyb" id="Qep-Z2-zel"/>
                         <outlet property="displayView" destination="XBx-Sz-IxC" id="hRx-F4-S0e"/>
+                        <outlet property="displayViewContainer" destination="Nhs-Hg-b4Z" id="zMn-7y-yKR"/>
+                        <outlet property="displayWidthAnchor" destination="j5E-VE-v1O" id="Xj2-yy-w1V"/>
                         <outlet property="numberBaseSegmentedSwitch" destination="TDe-uj-hR6" id="iav-iK-W57"/>
                         <outlet property="valueDisplayLabel" destination="EyI-f8-J7b" id="WZb-1u-phN"/>
                         <outlet property="valueSlider" destination="vvQ-sh-x43" id="Z2d-jS-dAL"/>
@@ -138,6 +153,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -287,7 +287,21 @@ extension LGV_7_Segment_Group {
         
         return eachDigitWidth / (LGV_7_Segment.c_g_displaySize.width / LGV_7_Segment.c_g_displaySize.height)
     }
-    
+
+    /* ################################################################## */
+    /**
+     This is the outline of the entire display.
+     */
+    public var outline: CGPath {
+        guard !digits.isEmpty else { return CGMutablePath() }
+        var x = CGFloat(0)
+        return digits.reduce(into: CGMutablePath()) {
+            let transform = CGAffineTransform(translationX: x, y: 0)
+            x += $1.size.width + spacingInDisplayUnits
+            $0.addPath($1.outline, transform: transform)
+        }
+    }
+
     /* ################################################################## */
     /**
      This is the combined paths for all the "On" segments.
@@ -295,7 +309,13 @@ extension LGV_7_Segment_Group {
      > NOTE: If none are on (value -2), this will be an empty path.
      */
     public var onSegments: CGPath {
-        digits.reduce(into: CGMutablePath()) { $0.addPath($1.onSegments) }
+        guard !digits.isEmpty else { return CGMutablePath() }
+        var x = CGFloat(0)
+        return digits.reduce(into: CGMutablePath()) {
+            let transform = CGAffineTransform(translationX: x, y: 0)
+            x += $1.size.width + spacingInDisplayUnits
+            $0.addPath($1.onSegments, transform: transform)
+        }
     }
 
     /* ################################################################## */
@@ -305,7 +325,13 @@ extension LGV_7_Segment_Group {
      > NOTE: If none are off (value 8), this will be an empty path.
      */
     public var offSegments: CGPath {
-        digits.reduce(into: CGMutablePath()) { $0.addPath($1.offSegments) }
+        guard !digits.isEmpty else { return CGMutablePath() }
+        var x = CGFloat(0)
+        return digits.reduce(into: CGMutablePath()) {
+            let transform = CGAffineTransform(translationX: x, y: 0)
+            x += $1.size.width + spacingInDisplayUnits
+            $0.addPath($1.offSegments, transform: transform)
+        }
     }
 
     /* ################################################################## */
@@ -313,14 +339,14 @@ extension LGV_7_Segment_Group {
      This is the combined paths for all the segments (both "on" and "off").
      */
     public var segmentMask: CGPath {
-        digits.reduce(into: CGMutablePath()) { $0.addPath($1.segmentMask) }
+        guard !digits.isEmpty else { return CGMutablePath() }
+        var x = CGFloat(0)
+        return digits.reduce(into: CGMutablePath()) {
+            let transform = CGAffineTransform(translationX: x, y: 0)
+            x += $1.size.width + spacingInDisplayUnits
+            $0.addPath($1.segmentMask, transform: transform)
+        }
     }
-
-    /* ################################################################## */
-    /**
-     This is the outline of the entire display.
-     */
-    public var outline: CGPath { digits.reduce(into: CGMutablePath()) { $0.addPath($1.outline) } }
 }
 
 /* ###################################################################################################################################### */

@@ -68,15 +68,14 @@ class LGV_7SGT_DisplayView: UIView {
      Called when the layout changes.
      */
     override func layoutSubviews() {
-        super.layoutSubviews()
-        
         layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         guard let myController = myController,
-              let viewWidth = myController.view?.bounds.size.width
+              let viewWidth = myController.displayViewContainer?.bounds.size.width
         else { return }
         
         if 0 < myController.numberOfDigits,
            0 < viewWidth {
+            myController.displayViewContainer?.isHidden = false
             var tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: CGSize(width: 128, height: 128))
             let necessaryHeight = tempDigit.idealHeightFrom(width: viewWidth)
             let value = myController.value
@@ -91,7 +90,8 @@ class LGV_7SGT_DisplayView: UIView {
             digitSet = tempDigit
             
             myController.displayHeightAnchor?.constant = necessaryHeight
-            
+            myController.displayWidthAnchor?.constant = viewWidth
+
             let backLayer = CAShapeLayer()
             let offLayer = CAShapeLayer()
             let onLayer = CAShapeLayer()
@@ -101,11 +101,6 @@ class LGV_7SGT_DisplayView: UIView {
             offLayer.frame = bounds
             onLayer.frame = bounds
             maskLayer.frame = bounds
-
-            backLayer.path = tempDigit.outline
-            offLayer.path = tempDigit.offSegments
-            onLayer.path = tempDigit.onSegments
-            maskLayer.path = tempDigit.segmentMask
             
             backLayer.fillColor = backColor.cgColor
             offLayer.fillColor = offColor.cgColor
@@ -118,33 +113,44 @@ class LGV_7SGT_DisplayView: UIView {
             
             switch selection {
             case .all:
+                backLayer.path = tempDigit.outline
                 layer.addSublayer(backLayer)
+                offLayer.path = tempDigit.offSegments
                 layer.addSublayer(offLayer)
+                onLayer.path = tempDigit.onSegments
                 layer.addSublayer(onLayer)
                 
             case .onOnly:
                 maskLayer.lineWidth = 0.5
                 maskLayer.fillColor = UIColor.clear.cgColor
+                maskLayer.path = tempDigit.segmentMask
                 layer.addSublayer(maskLayer)
+                onLayer.path = tempDigit.onSegments
                 layer.addSublayer(onLayer)
 
             case .offOnly:
                 maskLayer.lineWidth = 0.5
                 maskLayer.fillColor = UIColor.clear.cgColor
+                maskLayer.path = tempDigit.segmentMask
                 layer.addSublayer(maskLayer)
+                offLayer.path = tempDigit.offSegments
                 layer.addSublayer(offLayer)
 
             case .outline:
+                backLayer.path = tempDigit.outline
                 layer.addSublayer(backLayer)
 
             case .maskOnly:
                 maskLayer.lineWidth = 0
                 maskLayer.fillColor = maskColor.cgColor
+                maskLayer.path = tempDigit.segmentMask
                 layer.addSublayer(maskLayer)
             }
         } else {
-            myController.displayHeightAnchor?.constant = 0
+            myController.displayViewContainer?.isHidden = true
         }
+        
+        super.layoutSubviews()
     }
 }
 
@@ -203,6 +209,12 @@ class LGV_7SGT_ViewController: UIViewController {
      A slider that affects the value shown on the display.
      */
     @IBOutlet weak var valueSlider: UISlider?
+
+    /* ################################################################## */
+    /**
+     This contains the display.
+     */
+    @IBOutlet weak var displayViewContainer: UIView?
     
     /* ################################################################## */
     /**
@@ -227,7 +239,13 @@ class LGV_7SGT_ViewController: UIViewController {
      The height anchor for the display, which is changed to match the current number of digits, and the width of the display.
      */
     @IBOutlet weak var displayHeightAnchor: NSLayoutConstraint?
-    
+
+    /* ################################################################## */
+    /**
+     The width anchor for the display, which is changed to match the current number of digits, and the width of the display.
+     */
+    @IBOutlet weak var displayWidthAnchor: NSLayoutConstraint?
+
     /* ################################################################## */
     /**
      A segmented switch that affects the number base of the digits.
