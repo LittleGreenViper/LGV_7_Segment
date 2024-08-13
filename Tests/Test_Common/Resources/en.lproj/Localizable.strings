@@ -44,3 +44,5 @@
 "SLUG-BASE-1"                                     =     "Octal";
 "SLUG-BASE-2"                                     =     "Decimal";
 "SLUG-BASE-3"                                     =     "Hexadecimal";
+
+"SLUG-LEADING-ZEROES"                             =     "Leading Zeroes:";

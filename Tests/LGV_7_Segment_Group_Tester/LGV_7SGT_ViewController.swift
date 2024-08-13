@@ -70,21 +70,26 @@ class LGV_7SGT_DisplayView: UIView {
     override func layoutSubviews() {
         layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         guard let myController = myController,
-              let viewWidth = myController.displayViewContainer?.bounds.size.width
+              var viewWidth = myController.displayViewContainer?.bounds.size.width
         else { return }
         
         if 0 < myController.numberOfDigits,
            0 < viewWidth {
             myController.displayViewContainer?.isHidden = false
             var tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits, size: CGSize(width: 128, height: 128))
-            let necessaryHeight = tempDigit.idealHeightFrom(width: viewWidth)
+            var necessaryHeight = tempDigit.idealHeightFrom(width: viewWidth)
+            if necessaryHeight > (myController.view.bounds.height / 2) {
+                necessaryHeight = (myController.view.bounds.height / 2)
+                viewWidth = tempDigit.idealWidthFrom(height: necessaryHeight)
+            }
             let value = myController.value
             tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits,
-                                           size: CGSize(width: viewWidth, height: necessaryHeight),
-                                           numberBase: myController.numberBase,
-                                           value: value,
-                                           canShowNegative: 1 < myController.numberOfDigits,
-                                           spacing: 4
+                                            size: CGSize(width: viewWidth, height: necessaryHeight),
+                                            numberBase: myController.numberBase,
+                                            value: value,
+                                            canShowNegative: 1 < myController.numberOfDigits,
+                                            showLeadingZeroes: myController.hasLeadingZeroes,
+                                            spacing: 4
             )
             
             digitSet = tempDigit
@@ -251,6 +256,18 @@ class LGV_7SGT_ViewController: UIViewController {
      A segmented switch that affects the number base of the digits.
      */
     @IBOutlet weak var numberBaseSegmentedSwitch: UISegmentedControl?
+
+    /* ################################################################## */
+    /**
+     The switch that controls whether or not leading zeroes are displayed.
+     */
+    @IBOutlet weak var leadingZeroesSwitch: UISwitch?
+    
+    /* ################################################################## */
+    /**
+     The label is actually a button, and toggles the switch.
+     */
+    @IBOutlet weak var leadingZeroesLabelButton: UIButton?
 }
 
 /* ###################################################################################################################################### */
@@ -309,6 +326,15 @@ extension LGV_7SGT_ViewController {
     
     /* ################################################################## */
     /**
+     Returns the number of digits being displayed (including the negative sign).
+     */
+    var hasLeadingZeroes: Bool {
+        get { leadingZeroesSwitch?.isOn ?? false }
+        set { leadingZeroesSwitch?.isOn = newValue }
+    }
+
+    /* ################################################################## */
+    /**
      This is the value of the digit group.
      */
     var value: Int {
@@ -334,6 +360,8 @@ extension LGV_7SGT_ViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        leadingZeroesLabelButton?.setTitle(leadingZeroesLabelButton?.title(for: .normal)?.localizedVariant, for: .normal)
         
         guard let digitCountSegmentedSwitch = digitCountSegmentedSwitch else { return }
 
@@ -408,9 +436,8 @@ extension LGV_7SGT_ViewController {
         
         setHiddenStates()
 
-        let digitCount = numberOfNumericalDigits
-        let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(digitCount))) - 1
-        let minVal = (1 < digitCount) ? -maxVal : 0
+        let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(numberOfNumericalDigits))) - 1
+        let minVal = (1 < numberOfDigits) ? -maxVal : 0
         valueSlider?.minimumValue = Float(minVal)
         valueSlider?.maximumValue = Float(maxVal)
         valueSlider?.value = Float(0)
@@ -436,13 +463,27 @@ extension LGV_7SGT_ViewController {
      - parameter inSwitch: The switch that changed.
      */
     @IBAction func numberBaseSegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
-        let digitCount = numberOfNumericalDigits
-        let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(digitCount))) - 1
-        let minVal = (1 < digitCount) ? -maxVal : 0
+        let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(numberOfNumericalDigits))) - 1
+        let minVal = (1 < numberOfDigits) ? -maxVal : 0
         valueSlider?.minimumValue = Float(minVal)
         valueSlider?.maximumValue = Float(maxVal)
         valueSlider?.value = Float(0)
         valueSlider?.sendActions(for: .valueChanged)
         displayView?.setNeedsLayout()
+    }
+    
+    /* ################################################################## */
+    /**
+     Called when the button or the switch for leading zeroes changes.
+     
+     - parameter inControl: The button or switch that changed.
+     */
+    @IBAction func leadingZeroesSwitchChanged(_ inControl: UIControl) {
+        if inControl is UIButton {
+            leadingZeroesSwitch?.isOn = !(leadingZeroesSwitch?.isOn ?? true)
+            leadingZeroesSwitch?.sendActions(for: .valueChanged)
+        } else {
+            displayView?.setNeedsLayout()
+        }
     }
 }

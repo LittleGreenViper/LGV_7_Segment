@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ifK-hW-Sf0">
-                                        <rect key="frame" x="16" y="0.0" width="361" height="311.33333333333331"/>
+                                        <rect key="frame" x="16" y="0.0" width="361" height="352.33333333333331"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyI-f8-J7b">
                                                 <rect key="frame" x="160" y="0.0" width="41.333333333333343" height="20.333333333333332"/>
@@ -98,6 +98,26 @@
                                                     <action selector="numberBaseSegmentedSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Mka-O7-M2p"/>
                                                 </connections>
                                             </segmentedControl>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Wck-Ml-CBe">
+                                                <rect key="frame" x="55.666666666666686" y="319.33333333333331" width="250" height="33"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfv-5c-Fiv">
+                                                        <rect key="frame" x="0.0" y="0.0" width="193" height="33"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="SLUG-LEADING-ZEROES"/>
+                                                        <connections>
+                                                            <action selector="leadingZeroesSwitchChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="arb-dh-gL2"/>
+                                                        </connections>
+                                                    </button>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="slB-uu-Lb0">
+                                                        <rect key="frame" x="201" y="1" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="leadingZeroesSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="OI7-Ue-M0X"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TDe-uj-hR6" secondAttribute="trailing" id="9da-hv-qjp"/>
@@ -140,6 +160,8 @@
                         <outlet property="displayView" destination="XBx-Sz-IxC" id="hRx-F4-S0e"/>
                         <outlet property="displayViewContainer" destination="Nhs-Hg-b4Z" id="zMn-7y-yKR"/>
                         <outlet property="displayWidthAnchor" destination="j5E-VE-v1O" id="Xj2-yy-w1V"/>
+                        <outlet property="leadingZeroesLabelButton" destination="rfv-5c-Fiv" id="fwe-UO-KQs"/>
+                        <outlet property="leadingZeroesSwitch" destination="slB-uu-Lb0" id="aco-Ma-Q6Y"/>
                         <outlet property="numberBaseSegmentedSwitch" destination="TDe-uj-hR6" id="iav-iK-W57"/>
                         <outlet property="valueDisplayLabel" destination="EyI-f8-J7b" id="WZb-1u-phN"/>
                         <outlet property="valueSlider" destination="vvQ-sh-x43" id="Z2d-jS-dAL"/>

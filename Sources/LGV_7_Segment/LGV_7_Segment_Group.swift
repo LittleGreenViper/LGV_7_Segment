@@ -183,9 +183,9 @@ public struct LGV_7_Segment_Group {
         canShowNegative = inCanShowNegative
         showLeadingZeroes = inShowLeadingZeroes
         spacingInDisplayUnits = inSpacingInDisplayUnits
-        let maxDigitalPlaces = digits.count - (inCanShowNegative ? 1 : 0) // How many digit places we have to work with.
-        let maxValue = Int(pow(Double(numberBase.base), Double(maxDigitalPlaces))) - 1
-        let minValue = canShowNegative ? -maxValue : 0
+        let maxDigitalPlaces = tempDigits.count - (inCanShowNegative ? 1 : 0) // How many digit places we have to work with.
+        let maxValue = Int(pow(Double(inNumberBase.base), Double(maxDigitalPlaces))) - 1
+        let minValue = inCanShowNegative ? -maxValue : 0
         value = min(maxValue, max(minValue, inValue))
         _setToValue()
     }
@@ -205,7 +205,7 @@ extension LGV_7_Segment_Group {
         guard !digits.isEmpty else { return 0 }
         
         let defaultAspect = LGV_7_Segment.c_g_displaySize.width / LGV_7_Segment.c_g_displaySize.height
-        let digitWidth = CGFloat(digits.count) * (inHeight / defaultAspect)
+        let digitWidth = CGFloat(digits.count) * (inHeight * defaultAspect)
         
         return digitWidth + (spacingInDisplayUnits * (CGFloat(digits.count) - 1))
     }
@@ -318,12 +318,14 @@ extension LGV_7_Segment_Group {
     
     /* ################################################################## */
     /**
+     Awkward function, but it works.
+     
+     // TODO: Make this cleverer
      */
     private mutating func _setToValue() {
         guard !digits.isEmpty else { return }
 
-        let isNegative = 0 > value
-        var value = UInt64(abs(value))
+        var tempValue = UInt64(abs(value))
         
         for index in 0..<digits.count {
             digits[index].value = LGV_7_Segment.Values.off.rawValue
@@ -331,54 +333,68 @@ extension LGV_7_Segment_Group {
         
         var digitValues: [Int] = []
         
-        switch numberBase {
-        case .binary:
-            while 0 < value {
-                let overTwo = (value / 2) * 2
-                let underTwo = Int(value - overTwo)
-                digitValues.append(underTwo)
-                value /= 2
+        if 0 == tempValue {
+            digits[digits.count - 1].value = 0
+            if showLeadingZeroes {
+                for index in (canShowNegative ? 1 : 0)..<(digits.count - 1) {
+                    digits[index].value = 0
+                }
             }
-        case .octal:
-            while 0 < value {
-                let overEight = (value / 8) * 8
-                let underEight = Int(value - overEight)
-                digitValues.append(underEight)
-                value /= 8
+        } else {
+            switch numberBase {
+            case .binary:
+                while 0 < tempValue {
+                    let overTwo = (tempValue / 2) * 2
+                    let underTwo = Int(tempValue - overTwo)
+                    digitValues.append(underTwo)
+                    tempValue /= 2
+                }
+            case .octal:
+                while 0 < tempValue {
+                    let overEight = (tempValue / 8) * 8
+                    let underEight = Int(tempValue - overEight)
+                    digitValues.append(underEight)
+                    tempValue /= 8
+                }
+            case .decimal:
+                while 0 < tempValue {
+                    let overTen = (tempValue / 10) * 10
+                    let underTen = Int(tempValue - overTen)
+                    digitValues.append(underTen)
+                    tempValue /= 10
+                }
+            case .hex:
+                while 0 < tempValue {
+                    let overSixteen = (tempValue / 16) * 16
+                    let underSixteen = Int(tempValue - overSixteen)
+                    digitValues.append(underSixteen)
+                    tempValue /= 16
+                }
             }
-        case .decimal:
-            while 0 < value {
-                let overTen = (value / 10) * 10
-                let underTen = Int(value - overTen)
-                digitValues.append(underTen)
-                value /= 10
+            
+            let numericalDigits = canShowNegative ? digits.count - 1 : digits.count
+            
+            var currentDigit = numericalDigits - digitValues.count + (canShowNegative ? 1 : 0)
+            
+            digitValues.reversed().forEach {
+                digits[currentDigit].value = $0
+                currentDigit += 1
             }
-        case .hex:
-            while 0 < value {
-                let overSixteen = (value / 16) * 16
-                let underSixteen = Int(value - overSixteen)
-                digitValues.append(underSixteen)
-                value /= 16
+
+            if showLeadingZeroes {
+                currentDigit = canShowNegative ? 1 : 0
+                let max = numericalDigits - digitValues.count
+                while 0 < max,
+                      max >= currentDigit {
+                    digits[currentDigit].value = 0
+                    currentDigit += 1
+                }
             }
-        }
-        
-        guard digitValues.count <= digits.count else { return }
-        
-        var currentDigit = digits.count - 1
-        digitValues.forEach {
-            digits[currentDigit].value = $0
-            currentDigit -= 1
-        }
-        
-        if showLeadingZeroes {
-            while 1 < currentDigit {
-                digits[currentDigit].value = 0
-                currentDigit -= 1
+            
+            if canShowNegative {
+                currentDigit = showLeadingZeroes ? 0 : numericalDigits - digitValues.count
+                digits[currentDigit].value = 0 > value ? LGV_7_Segment.Values.minus.rawValue : LGV_7_Segment.Values.off.rawValue
             }
-        }
-        
-        if canShowNegative {
-            digits[currentDigit].value = isNegative ? LGV_7_Segment.Values.minus.rawValue : LGV_7_Segment.Values.off.rawValue
         }
     }
 }
