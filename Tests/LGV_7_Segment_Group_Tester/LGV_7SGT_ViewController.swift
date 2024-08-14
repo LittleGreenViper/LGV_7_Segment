@@ -409,7 +409,7 @@ extension LGV_7SGT_ViewController {
         guard let slider = valueSlider else { return }
         
         digitCountSegmentedSwitchChanged(digitCountSegmentedSwitch)
-        setHiddenStates()
+        enablements()
         valueSliderChanged(slider)
     }
 }
@@ -428,11 +428,11 @@ extension LGV_7SGT_ViewController {
 
     /* ################################################################## */
     /**
-     Hides or shows the value label and value slider.
+     Enables or disables various items.
      */
-    func setHiddenStates() {
-        valueSlider?.isHidden = 0 == numberOfDigits || .outline == displayType || .maskOnly == displayType
-        valueDisplayLabel?.isHidden = 0 == numberOfDigits || .outline == displayType || .maskOnly == displayType
+    func enablements() {
+        valueSlider?.isEnabled = !(0 == numberOfDigits || .outline == displayType || .maskOnly == displayType)
+        valueDisplayLabel?.isEnabled = !(0 == numberOfDigits || .outline == displayType || .maskOnly == displayType)
         canShowNegativeSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
         canShowNegativeLabelButton?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
         leadingZeroesSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
@@ -467,7 +467,7 @@ extension LGV_7SGT_ViewController {
         valueSlider?.isEnabled = 0 < inSwitch.selectedSegmentIndex
         valueDisplayLabel?.isHidden = 0 == inSwitch.selectedSegmentIndex
         
-        setHiddenStates()
+        enablements()
         
         canShowNegativeSwitch?.isEnabled = 1 < numberOfDigits
         canShowNegativeLabelButton?.isEnabled = 1 < numberOfDigits
@@ -488,7 +488,7 @@ extension LGV_7SGT_ViewController {
      - parameter inSwitch: The switch that changed.
      */
     @IBAction func displaySegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
-        setHiddenStates()
+        enablements()
         displayView?.setNeedsLayout()
     }
     
@@ -534,7 +534,7 @@ extension LGV_7SGT_ViewController {
             canShowNegativeSwitch?.setOn(!(canShowNegativeSwitch?.isOn ?? true), animated: true)
             canShowNegativeSwitch?.sendActions(for: .valueChanged)
         } else {
-            setHiddenStates()
+            enablements()
             let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(numberOfNumericalDigits))) - 1
             let minVal = canShowNegative ? -maxVal : 0
             valueSlider?.minimumValue = Float(minVal)
