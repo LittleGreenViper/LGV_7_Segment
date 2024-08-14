@@ -37,25 +37,25 @@ class LGV_7SGT_DisplayView: UIView {
     /**
      The color to use for "on" segments.
      */
-    @IBInspectable var onColor: UIColor = .red
+    @IBInspectable var onColor: UIColor?
 
     /* ################################################################## */
     /**
      The color to use for "off" segments.
      */
-    @IBInspectable var offColor : UIColor = .gray.withAlphaComponent(0.75)
+    @IBInspectable var offColor : UIColor?
 
     /* ################################################################## */
     /**
      The color to use for the "container."
      */
-    @IBInspectable var backColor: UIColor = .blue.withAlphaComponent(0.5)
+    @IBInspectable var backColor: UIColor?
 
     /* ################################################################## */
     /**
      The color to use for the "mask" outline.
      */
-    @IBInspectable var maskColor: UIColor = .label
+    @IBInspectable var maskColor: UIColor?
 
     /* ################################################################## */
     /**
@@ -107,15 +107,20 @@ class LGV_7SGT_DisplayView: UIView {
             onLayer.frame = bounds
             maskLayer.frame = bounds
             
+            guard let selectedSegment = myController.displaySegmentedSwitch?.selectedSegmentIndex,
+                  let selection = LGV_7SGT_ViewController.DisplayTypes(rawValue: selectedSegment)
+            else { return }
+            
+            let onColor = onColor ?? .red
+            let offColor = offColor ?? (.offOnly == selection ? .blue : .gray.withAlphaComponent(0.75))
+            let backColor = backColor ?? .blue.withAlphaComponent(0.5)
+            let maskColor = maskColor ?? .label
+
             backLayer.fillColor = backColor.cgColor
             offLayer.fillColor = offColor.cgColor
             onLayer.fillColor = onColor.cgColor
             maskLayer.strokeColor = UIColor.systemGray2.cgColor
 
-            guard let selectedSegment = myController.displaySegmentedSwitch?.selectedSegmentIndex,
-                  let selection = LGV_7SGT_ViewController.DisplayTypes(rawValue: selectedSegment)
-            else { return }
-            
             switch selection {
             case .all:
                 backLayer.path = tempDigit.outline
@@ -428,6 +433,10 @@ extension LGV_7SGT_ViewController {
     func setHiddenStates() {
         valueSlider?.isHidden = 0 == numberOfDigits || .outline == displayType || .maskOnly == displayType
         valueDisplayLabel?.isHidden = 0 == numberOfDigits || .outline == displayType || .maskOnly == displayType
+        canShowNegativeSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
+        canShowNegativeLabelButton?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
+        leadingZeroesSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
+        leadingZeroesLabelButton?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
     }
 }
 

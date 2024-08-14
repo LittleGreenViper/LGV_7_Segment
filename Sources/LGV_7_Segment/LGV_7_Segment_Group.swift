@@ -382,17 +382,14 @@ extension LGV_7_Segment_Group {
             }
 
             if showLeadingZeroes {
-                currentDigit = canShowNegative ? 1 : 0
-                let max = numericalDigits - digitValues.count
-                while 0 <= max,
-                      max >= currentDigit {
-                    digits[currentDigit].value = 0
-                    currentDigit += 1
+                for index in 0..<(digits.count - digitValues.count) {
+                    digits[index].value = 0
                 }
             }
             
-            if canShowNegative {
-                currentDigit = showLeadingZeroes ? 0 : numericalDigits - digitValues.count
+            currentDigit = showLeadingZeroes ? 0 : (digits.count - digitValues.count) - 1
+            if 0 <= currentDigit,
+               canShowNegative {
                 digits[currentDigit].value = 0 > value ? LGV_7_Segment.Values.minus.rawValue : LGV_7_Segment.Values.off.rawValue
             }
         }
