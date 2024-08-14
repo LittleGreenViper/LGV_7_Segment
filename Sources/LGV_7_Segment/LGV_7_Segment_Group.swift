@@ -341,6 +341,8 @@ extension LGV_7_Segment_Group {
                 }
             }
         } else {
+            let numericalDigits = canShowNegative ? digits.count - 1 : digits.count
+            
             switch numberBase {
             case .binary:
                 while 0 < tempValue {
@@ -372,8 +374,6 @@ extension LGV_7_Segment_Group {
                 }
             }
             
-            let numericalDigits = canShowNegative ? digits.count - 1 : digits.count
-            
             var currentDigit = numericalDigits - digitValues.count + (canShowNegative ? 1 : 0)
             
             digitValues.reversed().forEach {
@@ -384,7 +384,7 @@ extension LGV_7_Segment_Group {
             if showLeadingZeroes {
                 currentDigit = canShowNegative ? 1 : 0
                 let max = numericalDigits - digitValues.count
-                while 0 < max,
+                while 0 <= max,
                       max >= currentDigit {
                     digits[currentDigit].value = 0
                     currentDigit += 1

@@ -269,6 +269,8 @@ extension LGV_7ST_ViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        view?.overrideUserInterfaceStyle = .light
+        
         let value = displaySegment?.value ?? LGV_7_Segment.Values.off.rawValue
         displaySegment?.myController = self
         valueDisplayLabel?.text = String(value)

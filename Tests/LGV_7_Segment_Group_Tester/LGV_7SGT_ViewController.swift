@@ -37,19 +37,19 @@ class LGV_7SGT_DisplayView: UIView {
     /**
      The color to use for "on" segments.
      */
-    @IBInspectable var onColor: UIColor = .systemOrange
+    @IBInspectable var onColor: UIColor = .red
 
     /* ################################################################## */
     /**
      The color to use for "off" segments.
      */
-    @IBInspectable var offColor : UIColor = .systemGray.withAlphaComponent(0.75)
+    @IBInspectable var offColor : UIColor = .gray.withAlphaComponent(0.75)
 
     /* ################################################################## */
     /**
      The color to use for the "container."
      */
-    @IBInspectable var backColor: UIColor = .blue
+    @IBInspectable var backColor: UIColor = .blue.withAlphaComponent(0.5)
 
     /* ################################################################## */
     /**
@@ -87,7 +87,7 @@ class LGV_7SGT_DisplayView: UIView {
                                             size: CGSize(width: viewWidth, height: necessaryHeight),
                                             numberBase: myController.numberBase,
                                             value: value,
-                                            canShowNegative: 1 < myController.numberOfDigits,
+                                            canShowNegative: myController.canShowNegative,
                                             showLeadingZeroes: myController.hasLeadingZeroes,
                                             spacing: 4
             )
@@ -268,6 +268,18 @@ class LGV_7SGT_ViewController: UIViewController {
      The label is actually a button, and toggles the switch.
      */
     @IBOutlet weak var leadingZeroesLabelButton: UIButton?
+    
+    /* ################################################################## */
+    /**
+     The switch that controls whether or not negative values are allowed.
+     */
+    @IBOutlet weak var canShowNegativeSwitch: UISwitch?
+    
+    /* ################################################################## */
+    /**
+     The label is actually a button, and toggles the switch.
+     */
+    @IBOutlet weak var canShowNegativeLabelButton: UIButton?
 }
 
 /* ###################################################################################################################################### */
@@ -322,15 +334,24 @@ extension LGV_7SGT_ViewController {
     /**
      Returns the number of digits being displayed (without the negative sign).
      */
-    var numberOfNumericalDigits: Int { numberOfDigits - (1 < numberOfDigits ? 1 : 0) }
+    var numberOfNumericalDigits: Int { numberOfDigits - (canShowNegative ? 1 : 0) }
     
     /* ################################################################## */
     /**
-     Returns the number of digits being displayed (including the negative sign).
+     Returns true, if the display has leading zeroes.
      */
     var hasLeadingZeroes: Bool {
         get { leadingZeroesSwitch?.isOn ?? false }
         set { leadingZeroesSwitch?.isOn = newValue }
+    }
+    
+    /* ################################################################## */
+    /**
+     Returns true, if the display can show negative numbers (the first digit is reserved for a minus sign).
+     */
+    var canShowNegative: Bool {
+        get { 1 < numberOfDigits && (canShowNegativeSwitch?.isOn ?? false) }
+        set { canShowNegativeSwitch?.isOn = newValue }
     }
 
     /* ################################################################## */
@@ -361,8 +382,11 @@ extension LGV_7SGT_ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        leadingZeroesLabelButton?.setTitle(leadingZeroesLabelButton?.title(for: .normal)?.localizedVariant, for: .normal)
+        view?.overrideUserInterfaceStyle = .light
         
+        leadingZeroesLabelButton?.setTitle(leadingZeroesLabelButton?.title(for: .normal)?.localizedVariant, for: .normal)
+        canShowNegativeLabelButton?.setTitle(canShowNegativeLabelButton?.title(for: .normal)?.localizedVariant, for: .normal)
+
         guard let digitCountSegmentedSwitch = digitCountSegmentedSwitch else { return }
 
         for index in 0..<digitCountSegmentedSwitch.numberOfSegments {
@@ -435,9 +459,12 @@ extension LGV_7SGT_ViewController {
         valueDisplayLabel?.isHidden = 0 == inSwitch.selectedSegmentIndex
         
         setHiddenStates()
+        
+        canShowNegativeSwitch?.isEnabled = 1 < numberOfDigits
+        canShowNegativeLabelButton?.isEnabled = 1 < numberOfDigits
 
         let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(numberOfNumericalDigits))) - 1
-        let minVal = (1 < numberOfDigits) ? -maxVal : 0
+        let minVal = canShowNegative ? -maxVal : 0
         valueSlider?.minimumValue = Float(minVal)
         valueSlider?.maximumValue = Float(maxVal)
         valueSlider?.value = Float(0)
@@ -464,7 +491,7 @@ extension LGV_7SGT_ViewController {
      */
     @IBAction func numberBaseSegmentedSwitchChanged(_ inSwitch: UISegmentedControl) {
         let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(numberOfNumericalDigits))) - 1
-        let minVal = (1 < numberOfDigits) ? -maxVal : 0
+        let minVal = canShowNegative ? -maxVal : 0
         valueSlider?.minimumValue = Float(minVal)
         valueSlider?.maximumValue = Float(maxVal)
         valueSlider?.value = Float(0)
@@ -480,9 +507,31 @@ extension LGV_7SGT_ViewController {
      */
     @IBAction func leadingZeroesSwitchChanged(_ inControl: UIControl) {
         if inControl is UIButton {
-            leadingZeroesSwitch?.isOn = !(leadingZeroesSwitch?.isOn ?? true)
+            leadingZeroesSwitch?.setOn(!(leadingZeroesSwitch?.isOn ?? true), animated: true)
             leadingZeroesSwitch?.sendActions(for: .valueChanged)
         } else {
+            displayView?.setNeedsLayout()
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     Called when the button or the switch for negative values changes.
+     
+     - parameter inControl: The button or switch that changed.
+     */
+    @IBAction func canShowNegativeSwitchChanged(_ inControl: UIControl) {
+        if inControl is UIButton {
+            canShowNegativeSwitch?.setOn(!(canShowNegativeSwitch?.isOn ?? true), animated: true)
+            canShowNegativeSwitch?.sendActions(for: .valueChanged)
+        } else {
+            setHiddenStates()
+            let maxVal = Int(pow(Double(numberBase.maxValue + 1), Double(numberOfNumericalDigits))) - 1
+            let minVal = canShowNegative ? -maxVal : 0
+            valueSlider?.minimumValue = Float(minVal)
+            valueSlider?.maximumValue = Float(maxVal)
+            valueSlider?.value = Float(0)
+            valueSlider?.sendActions(for: .valueChanged)
             displayView?.setNeedsLayout()
         }
     }

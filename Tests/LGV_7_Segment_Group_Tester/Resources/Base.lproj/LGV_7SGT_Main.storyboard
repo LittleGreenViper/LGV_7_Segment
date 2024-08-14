@@ -17,11 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundGradient" translatesAutoresizingMaskIntoConstraints="NO" id="lpt-tK-sDj">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrM-gA-jPN">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ifK-hW-Sf0">
-                                        <rect key="frame" x="16" y="0.0" width="361" height="352.33333333333331"/>
+                                        <rect key="frame" x="16" y="0.0" width="361" height="393.33333333333331"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyI-f8-J7b">
                                                 <rect key="frame" x="160" y="0.0" width="41.333333333333343" height="20.333333333333332"/>
@@ -105,15 +108,41 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="193" height="33"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="SLUG-LEADING-ZEROES"/>
+                                                        <state key="normal" title="SLUG-LEADING-ZEROES">
+                                                            <color key="titleColor" systemColor="labelColor"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="leadingZeroesSwitchChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="arb-dh-gL2"/>
                                                         </connections>
                                                     </button>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="slB-uu-Lb0">
                                                         <rect key="frame" x="201" y="1" width="51" height="31"/>
+                                                        <color key="onTintColor" systemColor="systemRedColor"/>
                                                         <connections>
                                                             <action selector="leadingZeroesSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="OI7-Ue-M0X"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Ml-nY-z53">
+                                                <rect key="frame" x="37" y="360.33333333333331" width="287" height="33"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVg-hf-k1K" userLabel="SLUG-CAN-SHOW-NEGATIVE">
+                                                        <rect key="frame" x="0.0" y="0.0" width="230" height="33"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="SLUG-CAN-SHOW-NEGATIVE">
+                                                            <color key="titleColor" systemColor="labelColor"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="canShowNegativeSwitchChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JbD-4Q-r2g"/>
+                                                        </connections>
+                                                    </button>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNi-dt-WrW">
+                                                        <rect key="frame" x="238" y="1" width="51" height="31"/>
+                                                        <color key="onTintColor" systemColor="systemRedColor"/>
+                                                        <connections>
+                                                            <action selector="canShowNegativeSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="o8h-ki-bm3"/>
                                                         </connections>
                                                     </switch>
                                                 </subviews>
@@ -149,11 +178,17 @@
                         <constraints>
                             <constraint firstItem="QrM-gA-jPN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5xl-Ze-yC7"/>
                             <constraint firstItem="QrM-gA-jPN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7xf-qa-J5J"/>
+                            <constraint firstAttribute="bottom" secondItem="lpt-tK-sDj" secondAttribute="bottom" id="ElO-YS-0x0"/>
                             <constraint firstItem="QrM-gA-jPN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="FWk-tk-qq3"/>
                             <constraint firstItem="QrM-gA-jPN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Nmk-Cf-64p"/>
+                            <constraint firstItem="lpt-tK-sDj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bJE-nQ-JnE"/>
+                            <constraint firstItem="lpt-tK-sDj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="hCB-rc-0dV"/>
+                            <constraint firstAttribute="trailing" secondItem="lpt-tK-sDj" secondAttribute="trailing" id="qrK-0n-kXD"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="canShowNegativeLabelButton" destination="YVg-hf-k1K" id="hs2-Xf-j28"/>
+                        <outlet property="canShowNegativeSwitch" destination="LNi-dt-WrW" id="F9D-SB-02L"/>
                         <outlet property="digitCountSegmentedSwitch" destination="hok-nV-Fc6" id="Vt4-uM-HVf"/>
                         <outlet property="displayHeightAnchor" destination="EJK-WN-aZz" id="XgY-dY-qJd"/>
                         <outlet property="displaySegmentedSwitch" destination="fjn-Ny-Wyb" id="Qep-Z2-zel"/>
@@ -173,8 +208,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BackgroundGradient" width="16" height="1024"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

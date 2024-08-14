@@ -46,3 +46,5 @@
 "SLUG-BASE-3"                                     =     "Hexadecimal";
 
 "SLUG-LEADING-ZEROES"                             =     "Leading Zeroes:";
+
+"SLUG-CAN-SHOW-NEGATIVE"                          =     "Can Show Negative:";
