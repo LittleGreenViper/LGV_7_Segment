@@ -21,6 +21,28 @@ import Foundation
 import CoreGraphics
 
 /* ###################################################################################################################################### */
+// MARK: - Common Protocol for the 7-Segment Structs -
+/* ###################################################################################################################################### */
+/**
+ This just defines a couple of common properties.
+ */
+public protocol LGV_7_Segment_Protocol {
+    /* ################################################################## */
+    /**
+     This is the display size. This is a mutable property.
+     
+     The display will be stretched to fill the size.
+     */
+    var size: CGSize { get set }
+
+    /* ################################################################## */
+    /**
+     The value that determines the display. This is a mutable property.
+     */
+    var value: Int { get set }
+}
+
+/* ###################################################################################################################################### */
 // MARK: - Seven-Segment Display CGPath Generator -
 /* ###################################################################################################################################### */
 /**
@@ -55,7 +77,7 @@ import CoreGraphics
  
  It is possible to get the default aspect ratio, using the ``defaultAspect`` computed property, and the current aspect, using the ``currentAspect`` computed property.
  */
-public struct LGV_7_Segment {
+public struct LGV_7_Segment: LGV_7_Segment_Protocol {
     /* ################################################################################################################################## */
     // MARK: Segment Description Enum
     /* ################################################################################################################################## */

@@ -85,8 +85,8 @@ class LGV_7SGT_DisplayView: UIView {
             let value = myController.value
             tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits,
                                             size: CGSize(width: viewWidth, height: necessaryHeight),
-                                            numberBase: myController.numberBase,
                                             value: value,
+                                            numberBase: myController.numberBase,
                                             canShowNegative: myController.canShowNegative,
                                             showLeadingZeroes: myController.hasLeadingZeroes,
                                             spacing: 4

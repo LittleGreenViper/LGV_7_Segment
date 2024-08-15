@@ -102,9 +102,11 @@ extension LGV_7_Segment_Group {
 /**
  This struct aggregates one or more ``LGV_7_Segment`` structs, into a contiguous, multi-digit integer number.
  
- The number can be expressed as either a binary, octa, decimal, or hexadecimal value, and can also be negative (a property allows this as a selectable state).
+ The number can be expressed as either a binary, octal, decimal, or hexadecimal value, and can also be negative (a property allows this as a selectable state).
+ 
+ Spacing between digits can also be specified. We use Display units as the measure, but it should be noted that all product of these structs is `CGPath`s, so they can be scaled to any size.
  */
-public struct LGV_7_Segment_Group {
+public struct LGV_7_Segment_Group: LGV_7_Segment_Protocol {
     /* ################################################################################################################################## */
     // MARK: Number Base Enum
     /* ################################################################################################################################## */
@@ -176,18 +178,6 @@ public struct LGV_7_Segment_Group {
             }
         }
     }
-    
-    /* ################################################################## */
-    /**
-     The overall size (number of ``LGV_7_Segment`` instances) of the digit display. The individual digits are calculated from this, including the spacing.
-     */
-    public let size: CGSize
-    
-    /* ################################################################## */
-    /**
-     These are the digit (``LGV_7_Segment``) instances.
-     */
-    public var digits: [LGV_7_Segment]
 
     /* ################################################################## */
     /**
@@ -212,6 +202,33 @@ public struct LGV_7_Segment_Group {
      True, if the group can show leading zeroes. Cannot be true for only one digit (or no digit).
      */
     public var showLeadingZeroes: Bool { didSet { showLeadingZeroes = showLeadingZeroes && 1 < digits.count } }
+    
+    /* ################################################################## */
+    /**
+     These are the digit (``LGV_7_Segment``) instances.
+     */
+    public var digits: [LGV_7_Segment]
+
+    /* ################################################################## */
+    /**
+     The overall size of the digit display. The individual digit sizes are calculated from this, including the spacing.
+     */
+    public var size: CGSize {
+        didSet {
+            var tempDigits = [LGV_7_Segment]()
+            let numDigits = digits.count
+            
+            let digitWidth = (size.width - ((CGFloat(numDigits) - 1) * spacingInDisplayUnits)) / CGFloat(numDigits)
+            let digitSize = CGSize(width: digitWidth, height: size.height)
+
+            for _ in 0..<numDigits {
+                tempDigits.append(LGV_7_Segment(size: digitSize))
+            }
+            
+            digits = tempDigits
+            _setToValue()
+        }
+    }
 
     /* ################################################################## */
     /**
@@ -233,16 +250,16 @@ public struct LGV_7_Segment_Group {
      
      - parameter numberOfDigits: This is the number of *numerical* digits (ones showing numbers). If `canShowNegative` is true, then one extra digit will prefix the set. Required.
      - parameter size: The overall size of the control. The digits are sized to fit inside it. Required.
-     - parameter numberBase: The numerical base of the display. Default is hexadecimal.
      - parameter value: The numerical value (will be clipped to fit the number of digits, base, and whether or not negative numbers can be shown). Default is 0.
+     - parameter numberBase: The numerical base of the display. Default is hexadecimal.
      - parameter canShowNegative: True, if the group can show negative numbers (will result in an additional digit at the front). Default is false.
      - parameter showLeadingZeroes: True, if the group fills leading digits with 0. Default is false.
      - parameter spacing: This is the number of display units, between digits. Ignored, if only one digit. Default is 0.
      */
     public init(numberOfDigits inNumberOfDigits: Int,
                 size inSize: CGSize,
-                numberBase inNumberBase: NumberBase = .hex,
                 value inValue: Int = 0,
+                numberBase inNumberBase: NumberBase = .hex,
                 canShowNegative inCanShowNegative: Bool = false,
                 showLeadingZeroes inShowLeadingZeroes: Bool = false,
                 spacing inSpacingInDisplayUnits: CGFloat = 0
