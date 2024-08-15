@@ -49,8 +49,12 @@ extension LGV_7_Segment_Group {
         guard !digits.isEmpty else { return }
 
         for index in 0..<digits.count {
-            digits[index].value = LGV_7_Segment.Values.off.rawValue
+            digits[index].value = ((!allOff && allMinus) ? LGV_7_Segment.Values.minus : LGV_7_Segment.Values.off).rawValue
         }
+        
+        guard !allOff,
+              !allMinus
+        else { return }
         
         if 0 == value {
             if showLeadingZeroes {
@@ -104,7 +108,7 @@ extension LGV_7_Segment_Group {
  
  The number can be expressed as either a binary, octal, decimal, or hexadecimal value, and can also be negative (a property allows this as a selectable state).
  
- Spacing between digits can also be specified. We use Display units as the measure, but it should be noted that all product of these structs is `CGPath`s, so they can be scaled to any size.
+ Spacing between digits can also be specified. We use Display Units as the measure, but it should be noted that the product of these structs is a `CGPath`, so it can be scaled to any size.
  */
 public struct LGV_7_Segment_Group: LGV_7_Segment_Protocol {
     /* ################################################################################################################################## */
@@ -246,15 +250,30 @@ public struct LGV_7_Segment_Group: LGV_7_Segment_Protocol {
     
     /* ################################################################## */
     /**
+     If true, then the value is ignored, and all segments of all digits are off. Default is off.
+     */
+    public var allOff: Bool = false { didSet { _setToValue() } }
+    
+    /* ################################################################## */
+    /**
+     If true, and allOff is false, then the value is ignored, and digits are set to -1 (a bar through the middle).
+     */
+    public var allMinus: Bool = false { didSet { _setToValue() } }
+
+    /* ################################################################## */
+    /**
      Default initializer
      
-     - parameter numberOfDigits: This is the number of *numerical* digits (ones showing numbers). If `canShowNegative` is true, then one extra digit will prefix the set. Required.
-     - parameter size: The overall size of the control. The digits are sized to fit inside it. Required.
-     - parameter value: The numerical value (will be clipped to fit the number of digits, base, and whether or not negative numbers can be shown). Default is 0.
-     - parameter numberBase: The numerical base of the display. Default is hexadecimal.
-     - parameter canShowNegative: True, if the group can show negative numbers (will result in an additional digit at the front). Default is false.
-     - parameter showLeadingZeroes: True, if the group fills leading digits with 0. Default is false.
-     - parameter spacing: This is the number of display units, between digits. Ignored, if only one digit. Default is 0.
+     - Parameters:
+         - numberOfDigits: This is the number of *numerical* digits (ones showing numbers). If `canShowNegative` is true, then one extra digit will prefix the set. Required.
+         - size: The overall size of the control. The digits are sized to fit inside it. Required.
+         - value: The numerical value (will be clipped to fit the number of digits, base, and whether or not negative numbers can be shown). Default is 0.
+         - numberBase: The numerical base of the display. Default is hexadecimal.
+         - canShowNegative: True, if the group can show negative numbers (will result in an additional digit at the front). Default is false.
+         - showLeadingZeroes: True, if the group fills leading digits with 0. Default is false.
+         - spacing: This is the number of display units, between digits. Ignored, if only one digit. Default is 0.
+         - allOff: If true (default is false), then ``value`` will be ignored, and all digits will be off (-2).
+         - allMinus: If true (default is false), and ``allOff`` is false, then ``value`` will be ignored, and all digits will be minus (-1).
      */
     public init(numberOfDigits inNumberOfDigits: Int,
                 size inSize: CGSize,
@@ -262,7 +281,9 @@ public struct LGV_7_Segment_Group: LGV_7_Segment_Protocol {
                 numberBase inNumberBase: NumberBase = .hex,
                 canShowNegative inCanShowNegative: Bool = false,
                 showLeadingZeroes inShowLeadingZeroes: Bool = false,
-                spacing inSpacingInDisplayUnits: CGFloat = 0
+                spacing inSpacingInDisplayUnits: CGFloat = 0,
+                allOff inAllOff: Bool = false,
+                allMinus inAllMinus: Bool = false
     ) {
         var tempDigits = [LGV_7_Segment]()
         
@@ -283,6 +304,8 @@ public struct LGV_7_Segment_Group: LGV_7_Segment_Protocol {
         let maxValue = Int(pow(Double(inNumberBase.base), Double(maxDigitalPlaces))) - 1
         let minValue = inCanShowNegative ? -maxValue : 0
         value = min(maxValue, max(minValue, inValue))
+        allOff = inAllOff
+        allMinus = inAllMinus
         _setToValue()
     }
 }

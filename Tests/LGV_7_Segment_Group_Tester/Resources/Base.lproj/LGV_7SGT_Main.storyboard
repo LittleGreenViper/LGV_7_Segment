@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ifK-hW-Sf0">
-                                        <rect key="frame" x="16" y="0.0" width="361" height="393.33333333333331"/>
+                                        <rect key="frame" x="16" y="0.0" width="361" height="432.33333333333331"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyI-f8-J7b">
                                                 <rect key="frame" x="160" y="0.0" width="41.333333333333343" height="20.333333333333332"/>
@@ -146,6 +146,17 @@
                                                     </switch>
                                                 </subviews>
                                             </stackView>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="69J-aO-5aT">
+                                                <rect key="frame" x="8.6666666666666572" y="401.33333333333331" width="344" height="32"/>
+                                                <segments>
+                                                    <segment title="SLUG-STATE-0"/>
+                                                    <segment title="SLUG-STATE-0"/>
+                                                    <segment title="SLUG-STATE-0"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="allStateSegmentedSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="3te-Bn-kLv"/>
+                                                </connections>
+                                            </segmentedControl>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TDe-uj-hR6" secondAttribute="trailing" id="9da-hv-qjp"/>
@@ -186,6 +197,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="allStateSegmentedSwitch" destination="69J-aO-5aT" id="Aks-Qg-ZDO"/>
                         <outlet property="canShowNegativeLabelButton" destination="YVg-hf-k1K" id="hs2-Xf-j28"/>
                         <outlet property="canShowNegativeSwitch" destination="LNi-dt-WrW" id="F9D-SB-02L"/>
                         <outlet property="digitCountSegmentedSwitch" destination="hok-nV-Fc6" id="Vt4-uM-HVf"/>

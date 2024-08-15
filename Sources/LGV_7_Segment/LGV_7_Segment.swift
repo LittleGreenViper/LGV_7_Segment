@@ -76,6 +76,8 @@ public protocol LGV_7_Segment_Protocol {
      - 0-15 are the hex values (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, b, C, d, E, F).
  
  It is possible to get the default aspect ratio, using the ``defaultAspect`` computed property, and the current aspect, using the ``currentAspect`` computed property.
+ 
+ We use Display Units as the measure, but it should be noted that the product of these structs is a `CGPath`, so it can be scaled to any size.
  */
 public struct LGV_7_Segment: LGV_7_Segment_Protocol {
     /* ################################################################################################################################## */

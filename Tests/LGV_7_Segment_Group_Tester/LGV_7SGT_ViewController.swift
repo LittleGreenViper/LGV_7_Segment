@@ -83,15 +83,18 @@ class LGV_7SGT_DisplayView: UIView {
                 viewWidth = tempDigit.idealWidthFrom(height: necessaryHeight)
             }
             let value = myController.value
+            let state = myController.allStateSegmentedSwitch?.selectedSegmentIndex ?? 0
             tempDigit = LGV_7_Segment_Group(numberOfDigits: myController.numberOfDigits,
                                             size: CGSize(width: viewWidth, height: necessaryHeight),
                                             value: value,
                                             numberBase: myController.numberBase,
                                             canShowNegative: myController.canShowNegative,
                                             showLeadingZeroes: myController.hasLeadingZeroes,
-                                            spacing: 4
+                                            spacing: 4,
+                                            allOff: 1 == state,
+                                            allMinus: 2 == state
             )
-            
+
             digitSet = tempDigit
             
             myController.displayHeightAnchor?.constant = necessaryHeight
@@ -159,7 +162,7 @@ class LGV_7SGT_DisplayView: UIView {
         } else {
             myController.displayViewContainer?.isHidden = true
         }
-        
+
         super.layoutSubviews()
     }
 }
@@ -285,6 +288,12 @@ class LGV_7SGT_ViewController: UIViewController {
      The label is actually a button, and toggles the switch.
      */
     @IBOutlet weak var canShowNegativeLabelButton: UIButton?
+    
+    /* ################################################################## */
+    /**
+     This switches between "all off," "all minus," and "normal" mode.
+     */
+    @IBOutlet weak var allStateSegmentedSwitch: UISegmentedControl?
 }
 
 /* ###################################################################################################################################### */
@@ -404,6 +413,10 @@ extension LGV_7SGT_ViewController {
         
         for index in 0..<(numberBaseSegmentedSwitch?.numberOfSegments ?? 0) {
             numberBaseSegmentedSwitch?.setTitle(String(format: "SLUG-BASE-%d", index).localizedVariant, forSegmentAt: index)
+        }
+        
+        for index in 0..<(allStateSegmentedSwitch?.numberOfSegments ?? 0) {
+            allStateSegmentedSwitch?.setTitle(String(format: "SLUG-STATE-%d", index).localizedVariant, forSegmentAt: index)
         }
 
         guard let slider = valueSlider else { return }
@@ -543,5 +556,15 @@ extension LGV_7SGT_ViewController {
             valueSlider?.sendActions(for: .valueChanged)
             displayView?.setNeedsLayout()
         }
+    }
+    
+    /* ################################################################## */
+    /**
+     The switch for "all off," "all minus," and "normal" mode has changed.
+     
+     - parameter: ignored.
+     */
+    @IBAction func allStateSegmentedSwitchChanged(_: UISegmentedControl) {
+        setDigitGroup()
     }
 }

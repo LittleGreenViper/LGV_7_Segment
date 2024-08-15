@@ -44,6 +44,10 @@
 "SLUG-BASE-2"                                     =     "Decimal";
 "SLUG-BASE-3"                                     =     "Hexadecimal";
 
+"SLUG-STATE-0"                                    =     "Normal";
+"SLUG-STATE-1"                                    =     "Off";
+"SLUG-STATE-2"                                    =     "Line";
+
 "SLUG-LEADING-ZEROES"                             =     "Leading Zeroes:";
 
 "SLUG-CAN-SHOW-NEGATIVE"                          =     "Can Show Negative:";
