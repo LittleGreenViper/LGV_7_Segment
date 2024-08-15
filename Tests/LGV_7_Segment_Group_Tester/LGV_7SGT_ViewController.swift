@@ -435,7 +435,7 @@ extension LGV_7SGT_ViewController {
         valueDisplayLabel?.isEnabled = !(0 == numberOfDigits || .outline == displayType || .maskOnly == displayType)
         canShowNegativeSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
         canShowNegativeLabelButton?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
-        leadingZeroesSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
+        leadingZeroesSwitch?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType && (!canShowNegative || 2 < numberOfDigits)
         leadingZeroesLabelButton?.isEnabled = 1 < numberOfDigits && .outline != displayType && .maskOnly != displayType
     }
 }

@@ -49,6 +49,10 @@ It is possible to get the default aspect ratio, using the `LGV_7_Segment.default
 
 ### The The `LGV_7_Sement_Group` struct
 
+This struct aggregates one or more `LGV_7_Segment` structs, and presents them as a unified `CGPath`. It allows you to treat the group as a contiguous set of digits, expressed as a single binary, octal, decimal, or hexadecimal number.
+
+It allows you to specify whether or not leading zeroes are displayed, and if the number can be represented as negative (preceded by a minus sign -).
+
 Because the structs return `CGPath`s, the images can be scaled or transformed at very little cost, and used in Basic Swift, UIKit, SwiftUI, AppKit, WatchKit, or TV UIKit.
 
 ## License

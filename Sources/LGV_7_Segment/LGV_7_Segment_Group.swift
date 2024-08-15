@@ -21,9 +21,88 @@ import Foundation
 import CoreGraphics
 
 /* ###################################################################################################################################### */
+// MARK: Private Instance Methods.
+/* ###################################################################################################################################### */
+extension LGV_7_Segment_Group {
+    /* ################################################################## */
+    /**
+     This returns the internal frame of a single digit (as indexed).
+     
+     - parameter for: The 0-based index of the digit (0 is leftmost).
+     - returns: The frame for the digit.
+     */
+    private func _frame(for inIndex: Int) -> CGRect {
+        guard (0..<digits.count).contains(inIndex) else { return .zero }
+        
+        let size = digits[inIndex].size
+        let digitWidth = (size.width - (CGFloat(digits.count) * spacingInDisplayUnits)) / CGFloat(digits.count)
+        let digitHeight = size.height
+        let xOrigin = CGFloat(inIndex) * (spacingInDisplayUnits + digitWidth)
+        return CGRect(origin: CGPoint(x: xOrigin, y: 0), size: CGSize(width: digitWidth, height: digitHeight))
+    }
+    
+    /* ################################################################## */
+    /**
+     This sets the digits to their values, based on the number base, and the value.
+     */
+    private mutating func _setToValue() {
+        guard !digits.isEmpty else { return }
+
+        for index in 0..<digits.count {
+            digits[index].value = LGV_7_Segment.Values.off.rawValue
+        }
+        
+        if 0 == value {
+            if showLeadingZeroes {
+                for index in (canShowNegative ? 1 : 0)..<(digits.count) {
+                    digits[index].value = 0
+                }
+            } else {
+                digits[digits.count - 1].value = 0
+            }
+        } else {
+            var digitValues: [Int] = []
+
+            var tempValue = UInt64(abs(value))
+            let base = UInt64(numberBase.base)
+
+            while 0 < tempValue {
+                let over = (tempValue / base) * base
+                let under = Int(tempValue - over)
+                digitValues.append(under)
+                tempValue /= base
+            }
+
+            let numericalDigits = canShowNegative ? digits.count - 1 : digits.count
+            var currentDigit = numericalDigits - digitValues.count + (canShowNegative ? 1 : 0)
+            
+            digitValues.reversed().forEach {
+                digits[currentDigit].value = $0
+                currentDigit += 1
+            }
+
+            if showLeadingZeroes {
+                for index in 0..<(digits.count - digitValues.count) {
+                    digits[index].value = 0
+                }
+            }
+            
+            currentDigit = showLeadingZeroes ? 0 : (digits.count - digitValues.count) - 1
+            if 0 <= currentDigit,
+               canShowNegative {
+                digits[currentDigit].value = 0 > value ? LGV_7_Segment.Values.minus.rawValue : LGV_7_Segment.Values.off.rawValue
+            }
+        }
+    }
+}
+
+/* ###################################################################################################################################### */
 // MARK: - Seven-Segment Display Group CGPath Generator -
 /* ###################################################################################################################################### */
 /**
+ This struct aggregates one or more ``LGV_7_Segment`` structs, into a contiguous, multi-digit integer number.
+ 
+ The number can be expressed as either a binary, octa, decimal, or hexadecimal value, and can also be negative (a property allows this as a selectable state).
  */
 public struct LGV_7_Segment_Group {
     /* ################################################################################################################################## */
@@ -100,13 +179,13 @@ public struct LGV_7_Segment_Group {
     
     /* ################################################################## */
     /**
-     The overall size of the digit display. The individual digits are calculated from this, including the spacing.
+     The overall size (number of ``LGV_7_Segment`` instances) of the digit display. The individual digits are calculated from this, including the spacing.
      */
     public let size: CGSize
     
     /* ################################################################## */
     /**
-     These are the digit instances.
+     These are the digit (``LGV_7_Segment``) instances.
      */
     public var digits: [LGV_7_Segment]
 
@@ -289,109 +368,6 @@ extension LGV_7_Segment_Group {
             index -= 1
             x += $1.size.width + (0 == index ? 0 : spacingInDisplayUnits)
             $0.addPath($1.segmentMask, transform: transform)
-        }
-    }
-}
-
-/* ###################################################################################################################################### */
-// MARK: Private Instance Methods.
-/* ###################################################################################################################################### */
-extension LGV_7_Segment_Group {
-    /* ################################################################## */
-    /**
-     This returns the internal frame of a single digit (as indexed).
-     
-     - parameter for: The 0-based index of the digit (0 is leftmost).
-     - returns: The frame for the digit.
-     */
-    private func _frame(for inIndex: Int) -> CGRect {
-        guard !digits.isEmpty,
-              (0..<digits.count).contains(inIndex)
-        else { return .zero }
-        
-        let size = digits[inIndex].size
-        let digitWidth = (size.width - (CGFloat(digits.count) * spacingInDisplayUnits)) / CGFloat(digits.count)
-        let digitHeight = size.height
-        let xOrigin = CGFloat(inIndex) * (spacingInDisplayUnits + digitWidth)
-        return CGRect(origin: CGPoint(x: xOrigin, y: 0), size: CGSize(width: digitWidth, height: digitHeight))
-    }
-    
-    /* ################################################################## */
-    /**
-     Awkward function, but it works.
-     
-     // TODO: Make this cleverer
-     */
-    private mutating func _setToValue() {
-        guard !digits.isEmpty else { return }
-
-        var tempValue = UInt64(abs(value))
-        
-        for index in 0..<digits.count {
-            digits[index].value = LGV_7_Segment.Values.off.rawValue
-        }
-        
-        var digitValues: [Int] = []
-        
-        if 0 == tempValue {
-            digits[digits.count - 1].value = 0
-            if showLeadingZeroes {
-                for index in (canShowNegative ? 1 : 0)..<(digits.count - 1) {
-                    digits[index].value = 0
-                }
-            }
-        } else {
-            let numericalDigits = canShowNegative ? digits.count - 1 : digits.count
-            
-            switch numberBase {
-            case .binary:
-                while 0 < tempValue {
-                    let overTwo = (tempValue / 2) * 2
-                    let underTwo = Int(tempValue - overTwo)
-                    digitValues.append(underTwo)
-                    tempValue /= 2
-                }
-            case .octal:
-                while 0 < tempValue {
-                    let overEight = (tempValue / 8) * 8
-                    let underEight = Int(tempValue - overEight)
-                    digitValues.append(underEight)
-                    tempValue /= 8
-                }
-            case .decimal:
-                while 0 < tempValue {
-                    let overTen = (tempValue / 10) * 10
-                    let underTen = Int(tempValue - overTen)
-                    digitValues.append(underTen)
-                    tempValue /= 10
-                }
-            case .hex:
-                while 0 < tempValue {
-                    let overSixteen = (tempValue / 16) * 16
-                    let underSixteen = Int(tempValue - overSixteen)
-                    digitValues.append(underSixteen)
-                    tempValue /= 16
-                }
-            }
-            
-            var currentDigit = numericalDigits - digitValues.count + (canShowNegative ? 1 : 0)
-            
-            digitValues.reversed().forEach {
-                digits[currentDigit].value = $0
-                currentDigit += 1
-            }
-
-            if showLeadingZeroes {
-                for index in 0..<(digits.count - digitValues.count) {
-                    digits[index].value = 0
-                }
-            }
-            
-            currentDigit = showLeadingZeroes ? 0 : (digits.count - digitValues.count) - 1
-            if 0 <= currentDigit,
-               canShowNegative {
-                digits[currentDigit].value = 0 > value ? LGV_7_Segment.Values.minus.rawValue : LGV_7_Segment.Values.off.rawValue
-            }
         }
     }
 }

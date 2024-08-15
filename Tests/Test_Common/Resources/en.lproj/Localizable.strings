@@ -33,12 +33,11 @@
 
 // MARK: Used only in the Group tester app
 
-"SLUG-COUNT-0"                                    =     "0 Digits";
-"SLUG-COUNT-1"                                    =     "1 Digit";
-"SLUG-COUNT-2"                                    =     "2 Digits";
-"SLUG-COUNT-3"                                    =     "3 Digits";
-"SLUG-COUNT-4"                                    =     "4 Digits";
-"SLUG-COUNT-5"                                    =     "5 Digits";
+"SLUG-COUNT-0"                                    =     "1 Digit";
+"SLUG-COUNT-1"                                    =     "2 Digits";
+"SLUG-COUNT-2"                                    =     "3 Digits";
+"SLUG-COUNT-3"                                    =     "4 Digits";
+"SLUG-COUNT-4"                                    =     "5 Digits";
 
 "SLUG-BASE-0"                                     =     "Binary";
 "SLUG-BASE-1"                                     =     "Octal";
