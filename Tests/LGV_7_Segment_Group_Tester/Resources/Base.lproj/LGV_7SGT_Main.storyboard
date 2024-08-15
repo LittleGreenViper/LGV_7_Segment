@@ -70,7 +70,6 @@
                                                     <segment title="SLUG-COUNT-2"/>
                                                     <segment title="SLUG-COUNT-3"/>
                                                     <segment title="SLUG-COUNT-4"/>
-                                                    <segment title="SLUG-COUNT-5"/>
                                                 </segments>
                                                 <connections>
                                                     <action selector="digitCountSegmentedSwitchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="LSB-w0-8BX"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
@@ -14,18 +14,30 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackgroundGradient" translatesAutoresizingMaskIntoConstraints="NO" id="O52-Yg-X2E">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="a0R-c8-aEI">
+                                <rect key="frame" x="75" y="293.66666666666669" width="225" height="225.00000000000006"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="a0R-c8-aEI" secondAttribute="height" multiplier="1:1" id="k5Q-kY-vwx"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="a0R-c8-aEI" firstAttribute="width" relation="lessThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.6" id="2hA-Ua-aW3"/>
                             <constraint firstAttribute="bottom" secondItem="O52-Yg-X2E" secondAttribute="bottom" id="2t8-r0-aZP"/>
+                            <constraint firstItem="a0R-c8-aEI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Ash-MV-5Bq"/>
                             <constraint firstAttribute="trailing" secondItem="O52-Yg-X2E" secondAttribute="trailing" id="SY1-1y-L2R"/>
+                            <constraint firstItem="a0R-c8-aEI" firstAttribute="height" relation="lessThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="0.6" id="Z0U-2y-5oV"/>
+                            <constraint firstItem="a0R-c8-aEI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="f9y-6l-mIu"/>
                             <constraint firstItem="O52-Yg-X2E" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="luc-e5-Rys"/>
                             <constraint firstItem="O52-Yg-X2E" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="xUJ-Fv-aHd"/>
                         </constraints>
@@ -33,11 +45,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
     <resources>
         <image name="BackgroundGradient" width="16" height="1024"/>
+        <image name="Logo" width="2400" height="2400"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

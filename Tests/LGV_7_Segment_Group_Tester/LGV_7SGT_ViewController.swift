@@ -327,11 +327,11 @@ extension LGV_7SGT_ViewController {
      Returns the number of digits being displayed (including the negative sign).
      */
     var numberOfDigits: Int {
-        get { digitCountSegmentedSwitch?.selectedSegmentIndex ?? 0 }
+        get { (digitCountSegmentedSwitch?.selectedSegmentIndex ?? 0) + 1 }
         
         set {
-            guard (0..<(digitCountSegmentedSwitch?.numberOfSegments ?? 0)).contains(newValue) else { return }
-            digitCountSegmentedSwitch?.selectedSegmentIndex = newValue
+            guard (1..<(digitCountSegmentedSwitch?.numberOfSegments ?? 0)).contains(newValue) else { return }
+            digitCountSegmentedSwitch?.selectedSegmentIndex = newValue - 1
         }
     }
     
