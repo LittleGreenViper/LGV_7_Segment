@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LGV_7_Segment_Group Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Struct/LGV_7_Segment_Group" class="dashAnchor"></a>
+
+    <a title="LGV_7_Segment_Group Structure Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          LGV_7_Segment Doumentation
+        </a>
+         (100% documented)
+      </p>
+    
+      <div class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </div>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/LittleGreenViper/LGV_7_Segment">
+            <img class="header-icon" src="../img/gh.png" alt="GitHub"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Index</a>
+      <img class="carat" src="../img/carat.png" alt=""/>
+      <a class="breadcrumb" href="../Structs.html">Structures</a>
+      <img class="carat" src="../img/carat.png" alt=""/>
+      LGV_7_Segment.LGV_7_Segment_Group Structure Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/LGV_7_Segment_Protocol.html">LGV_7_Segment_Protocol</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LGV_7_Segment.html">LGV_7_Segment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LGV_7_Segment/Values.html">– Values</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LGV_7_Segment_Group.html">LGV_7_Segment_Group</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LGV_7_Segment_Group/NumberBase.html">– NumberBase</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>LGV_7_Segment_Group</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">LGV_7_Segment_Group</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/LGV_7_Segment_Protocol.html">LGV_7_Segment_Protocol</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>This struct aggregates one or more <code><a href="../Structs/LGV_7_Segment.html">LGV_7_Segment</a></code> structs, into a contiguous, multi-digit integer number.</p>
+
+<p>The number can be expressed as either a binary, octal, decimal, or hexadecimal value, and can also be negative (a property allows this as a selectable state).</p>
+
+<p>Spacing between digits can also be specified. We use Display Units as the measure, but it should be noted that the product of these structs is a <code>CGPath</code>, so it can be scaled to any size.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Number%20Base%20Enum"></a>
+                <a name="//apple_ref/swift/Section/Number Base Enum" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Number%20Base%20Enum"></a>
+                  <h3 class="section-name"><span>Number Base Enum</span>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV10NumberBaseO"></a>
+                    <a name="//apple_ref/swift/Enum/NumberBase" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV10NumberBaseO">NumberBase</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This enumeration defines which number base the group will use.</p>
+
+                        <a href="../Structs/LGV_7_Segment_Group/NumberBase.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">NumberBase</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV10numberBaseAC06NumberE0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/numberBase" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV10numberBaseAC06NumberE0Ovp">numberBase</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the number base of the group.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">numberBase</span><span class="p">:</span> <span class="kt"><a href="../Structs/LGV_7_Segment_Group/NumberBase.html">NumberBase</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV21spacingInDisplayUnits14CoreFoundation7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/spacingInDisplayUnits" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV21spacingInDisplayUnits14CoreFoundation7CGFloatVvp">spacingInDisplayUnits</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The spacing between the digits.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">spacingInDisplayUnits</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV15canShowNegativeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/canShowNegative" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV15canShowNegativeSbvp">canShowNegative</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>True, if the group can show negative numbers. Cannot be true for only one digit (or no digit).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">canShowNegative</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV17showLeadingZeroesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/showLeadingZeroes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV17showLeadingZeroesSbvp">showLeadingZeroes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>True, if the group can show leading zeroes. Cannot be true for only one digit (or no digit).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showLeadingZeroes</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV6digitsSayA2AVGvp"></a>
+                    <a name="//apple_ref/swift/Property/digits" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV6digitsSayA2AVGvp">digits</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>These are the digit (<code><a href="../Structs/LGV_7_Segment.html">LGV_7_Segment</a></code>) instances.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">digits</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/LGV_7_Segment.html">LGV_7_Segment</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV4sizeSo6CGSizeVvp"></a>
+                    <a name="//apple_ref/swift/Property/size" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV4sizeSo6CGSizeVvp">size</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The overall size of the digit display. The individual digit sizes are calculated from this, including the spacing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV5valueSivp"></a>
+                    <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV5valueSivp">value</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The overall value of the digit group. This is clipped to the current setup (base, negative, and number of digits).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV6allOffSbvp"></a>
+                    <a name="//apple_ref/swift/Property/allOff" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV6allOffSbvp">allOff</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If true, then the value is ignored, and all segments of all digits are off. Default is off.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">allOff</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV8allMinusSbvp"></a>
+                    <a name="//apple_ref/swift/Property/allMinus" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV8allMinusSbvp">allMinus</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If true, and allOff is false, then the value is ignored, and digits are set to -1 (a bar through the middle).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">allMinus</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV14numberOfDigits4size5value0D4Base15canShowNegative17showLeadingZeroes7spacing6allOff0Q5MinusACSi_So6CGSizeVSiAC06NumberI0OS2b14CoreFoundation7CGFloatVS2btcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(numberOfDigits:size:value:numberBase:canShowNegative:showLeadingZeroes:spacing:allOff:allMinus:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV14numberOfDigits4size5value0D4Base15canShowNegative17showLeadingZeroes7spacing6allOff0Q5MinusACSi_So6CGSizeVSiAC06NumberI0OS2b14CoreFoundation7CGFloatVS2btcfc">init(numberOfDigits:<wbr>size:<wbr>value:<wbr>numberBase:<wbr>canShowNegative:<wbr>showLeadingZeroes:<wbr>spacing:<wbr>allOff:<wbr>allMinus:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default initializer</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">numberOfDigits</span> <span class="nv">inNumberOfDigits</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV4sizeSo6CGSizeVvp">size</a></span> <span class="nv">inSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV5valueSivp">value</a></span> <span class="nv">inValue</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV10numberBaseAC06NumberE0Ovp">numberBase</a></span> <span class="nv">inNumberBase</span><span class="p">:</span> <span class="kt"><a href="../Structs/LGV_7_Segment_Group/NumberBase.html">NumberBase</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">hex</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV15canShowNegativeSbvp">canShowNegative</a></span> <span class="nv">inCanShowNegative</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV17showLeadingZeroesSbvp">showLeadingZeroes</a></span> <span class="nv">inShowLeadingZeroes</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="n">spacing</span> <span class="nv">inSpacingInDisplayUnits</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV6allOffSbvp">allOff</a></span> <span class="nv">inAllOff</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="n"><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV8allMinusSbvp">allMinus</a></span> <span class="nv">inAllMinus</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>numberOfDigits</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>This is the number of <em>numerical</em> digits (ones showing numbers). If <code><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV15canShowNegativeSbvp">canShowNegative</a></code> is true, then one extra digit will prefix the set. Required.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>size</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The overall size of the control. The digits are sized to fit inside it. Required.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The numerical value (will be clipped to fit the number of digits, base, and whether or not negative numbers can be shown). Default is 0.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>numberBase</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The numerical base of the display. Default is hexadecimal.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>canShowNegative</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>True, if the group can show negative numbers (will result in an additional digit at the front). Default is false.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>showLeadingZeroes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>True, if the group fills leading digits with 0. Default is false.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spacing</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>This is the number of display units, between digits. Ignored, if only one digit. Default is 0.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>allOff</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If true (default is false), then <code><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV5valueSivp">value</a></code> will be ignored, and all digits will be off (-2).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>allMinus</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If true (default is false), and <code><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV6allOffSbvp">allOff</a></code> is false, then <code><a href="../Structs/LGV_7_Segment_Group.html#/s:13LGV_7_Segment0a3_7_B6_GroupV5valueSivp">value</a></code> will be ignored, and all digits will be minus (-1).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Instance%20Methods"></a>
+                <a name="//apple_ref/swift/Section/Public Instance Methods" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Public%20Instance%20Methods"></a>
+                  <h3 class="section-name"><span>Public Instance Methods</span>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV14idealWidthFrom6height14CoreFoundation7CGFloatVAH_tF"></a>
+                    <a name="//apple_ref/swift/Method/idealWidthFrom(height:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV14idealWidthFrom6height14CoreFoundation7CGFloatVAH_tF">idealWidthFrom(height:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This returns the &ldquo;ideal&rdquo; width for this group, based on a fixed height.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">idealWidthFrom</span><span class="p">(</span><span class="n">height</span> <span class="nv">inHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The height to be used as the fixed axis.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV15idealHeightFrom5width14CoreFoundation7CGFloatVAH_tF"></a>
+                    <a name="//apple_ref/swift/Method/idealHeightFrom(width:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV15idealHeightFrom5width14CoreFoundation7CGFloatVAH_tF">idealHeightFrom(width:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This returns the &ldquo;ideal&rdquo; height for this group, based on a fixed width.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">idealHeightFrom</span><span class="p">(</span><span class="n">width</span> <span class="nv">inWidth</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The width to be used as the fixed axis.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV7outlineSo9CGPathRefavp"></a>
+                    <a name="//apple_ref/swift/Property/outline" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV7outlineSo9CGPathRefavp">outline</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the outline of the entire display.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">outline</span><span class="p">:</span> <span class="kt">CGPath</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV10onSegmentsSo9CGPathRefavp"></a>
+                    <a name="//apple_ref/swift/Property/onSegments" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV10onSegmentsSo9CGPathRefavp">onSegments</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the combined paths for all the &ldquo;On&rdquo; segments.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If none are on (value -2), this will be an empty path.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onSegments</span><span class="p">:</span> <span class="kt">CGPath</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV11offSegmentsSo9CGPathRefavp"></a>
+                    <a name="//apple_ref/swift/Property/offSegments" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV11offSegmentsSo9CGPathRefavp">offSegments</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the combined paths for all the &ldquo;Off&rdquo; segments.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>If none are off (value 8), this will be an empty path.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">offSegments</span><span class="p">:</span> <span class="kt">CGPath</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13LGV_7_Segment0a3_7_B6_GroupV11segmentMaskSo9CGPathRefavp"></a>
+                    <a name="//apple_ref/swift/Property/segmentMask" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13LGV_7_Segment0a3_7_B6_GroupV11segmentMaskSo9CGPathRefavp">segmentMask</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is the combined paths for all the segments (both &ldquo;on&rdquo; and &ldquo;off&rdquo;).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">segmentMask</span><span class="p">:</span> <span class="kt">CGPath</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2024 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2024-08-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+    </section>
+  </body>
+</html>

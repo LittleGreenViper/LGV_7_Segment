@@ -26,12 +26,10 @@ let package = Package(
     name: "LGV_7_Segment",
     defaultLocalization: "en",
     platforms: [
-        platforms: [
-            .iOS(.v15),
-            .tvOS(.v15),
-            .macOS(.v10_15),
-            .watchOS(.v7)
-        ],
+        .iOS(.v15),
+        .tvOS(.v15),
+        .macOS(.v10_15),
+        .watchOS(.v7)
     ],
     products: [
         .library(
